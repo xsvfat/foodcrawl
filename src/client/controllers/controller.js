@@ -1,5 +1,5 @@
 // controller for start/end inputs
-app.controller('inputsController', '$http', ['$scope', function($scope, $http) {
+app.controller('inputsController', ['$scope', '$http', function($scope, $http) {
   $scope.start // start location input
   $scope.end // end location input
   $scope.submit = $http({
@@ -9,5 +9,9 @@ app.controller('inputsController', '$http', ['$scope', function($scope, $http) {
       start: $scope.start,
       end: $scope.end
     }
+  }).then((data) => {
+    console.log('Returned data: ', data);
+  }).catch((err) => {
+    console.log('Error submitting: ', err);
   })
 }]);
