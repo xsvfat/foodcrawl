@@ -1,5 +1,21 @@
 // controller for start/end inputs
-app.controller('inputsController', ['$scope', function($scope) {
+app.controller('inputsController', ['$scope', '$http', function($scope, $http) {
   $scope.start // start location input
   $scope.end // end location input
+
+  // POST request
+  $scope.submit = function() {
+    $http({
+      method: 'POST',
+      url: '/maps/submit',
+      data: {
+        start: $scope.start,
+        end: $scope.end
+      }
+    }).then((data) => {
+      console.log('Returned data: ', data);
+    }).catch((err) => {
+      console.log('Error submitting: ', err);
+    })
+  }
 }]);

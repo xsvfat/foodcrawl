@@ -33,6 +33,13 @@ module.exports = {
     request(options, (error, results) => {
       error ? callback(error) : callback(results);
     });
+  },
+
+  // Takes form data from submit
+  // Outputs routes or addresses for the map
+  submit: function(req, res, next) {
+    console.log(req.body);
+    res.end();
   }
 
 };
