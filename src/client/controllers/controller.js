@@ -1,5 +1,6 @@
-// controller for start/end inputs
+// controller for start & end inputs
 app.controller('inputsController', ['$scope', '$http', function($scope, $http) {
+
   $scope.start // start location input
   $scope.end // end location input
 
@@ -17,5 +18,5 @@ app.controller('inputsController', ['$scope', '$http', function($scope, $http) {
     }).catch((err) => {
       console.log('Error submitting: ', err);
     })
-  }
+  };
 }]);
