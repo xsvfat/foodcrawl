@@ -1,5 +1,5 @@
 var request = require('request');
-var keys = require('./keys.js');
+// var keys = require('./keys.js');
 var qs = require('querystring');
 var bb = require('bluebird');
 
@@ -33,6 +33,10 @@ module.exports = {
     request(options, (error, results) => {
       error ? callback(error) : callback(results);
     });
+  },
+
+  submit: function(req, res, next) {
+    res.send('Hello world');
   }
 
 };
