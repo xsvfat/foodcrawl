@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "babel src --out-dir compiled --presets=es2015 --source-maps inline --copy-files --watch",
-    "rebase": "git pull --rebase upstream master && git push origin master"
+    "rebase": "git pull --rebase upstream master && git push origin master",
+    "start": "nodemon compiled/server/server.js"
   },
   "repository": {
     "type": "git",
