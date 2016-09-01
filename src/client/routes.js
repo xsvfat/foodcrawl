@@ -10,6 +10,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   })
   .state('main', {
     url: '/main',
-    templateUrl: './views/view.html'
+    templateUrl: './views/view.html',
+    controller: 'inputsController'
   });
 }])
