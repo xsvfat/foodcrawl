@@ -1,5 +1,5 @@
 var request = require('request');
-// var keys = require('./keys.js');
+var keys = require('./keys.js');
 var qs = require('querystring');
 var bb = require('bluebird');
 
