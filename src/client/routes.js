@@ -10,6 +10,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   })
   .state('main', {
     url: '/main',
-    template: '<p>testing main</p>'
+    templateUrl: './views/view.html'
   });
 }])
