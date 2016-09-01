@@ -35,8 +35,11 @@ module.exports = {
     });
   },
 
+  // Takes form data from submit
+  // Outputs routes or addresses for the map
   submit: function(req, res, next) {
-    res.send('Hello world');
+    console.log(req.body);
+    res.end();
   }
 
 };
