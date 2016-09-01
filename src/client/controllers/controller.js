@@ -1,1 +1,3 @@
-var asdf = 7;
+app.controller('pageController', ['$scope', function($scope) {
+  $scope.text = 'hello';
+}])
