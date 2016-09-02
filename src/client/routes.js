@@ -15,9 +15,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   })
   .state('main.list', {
     url: '/list',
-    template: '<ul><li ng-repeat="item in items">{{item}}</li></ul>',
+    templateUrl: './views/places.html',
     controller: function($scope) {
-      $scope.items = ['bananas', 'cherries'];
+      $scope.items = ['bananas', 'cherries', 'krabby patties'];
     }
   })
 }])
