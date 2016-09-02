@@ -1,8 +1,8 @@
-table {
+#restaurantTable {
   border: 2px solid black;
   min-width: 200px;
   margin: 10px;
 }
-td {
+.restaurant, .rating {
   border-top: 1px solid black;
 }
