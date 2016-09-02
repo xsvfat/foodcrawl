@@ -12,5 +12,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     url: '/main',
     templateUrl: './views/view.html',
     controller: 'inputsController'
-  });
+  })
+  .state('main.list', {
+    url: '/list',
+    template: '<ul><li ng-repeat="item in items">{{item}}</li></ul>',
+    controller: function($scope) {
+      $scope.items = ['bananas', 'cherries'];
+    }
+  })
 }])

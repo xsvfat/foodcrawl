@@ -4,7 +4,7 @@ app.controller('inputsController', ['$scope', '$http', function($scope, $http) {
   $scope.start // start location input
   $scope.end // end location input
 
-  // POST request
+  // POST users' start and end locations to server
   $scope.submit = function() {
     $http({
       method: 'POST',
