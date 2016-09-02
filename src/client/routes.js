@@ -10,7 +10,24 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   })
   .state('main', {
     url: '/main',
-    templateUrl: './views/view.html',
+    templateUrl: './views/main.html',
     controller: 'inputsController'
-  });
+  })
+  .state('main.list', {
+    url: '/list',
+    templateUrl: './views/places.html',
+    controller: function($scope) {
+      // restaurants from yelp API
+      $scope.restaurants = [{
+        restaurant: 'In n Out',
+        rating: '4.0'
+      }, {
+        restaurant: 'Pizza Hut',
+        rating: '2.8'
+      }, {
+        restaurant: 'KBBQ',
+        rating: '5.0'
+      }]
+    }
+  })
 }])
