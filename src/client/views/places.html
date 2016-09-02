@@ -1,10 +1,12 @@
 <div>
-  <table>
+  <table id='restaurantTable'>
     <tr>
       <th align='center'>Restaurants</th>
+      <th align='center'>Rating</th>
     </tr>
-    <tr ng-repeat='item in items'>
-      <td>{{item}}</td>
+    <tr ng-repeat='restaurant in restaurants'>
+      <td class='restaurant'>{{restaurant.restaurant}}</td>
+      <td class='rating' align='center'>{{restaurant.rating}}</td>
     </tr>
   </table>
 </div>
