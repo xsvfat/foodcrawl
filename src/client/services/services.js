@@ -22,6 +22,8 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       }).then(data => {
 
         // push fetched restaurants to the restaurants array
+        // each restaurant should be an object with properties:
+        // name, address, rating, foodType, hours, priceRange
 
       }).catch(err => {
 
