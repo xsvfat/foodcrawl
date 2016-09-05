@@ -1,5 +1,6 @@
 var bb = require('bluebird');
 var request = bb.promisify(require('request'));
+var request2 = require('request');
 var keys = require('./keys.js');
 var qs = require('querystring');
 var Yelp = require('yelp');
@@ -43,11 +44,15 @@ module.exports = {
   // Outputs routes or addresses for the map
   submit: function(req, res, next) {
     console.log(req.body);
+    module.exports.getRoutes(req.body.start, req.body.end).then(results => {
+      console.log('Routes results: ', results.body);
+      res.send(results);
+    }).catch(err => {
+      console.log('Error requesting routes: ', err);
+      res.end();
+    })
 
-    // format form data into yelp parameters
-    // res.send(exports.getRestaurants(req.body));
-
-    res.send(req.body);
+    // res.send(req.body);
   },
 
   /*
