@@ -7,7 +7,7 @@
   border-top: 1px solid black;
 }
 
-#map {
+#map, #map2 {
   width: 400px;
   height: 400px;
 }
