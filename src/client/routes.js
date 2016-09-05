@@ -13,8 +13,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     templateUrl: './views/main.html',
     controller: 'inputsController'
   })
-  .state('main.list', {
-    url: '/list',
+  .state('main.map', {
+    url: '/map',
     views: {
       'restaurantList': {
         templateUrl: './views/places.html',

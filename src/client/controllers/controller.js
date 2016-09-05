@@ -7,7 +7,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', function($scope
   // POST users' start and end locations to server
   $scope.submit = function(form) {
     if (form.$valid) {
-      $state.go('main.list');
+      $state.go('main.map');
       $http({
         method: 'POST',
         url: '/maps/submit',
