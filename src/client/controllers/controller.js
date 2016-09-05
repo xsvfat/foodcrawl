@@ -26,8 +26,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', functio
         }
       }).then((response) => {
 
-        var results = response.data;
-        console.log('Returned data: ', response);
+        var results = response.data.route;
+        console.log('Returned route: ', results);
+        console.log('Returned restaurant: ', response.data.restaurants);
 
         // reset the directions upon new search
         $scope.directions = '';
