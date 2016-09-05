@@ -19,3 +19,11 @@ var restaurantSchema = new mongoose.Schema({
   priceRange: String,
   visits: Number
 })
+
+var User = mongoose.model('User', userSchema);
+var Restaurant = mongoose.model('Restaurant', restaurantSchema);
+
+module.exports = {
+  User: User,
+  Restaurant: Restaurant
+}
