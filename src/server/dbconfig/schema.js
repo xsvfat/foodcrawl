@@ -7,5 +7,15 @@ var userSchema = new mongoose.Schema({
     name: String,
     visits: Number
   }],
-  addresses: [String]
+  locations: [String]
+});
+
+var restaurantSchema = new mongoose.Schema({
+  name: String,
+  rating: String,
+  foodType: String,
+  address: String,
+  hours: String,
+  priceRange: String,
+  visits: Number
 })
