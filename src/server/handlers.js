@@ -43,6 +43,10 @@ module.exports = {
   // Outputs routes or addresses for the map
   submit: function(req, res, next) {
     console.log(req.body);
+
+    // format form data into yelp parameters
+    // res.send(exports.getRestaurants(req.body));
+
     res.send(req.body);
   },
 
