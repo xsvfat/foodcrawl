@@ -5,19 +5,21 @@ app.controller('inputsController', ['$scope', '$http', '$state', function($scope
   $scope.end // end location input
 
   // POST users' start and end locations to server
-  $scope.submit = function() {
-    $state.go('main.list');
-    $http({
-      method: 'POST',
-      url: '/maps/submit',
-      data: {
-        start: $scope.start,
-        end: $scope.end
-      }
-    }).then((data) => {
-      console.log('Returned data: ', data);
-    }).catch((err) => {
-      console.log('Error submitting: ', err);
-    })
+  $scope.submit = function(form) {
+    if (form.$valid) {
+      $state.go('main.list');
+      $http({
+        method: 'POST',
+        url: '/maps/submit',
+        data: {
+          start: $scope.start,
+          end: $scope.end
+        }
+      }).then((data) => {
+        console.log('Returned data: ', data);
+      }).catch((err) => {
+        console.log('Error submitting: ', err);
+      })
+    }
   };
 }]);

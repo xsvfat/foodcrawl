@@ -1,5 +1,5 @@
  <div ng-controller='inputsController'>
-   <form id='routeSearch' ng-submit='submit()'>
+   <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
      Start: <input name='start' type='text' ng-model='start' required/>
      End: <input name='end' type='text' ng-model='end' required/>
      <input type='submit'/>
