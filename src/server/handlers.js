@@ -45,7 +45,7 @@ module.exports = {
   submit: function(req, res, next) {
     console.log(req.body);
     module.exports.getRoutes(req.body.start, req.body.end).then(results => {
-      console.log('Routes results: ', results.body);
+      console.log('Routes results: ', results.data);
       res.send(results);
     }).catch(err => {
       console.log('Error requesting routes: ', err);

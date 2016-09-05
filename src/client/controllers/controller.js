@@ -11,12 +11,15 @@ app.controller('inputsController', ['$scope', '$http', '$state', function($scope
       $http({
         method: 'POST',
         url: '/maps/submit',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         data: {
           start: $scope.start,
           end: $scope.end
         }
       }).then((data) => {
-        console.log('Returned data: ', data);
+        console.log('Returned data: ', JSON.parse(JSON.parse(JSON.stringify(data.data.body))).routes);
       }).catch((err) => {
         console.log('Error submitting: ', err);
       })
