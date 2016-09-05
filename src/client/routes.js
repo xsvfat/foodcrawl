@@ -18,7 +18,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     views: {
       'restaurantList': {
         templateUrl: './views/places.html',
-        controller: function($scope) {
+        controller: function($scope, RestaurantAndRoute) {
           // restaurants from yelp API
           $scope.restaurants = [{
             restaurant: 'In n Out',
@@ -34,7 +34,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       },
       'map': {
         templateUrl: './views/map.html',
-        controller: function($scope) {
+        controller: function($scope, RestaurantAndRoute) {
           var map;
           function initMap(coord) { // creates a map
             map = new google.maps.Map(document.getElementById('map'), {
