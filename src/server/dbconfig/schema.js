@@ -16,7 +16,10 @@ var restaurantSchema = new mongoose.Schema({
   foodType: String,
   address: String,
   hours: String,
-  priceRange: String,
+  priceRange: {
+    min: String,
+    max: String
+  },
   visits: Number
 })
 
