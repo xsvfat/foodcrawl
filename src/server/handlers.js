@@ -43,16 +43,14 @@ module.exports = {
   // Takes form data from submit
   // Outputs routes or addresses for the map
   submit: function(req, res, next) {
-    console.log(req.body);
-    module.exports.getRoutes(req.body.start, req.body.end).then(results => {
-      console.log('Routes results: ', results.data);
+    module.exports.getRoutes(req.body.start, req.body.end)
+    .then(results => {
       res.send(results);
-    }).catch(err => {
+    })
+    .catch(err => {
       console.log('Error requesting routes: ', err);
       res.end();
     })
-
-    // res.send(req.body);
   },
 
   /*
