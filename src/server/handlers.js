@@ -69,14 +69,26 @@ module.exports = {
    */
   getRestaurants: (routesArray) => {
     var counter = 0;
+    var resultsObj = {};
     routesArray[0].legs[0].steps.forEach(function (step, index) {
+      // Calculate the geographical midpoint along each step of the journey.
       let midpointLatitude = (step.start_location.lat + step.end_location.lat) / 2;
       let midpointLongitude = (step.start_location.lng + step.end_location.lng) / 2;
 
-      let yelpSearchParameters = {
-        radius: step.distance.value / 2,
-        ll: `${midpointLatitude},${midpointLongitude}`
+      // Establish parameters for each individual yelp query.
+      let searchParameters = {
+        'radius_filter': step.distance.value / 2,
+        'll': `${midpointLatitude},${midpointLongitude}`,
+        'term': 'food',
       };
+
+      yelp.search(searchParameters)
+        .then(function (searchResults) {
+          console.log(searchResults);
+        }) 
+        .catch(function (error) {
+          console.log('Yelp returned an error:', error);
+        });
     });
   },
 };
