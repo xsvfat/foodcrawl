@@ -45,8 +45,14 @@ module.exports = {
   submit: function(req, res, next) {
     module.exports.getRoutes(req.body.start, req.body.end)
     .then(results => {
+      // Parse nested object returned by Google's API to
+      // specifically get Array of routes.
       var routesArray = JSON.parse(results.body).routes;
+
+      // Call getRestaurants along the returned route.
       module.exports.getRestaurants(routesArray);
+
+      // Send the route array back to the client for rendering.
       res.send(routesArray);
     })
     .catch(err => {
@@ -62,9 +68,14 @@ module.exports = {
    *              and returns an array of restaurant objects from Yelp.
    */
   getRestaurants: (routesArray) => {
+    var counter = 0;
     routesArray[0].legs[0].steps.forEach(function (step, index) {
-      var yelpParameters = {
+      let midpointLatitude = (step.start_location.lat + step.end_location.lat) / 2;
+      let midpointLongitude = (step.start_location.lng + step.end_location.lng) / 2;
 
+      let yelpSearchParameters = {
+        radius: step.distance.value / 2,
+        ll: `${midpointLatitude},${midpointLongitude}`
       };
     });
   },
