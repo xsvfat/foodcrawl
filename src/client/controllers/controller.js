@@ -24,10 +24,10 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', functio
           start: $scope.start,
           end: $scope.end
         }
-      }).then((data) => {
+      }).then((response) => {
 
-        var results = JSON.parse(data.data.body).routes;
-        console.log('Returned data: ', results);
+        var results = response.data;
+        console.log('Returned data: ', response);
 
         // reset the directions upon new search
         $scope.directions = '';
@@ -35,8 +35,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', functio
         // write out the steps from start to end
         results[0].legs[0].steps.forEach((step => {
           $scope.directions += step['html_instructions'] + '<br>';
-        }))
-
+        }));
       }).catch((err) => {
         console.log('Error submitting: ', err);
       })

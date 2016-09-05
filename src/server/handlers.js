@@ -45,8 +45,9 @@ module.exports = {
   submit: function(req, res, next) {
     module.exports.getRoutes(req.body.start, req.body.end)
     .then(results => {
-      module.exports.getRestaurants(results);
-      res.send(results);
+      var routesArray = JSON.parse(results.body).routes;
+      module.exports.getRestaurants(routesArray);
+      res.send(routesArray);
     })
     .catch(err => {
       console.log('Error requesting routes: ', err);
@@ -55,13 +56,17 @@ module.exports = {
   },
 
   /*
-   * Input: Object
+   * Input: Array
    * Output: Promise
    * Description: Takes in the route object returned by Google's API,
    *              and returns an array of restaurant objects from Yelp.
    */
-  getRestaurants: (routeObj) => {
-    console.log(JSON.parse(routeObj.body).routes[0].legs[0].steps);
+  getRestaurants: (routesArray) => {
+    routesArray[0].legs[0].steps.forEach(function (step, index) {
+      var yelpParameters = {
+
+      };
+    });
   },
 };
 
