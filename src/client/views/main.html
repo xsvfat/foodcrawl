@@ -1,9 +1,13 @@
  <div ng-controller='inputsController'>
-   <form ng-submit='submit()'>
-     Start: <input type='text' ng-model='start' required/>
-     End: <input type='text' ng-model='end' required/>
+   <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
+     Start: <input name='start' type='text' ng-model='start' required/>
+     End: <input name='end' type='text' ng-model='end' required/>
      <input type='submit'/>
   </form>
-  <div ui-view>
+  <div ui-view='restaurantList'>
+  </div>
+  <div ui-view='map'>
+  </div>
+  <div ng-bind-html='directions'>
   </div>
  </div>
