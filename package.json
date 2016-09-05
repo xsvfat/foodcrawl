@@ -33,6 +33,7 @@
     "mongoose": "^4.5.10",
     "path": "^0.12.7",
     "request": "^2.74.0",
-    "ui-router": "^1.0.0-alpha.3"
+    "ui-router": "^1.0.0-alpha.3",
+    "yelp": "^1.0.1"
   }
 }

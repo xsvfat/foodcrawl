@@ -43,7 +43,7 @@ module.exports = {
   // Outputs routes or addresses for the map
   submit: function(req, res, next) {
     console.log(req.body);
-    res.end();
+    res.send(req.body);
   },
 
   /*
