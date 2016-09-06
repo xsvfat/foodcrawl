@@ -99,7 +99,7 @@ module.exports = {
 
       // Establish parameters for each individual yelp query.
       let searchParameters = {
-        'radius_filter': step.distance.value / 2,
+        'radius_filter': Math.min((step.distance.value / 2), 39999),
         'll': `${midpointLatitude},${midpointLongitude}`,
         'term': 'food',
       };
