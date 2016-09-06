@@ -19,3 +19,10 @@
 tr th {
   padding: 3px 10px;
 }
+
+#loginDiv form {
+  margin-left: 10px;
+}
+#loginDiv form input {
+  margin: 5px 0px;
+}
