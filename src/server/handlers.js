@@ -4,6 +4,7 @@ var request2 = require('request');
 var keys = require('./keys.js');
 var qs = require('querystring');
 var Yelp = require('yelp');
+var session = require('express-session');
 var _ = require('lodash');
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
