@@ -11,7 +11,7 @@ app.controller('loginController', ['$http', '$scope', '$state', function($http, 
           password: $scope.password
         }
       }).then(result => {
-        console.log('Successfully signed in.');
+        console.log('Login result: ', result);
         $state.go('main');
       }).catch(err => {
         console.log('Error signing in: ', err);
