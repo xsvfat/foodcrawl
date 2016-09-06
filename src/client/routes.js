@@ -20,14 +20,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     views: {
       'restaurantList': {
         templateUrl: './views/places.html',
-        controller: function($scope, RestaurantAndRoute, $localStorage) {
+        controller: function($scope, RestaurantAndRoute, Auth) {
           // restaurants from the server
           $scope.restaurants = RestaurantAndRoute.getRestaurants();
         }
       },
       'map': {
         templateUrl: './views/map.html',
-        controller: function($scope, RestaurantAndRoute, $localStorage) {
+        controller: function($scope, RestaurantAndRoute, Auth) {
           var directionsService = new google.maps.DirectionsService;
           var directionsDisplay = new google.maps.DirectionsRenderer;
           var map;
