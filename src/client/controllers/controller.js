@@ -49,15 +49,16 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
           })
           // Associate the route with our current map
           directionsDisplay.setMap(map);
+          //clear existing markers
+          RestaurantAndRoute.removeMarkers();
+          //add restaurant markers
+          RestaurantAndRoute.addMarkers(map);
 
         }
         initMap(coord);
 
         // Immediately invoke the method with the passed in data.
         RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end);
-
-        // initialize the map to map.html
-        console.log('map initiated');
 
 
 
