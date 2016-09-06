@@ -1,6 +1,6 @@
 var chai = require('chai');
 var expect = chai.expect;
-var request = require('request');
+// var request = require('request');
 
 describe('Server', function() {
 
@@ -35,10 +35,15 @@ describe('Server', function() {
 
       it('should throw an error for empty arguments', function(done) {
         // fix this test
-        request.post('http://127.0.0.1:8000/maps/submit', function (error, response, body) {
-          expect(error);
-          done();
-        });
+        handlers.getRoutes(null, null)
+          .then(function (response) {
+            expect(!response);
+            done();
+          })
+          .catch(function (error) {
+            expect(error);
+            done();
+          });
       });
     });
 
