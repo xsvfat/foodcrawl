@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var session = require('express-session');
 var handlers = require('./handlers.js');
 
 // open connection to MongoDB database
@@ -10,7 +11,8 @@ mongoose.connect('mongodb://localhost/foodfood');
 var app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({ secret: 'FOOD' }))
 
 // serves initial static index file
 app.use('/', express.static(path.join(__dirname, '../client')));
