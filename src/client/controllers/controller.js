@@ -27,38 +27,32 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       if (form.$valid) {
         RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end).then(restaurants => {
 
-          // update list of restaurants in the factory
+          // // update list of restaurants in the factory
           console.log('restaurants: ', restaurants);
 
-          // switch states to show restaurants and map
-          $state.go('main.map');
+          var directionsService = new google.maps.DirectionsService;
+          var directionsDisplay = new google.maps.DirectionsRenderer;
+          var map;
+          var coord = new google.maps.LatLng(37.8, -122.4);
 
+          function initMap(coord) { // creates a map
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: coord,
+              zoom: 14
+            })
+            // Associate the route with our current map
+            directionsDisplay.setMap(map);
+            //clear existing markers
+            RestaurantAndRoute.removeMarkers();
+            //add restaurant markers
+            RestaurantAndRoute.addMarkers(map);
+          }
+          initMap(coord);
+          RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end);
         }).catch(err => {
           console.log('Error submitting: ', err);
         })
 
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var map;
-        var coord = new google.maps.LatLng(37.8, -122.4);
-
-        function initMap(coord) { // creates a map
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: coord,
-            zoom: 14
-          })
-          // Associate the route with our current map
-          directionsDisplay.setMap(map);
-          //clear existing markers
-          RestaurantAndRoute.removeMarkers();
-          //add restaurant markers
-          RestaurantAndRoute.addMarkers(map);
-
-        }
-        initMap(coord);
-
-        // Immediately invoke the method with the passed in data.
-        RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end);
 
 
 
