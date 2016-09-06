@@ -93,7 +93,7 @@ module.exports = {
     var addStep = function (step) {
       
       // The base case.
-      if (step.distance.value <= 500) {
+      if (step.distance.value <= routesArray[0].legs[0].distance.value / 6) {
         stepsArray.push(step);
       } else {
 
@@ -131,6 +131,7 @@ module.exports = {
 
     // Makes a unique Yelp query for each step along the given route.
     stepsArray.forEach(function (step, index) {
+      if (index > 20) { return; }
 
       // Calculate the geographical midpoint along each step of the journey.
       let midpointLatitude = (step.start_location.lat + step.end_location.lat) / 2;
