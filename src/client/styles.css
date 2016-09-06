@@ -3,11 +3,19 @@
   min-width: 200px;
   margin: 10px;
 }
-.restaurant, .rating {
+.restaurant, .rating, .address {
   border-top: 1px solid black;
+}
+
+.address {
+  text-align: right;
 }
 
 #map, #map2 {
   width: 400px;
   height: 400px;
+}
+
+tr th {
+  margin: 3px 10px;
 }

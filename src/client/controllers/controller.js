@@ -8,16 +8,23 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
   // POST users' start and end locations to server
   $scope.submit = function(form) {
-    if (form.$valid) {
-      // switch states to show restaurants and map
-      $state.go('main.map');
 
+    // to refresh states from main.map, need to redirect to main first
+    $state.go('main');
+    
+    if (form.$valid) {
       RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end).then(restaurants => {
+        
         // update list of restaurants in the factory
         console.log('restaurants: ', restaurants);
+
+        // switch states to show restaurants and map
+        $state.go('main.map');
+
       }).catch(err => {
         console.log('Error submitting: ', err);
       })
+
 
 
 
