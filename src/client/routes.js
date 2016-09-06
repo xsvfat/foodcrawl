@@ -67,6 +67,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
           // initialize the map to map.html
           console.log('map initiated');
+
+          //clear existing markers
+          RestaurantAndRoute.removeMarkers();
+          //add restaurant markers
+          RestaurantAndRoute.addMarkers(map);
         }
       }
     }
