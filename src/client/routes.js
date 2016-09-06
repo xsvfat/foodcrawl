@@ -19,7 +19,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       'restaurantList': {
         templateUrl: './views/places.html',
         controller: function($scope, RestaurantAndRoute) {
-          // restaurants from yelp API
+          // restaurants from the server
           $scope.restaurants = RestaurantAndRoute.getRestaurants();
         }
       },

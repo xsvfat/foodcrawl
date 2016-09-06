@@ -25,21 +25,16 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         restaurants = data.data.restaurants.filter(restaurant => {
           return restaurant.distance < 60;
         })
+
+        // resolve restaurants for promise chaining
         return restaurants;
-        // push fetched restaurants to the restaurants array
-        // each restaurant should be an object with properties:
-        // name, address, rating, foodType, hours, priceRange
 
       }).catch(err => {
-
         console.log('Error fetching restaurants: ', err);
-        // handle errors
-
       })
     },
 
     getRestaurants: function() {
-      // returns the list of restaurants
       return restaurants;
     }
   }
