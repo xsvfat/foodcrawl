@@ -7,8 +7,13 @@
   <button id='logout' ng-click='logout()'>Logout</button>
   <div ui-view='restaurantList'>
   </div>
-  <div ui-view='map'>
+  <div>
+    <h4>MAP</h4>
+    <div id='map'>
+    </div>
   </div>
+  <!-- <div ui-view='map'>
+  </div> -->
   <div ng-bind-html='directions'>
   </div>
  </div>
