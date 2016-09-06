@@ -43,11 +43,31 @@ describe('Server', function() {
     });
 
     describe('getRestaurants', function() {
-      
+      var result, route;
+
+      before(function (done) {
+        handlers.getRoutes('1412 15th Street, SF, CA', '944 Market Street, SF, CA')
+          .then(function (response) {
+            route = JSON.parse(response.body).routes;
+            done();
+          });
+      });
+
       it ('should be a function', function() {
         expect(handlers.getRestaurants).to.be.a('function');
       });
 
+      it('should respond with an object containing route and restaurants properties', function (done) {
+        var res = {
+          send: function (input) {
+            expect(input.route.length);
+            expect(input.restaurants.length);
+            done();
+          }
+        };
+
+        handlers.getRestaurants(null, res, route);
+      });
 
     });
 
