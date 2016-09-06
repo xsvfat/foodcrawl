@@ -79,29 +79,33 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state('options', {
     url: '/options',
     templateUrl: './views/options.html',
-    controller: function($scope, $state) {
+    controller: function($scope, $state, Auth) {
 
-      // a collection of user submitted preferences
-      $scope.tags = [];
+      if (!Auth.check()) {
+        $state.go('login');
+      } else {
+        // a collection of user submitted preferences
+        $scope.tags = [];
 
-      $scope.submitTag = () => {
-        if ($scope.tags.indexOf($scope.prefs) === -1) {
-          $scope.tags.push($scope.prefs);
+        $scope.submitTag = () => {
+          if ($scope.tags.indexOf($scope.prefs) === -1) {
+            $scope.tags.push($scope.prefs);
+          }
+          $scope.prefs = '';
         }
-        $scope.prefs = '';
-      }
 
-      $scope.deleteTag = (tag) => {
-        $scope.tags.splice($scope.tags.indexOf(tag), 1);
-      }
+        $scope.deleteTag = (tag) => {
+          $scope.tags.splice($scope.tags.indexOf(tag), 1);
+        }
 
-      $scope.save = () => {
+        $scope.save = () => {
 
-        // save the collection of preferences to database
+          // TODO: save the collection of preferences to database
 
-        // redirect the user back to /main/map
-        $state.go('main.map')
+          // redirect the user back to /main/map
+          $state.go('main.map')
 
+        }
       }
     }
   })
