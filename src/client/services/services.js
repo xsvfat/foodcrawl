@@ -68,11 +68,11 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       });
     },
 
-    calculateAndDisplayRoute: (directionsService, directionsDisplay) => {
+    calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end) => {
       directionsService.route({
         // hardcoded the important route from where Eric and I live to school
-        origin: '944 market st',
-        destination: '1412 15th st, sf, CA',
+        origin: start,
+        destination: end,
         travelMode: 'DRIVING'
       }, function(response, status) {
         console.log('Response: ', response);
