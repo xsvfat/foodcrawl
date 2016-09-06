@@ -84,11 +84,15 @@ module.exports = {
     };
 
     // Grab the array of steps out of Googles nested objects.
-    var stepsArray = routesArray[0].legs[0].steps;
+    var stepsArray = [];
+    routesArray[0].legs.forEach(function (leg, index) {
+      stepsArray = stepsArray.concat(leg.steps);
+    });
+
+    console.log(stepsArray.length);
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
-    
 
     // Makes a unique Yelp query for each step along the given route.
     stepsArray.forEach(function (step, index) {
@@ -99,7 +103,7 @@ module.exports = {
 
       // Establish parameters for each individual yelp query.
       let searchParameters = {
-        'radius_filter': step.distance.value / 2,
+        'radius_filter': Math.min((step.distance.value / 2), 39999),
         'll': `${midpointLatitude},${midpointLongitude}`,
         'term': 'food',
       };
