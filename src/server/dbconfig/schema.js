@@ -13,7 +13,7 @@ var userSchema = new mongoose.Schema({
 var restaurantSchema = new mongoose.Schema({
   name: String,
   rating: String,
-  foodType: String,
+  tags: [String],
   address: String,
   hours: String,
   priceRange: {
