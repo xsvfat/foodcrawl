@@ -1,5 +1,6 @@
 var chai = require('chai');
 var expect = chai.expect;
+var request = require('request');
 
 describe('Server', function() {
 
@@ -20,10 +21,10 @@ describe('Server', function() {
        * it should provide all the required props to a ajax req
        * it should throw an error upon ajax failure
        */
-       it('should return an object', function() {
+      it('should return an object', function() {
         var result = handlers.getRoutes('San Francisco', 'San Jose');
         expect(result).to.be.instanceof(Object);
-       });
+      });
     });
 
     describe('submit', function() {
@@ -32,18 +33,43 @@ describe('Server', function() {
         expect(handlers.getRoutes).to.be.a('function');
       });
 
-      it('should throw an error for empty arguments', function() {
+      it('should throw an error for empty arguments', function(done) {
         // fix this test
-        expect(false).to.equal(true);
-      })
+        request.post('http://127.0.0.1:8000/maps/submit', function (error, response, body) {
+          expect(error);
+          done();
+        });
+      });
     });
 
     describe('getRestaurants', function() {
-      
+      var result, route;
+
+      before(function (done) {
+        handlers.getRoutes('1412 15th Street, SF, CA', '944 Market Street, SF, CA')
+          .then(function (response) {
+            route = JSON.parse(response.body).routes;
+            done();
+          });
+      });
+
       it ('should be a function', function() {
         expect(handlers.getRestaurants).to.be.a('function');
-      })
-    })
+      });
+
+      it('should respond with an object containing route and restaurants properties', function (done) {
+        var res = {
+          send: function (input) {
+            expect(input.route.length);
+            expect(input.restaurants.length);
+            done();
+          }
+        };
+
+        handlers.getRestaurants(null, res, route);
+      });
+
+    });
 
   });
 
