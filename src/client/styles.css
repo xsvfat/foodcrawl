@@ -26,3 +26,7 @@ tr th {
 #loginDiv form input {
   margin: 5px 0px;
 }
+
+#logout {
+  float: right;
+}

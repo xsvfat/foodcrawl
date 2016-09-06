@@ -34,6 +34,7 @@
     "lodash": "^4.15.0",
     "mocha": "^3.0.2",
     "mongoose": "^4.5.10",
+    "ngstorage": "^0.3.11",
     "path": "^0.12.7",
     "request": "^2.74.0",
     "supertest": "^2.0.0",
