@@ -21,8 +21,10 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         }
       }).then(data => {
 
-        console.log('factory', data.data);
-        restaurants = data.data.restaurants;
+        // filter out any restaurants farther than 60m
+        restaurants = data.data.restaurants.filter(restaurant => {
+          return restaurant.distance < 60;
+        })
         return restaurants;
         // push fetched restaurants to the restaurants array
         // each restaurant should be an object with properties:
@@ -30,6 +32,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
 
       }).catch(err => {
 
+        console.log('Error fetching restaurants: ', err);
         // handle errors
 
       })
