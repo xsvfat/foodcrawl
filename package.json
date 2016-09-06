@@ -4,7 +4,7 @@
   "description": "foodfood",
   "main": "index.js",
   "scripts": {
-    "test": "mocha compiled/tests",
+    "test": "mocha compiled/tests --timeout 5000",
     "compile": "babel src --out-dir compiled --presets=es2015 --source-maps inline --copy-files --watch",
     "rebase": "git pull --rebase upstream master && git push origin master",
     "start": "nodemon compiled/server/server.js"
