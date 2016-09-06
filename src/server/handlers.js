@@ -22,6 +22,7 @@ module.exports = {
     var password = req.body.password; // need to hash later
     req.session.username = username;
     req.session.password = password;
+    res.send('yo');
   },
 
 

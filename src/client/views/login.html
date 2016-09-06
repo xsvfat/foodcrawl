@@ -1,8 +1,8 @@
 <div ng-controller='loginController'>
   <h1>Login</h1>
-  <form ng-submit='loginSubmit()'>
-    Username: <input type='text' ng-model='username' /><br>
-    Password: <input type='password' ng-model='password' /><br>
+  <form name='loginForm' ng-submit='loginSubmit(loginForm)'>
+    Username: <input type='text' ng-model='username' required/><br>
+    Password: <input type='password' ng-model='password' required/><br>
     <input type='submit' />
   </form>
 </div>
