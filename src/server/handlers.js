@@ -84,7 +84,10 @@ module.exports = {
     };
 
     // Grab the array of steps out of Googles nested objects.
-    var stepsArray = routesArray[0].legs[0].steps;
+    var stepsArray = [];
+    routesArray[0].legs.forEach(function (leg, index) {
+      stepsArray = stepsArray.concat(leg.steps);
+    });
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
