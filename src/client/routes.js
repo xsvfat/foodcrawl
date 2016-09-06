@@ -79,8 +79,30 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state('options', {
     url: '/options',
     templateUrl: './views/options.html',
-    controller: function($scope) {
-      
+    controller: function($scope, $state) {
+
+      // a collection of user submitted preferences
+      $scope.tags = [];
+
+      $scope.submitTag = () => {
+        if ($scope.tags.indexOf($scope.prefs) === -1) {
+          $scope.tags.push($scope.prefs);
+        }
+        $scope.prefs = '';
+      }
+
+      $scope.deleteTag = (tag) => {
+        $scope.tags.splice($scope.tags.indexOf(tag), 1);
+      }
+
+      $scope.save = () => {
+
+        // save the collection of preferences to database
+
+        // redirect the user back to /main/map
+        $state.go('main.map')
+
+      }
     }
   })
 }])

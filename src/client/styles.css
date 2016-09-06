@@ -30,3 +30,24 @@ tr th {
 #logout {
   float: right;
 }
+
+.pref {
+  display: inline-block;
+  margin: 5px;
+  margin-right: 15px;
+  padding-right: 5px;
+  padding-left: 3px;
+  border-left: 1px solid black; 
+}
+
+.pref:hover {
+  cursor: pointer;
+}
+
+#tags {
+  margin: 15px 0px;
+}
+
+#savePref {
+  float: right;
+}
