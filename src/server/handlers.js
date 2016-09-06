@@ -85,52 +85,38 @@ module.exports = {
       restaurants: [],
     };
 
-    // Stores the steps along a route for querying Yelp.
-    var stepsArray = [];
+    // Stores the segments along a route for querying Yelp.
+    var segmentsArray = [];
 
-    // Checks to see if a step's length is too long, and chops it in half
-    // if it is. Then it adds it to the steps array.
-    var addStep = function (step) {
-      
-      // The base case.
-      if (step.distance.value <= routesArray[0].legs[0].distance.value / 6) {
-        stepsArray.push(step);
-      } else {
+    // Stores all of the Google defined "steps" along a route.
+    var steps = [];
 
-        // Calculates the midpoint between the start and end of a step.
-        var midpoint = {
-          lat: (step.start_location.lat + step.end_location.lat) / 2,
-          lng: (step.start_location.lng + step.end_location.lng) / 2,
-        };
-
-        // Chops off the first half of the step.
-        var step1 = JSON.parse(JSON.stringify(step));
-        step1['end_location'] = midpoint;
-        step1.distance.value /= 2;
-
-        // Chops off the second half of the step.
-        var step2 = JSON.parse(JSON.stringify(step));
-        step2['start_location'] = midpoint;
-        step2.distance.value /= 2;
-        
-        // Recursively calls itself on each "half-step".
-        addStep(step1);
-        addStep(step2);
-      }
-    };
-
-    // Calls addStep on every single step along a route.
-    routesArray[0].legs.forEach(function (leg, index) {
-      leg.steps.forEach(function (stepObj) {
-        addStep(stepObj);
-      });
+    // Determine the total length of a route in meters.
+    var totalRouteDistance = 0;
+    routesArray[0].legs.forEach(function (leg) {
+      totalRouteDistance += leg.distance.value;
+      steps = steps.concat(leg.steps);
     });
+
+    // Calculates the length of the segments produced by cutting a given route into 10ths.
+    var averageSegmentLength = totalRouteDistance / 10;
+
+    // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
+    while (segmentsArray.length < 10) {
+      segmentsArray.push({
+        distance: averageSegmentLength,
+        midpoint: {
+          lat: Number,
+          lng: Number,          
+        },
+      });
+    }
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
 
     // Makes a unique Yelp query for each step along the given route.
-    stepsArray.forEach(function (step, index) {
+    segmentsArray.forEach(function (step, index) {
       if (index > 20) { return; }
 
       // Calculate the geographical midpoint along each step of the journey.
@@ -139,7 +125,7 @@ module.exports = {
 
       // Establish parameters for each individual yelp query.
       let searchParameters = {
-        'radius_filter': Math.min((step.distance.value / 2), 39999),
+        'radius_filter': Math.min((step.distance / 2), 39999),
         'll': `${midpointLatitude},${midpointLongitude}`,
         // 'category_filter': 'food',
         'term': 'restaurant'
@@ -155,7 +141,7 @@ module.exports = {
           
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= Math.min(21, stepsArray.length) ? res.send(responseObject) : null;
+          queryCounter >= Math.min(21, segmentsArray.length) ? res.send(responseObject) : null;
         }) 
 
         // Error callback
@@ -164,7 +150,7 @@ module.exports = {
 
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= Math.min(21, stepsArray.length) ? res.send(responseObject) : null;
+          queryCounter >= Math.min(21, segmentsArray.length) ? res.send(responseObject) : null;
         });
     });
   },
