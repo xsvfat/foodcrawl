@@ -9,7 +9,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       restaurants = [];
 
       // request the restaurants from the server
-      $http({
+      return $http({
         method: 'POST',
         url: '/maps/submit',
         headers: {
@@ -21,19 +21,20 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         }
       }).then(data => {
 
-        // push fetched restaurants to the restaurants array
-        // each restaurant should be an object with properties:
-        // name, address, rating, foodType, hours, priceRange
+        // filter out any restaurants farther than 60m
+        restaurants = data.data.restaurants.filter(restaurant => {
+          return restaurant.distance < 60;
+        })
+
+        // resolve restaurants for promise chaining
+        return restaurants;
 
       }).catch(err => {
-
-        // handle errors
-
+        console.log('Error fetching restaurants: ', err);
       })
     },
 
     getRestaurants: function() {
-      // returns the list of restaurants
       return restaurants;
     }
   }

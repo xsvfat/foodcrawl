@@ -4,6 +4,7 @@ var request2 = require('request');
 var keys = require('./keys.js');
 var qs = require('querystring');
 var Yelp = require('yelp');
+var session = require('express-session');
 var _ = require('lodash');
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
@@ -16,6 +17,15 @@ var yelp = new Yelp({
 });
 
 module.exports = {
+  login: (req, res, next) => {
+    var username = req.body.username;
+    var password = req.body.password; // need to hash later
+    req.session.username = username;
+    req.session.password = password;
+  },
+
+
+
   /*
    * Input: (String, String, Function) 
    * Output: Promise

@@ -5,9 +5,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   $urlRouterProvider.otherwise('/main');
 
   $stateProvider
-  .state('state1', {
-    template: '<p>testing state 1</p>'
-  })
   .state('main', {
     url: '/main',
     templateUrl: './views/main.html',
@@ -19,17 +16,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       'restaurantList': {
         templateUrl: './views/places.html',
         controller: function($scope, RestaurantAndRoute) {
-          // restaurants from yelp API
-          $scope.restaurants = [{
-            restaurant: 'In n Out',
-            rating: '4.0'
-          }, {
-            restaurant: 'Pizza Hut',
-            rating: '2.8'
-          }, {
-            restaurant: 'KBBQ',
-            rating: '5.0'
-          }]
+          // restaurants from the server
+          $scope.restaurants = RestaurantAndRoute.getRestaurants();
         }
       },
       'map': {
