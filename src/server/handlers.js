@@ -93,7 +93,6 @@ module.exports = {
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
-    
 
     // Makes a unique Yelp query for each step along the given route.
     stepsArray.forEach(function (step, index) {
