@@ -66,6 +66,26 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         marker.setMap(null);
         marker = null;
       });
+    },
+
+    /*
+      Input: DirectionsService instance, DirectionsRenderer instance, start string, end string
+      Output: null
+      Description: Renders a route to the map with the given start and end points.
+    */
+    calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end) => {
+      directionsService.route({
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+      }, function(response, status) {
+        if (status === 'OK') {
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
     }
+
   }
 }])
