@@ -49,7 +49,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         let lat = place.location.coordinate.latitude;
         let lng = place.location.coordinate.longitude;
 
-        markers.push(marker = new google.maps.Marker({
+        markers.push(new google.maps.Marker({
           position: new google.maps.LatLng(lat, lng),
           map: map,
           title: place.name
