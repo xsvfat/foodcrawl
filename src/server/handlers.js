@@ -102,15 +102,23 @@ module.exports = {
     var averageSegmentLength = totalRouteDistance / 10;
 
     // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
-    while (segmentsArray.length < 10) {
-      segmentsArray.push({
-        distance: averageSegmentLength,
-        midpoint: {
-          lat: Number,
-          lng: Number,          
-        },
-      });
+    var target = averageSegmentLength / 2;
+    for (var i = 0; i < steps.length; i++) {
+      if (steps[i].distance.value >= target) {
+        segmentsArray.push({
+          distance: averageSegmentLength,
+          midpoint: {
+            lat: Number,
+            lng: Number,          
+          },
+        });
+        target = averageSegmentLength;
+      } else {
+        target -= steps[i].distance.value;
+      }
     }
+
+      target = averageSegmentLength;
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
