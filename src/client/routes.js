@@ -44,26 +44,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           // Associate the route with our current map
           directionsDisplay.setMap(map);
 
-
-          function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-            directionsService.route({
-              // hardcoded the important route from where Eric and I live to school
-              origin: '944 market st',
-              destination: '1412 15th st, sf, CA',
-              travelMode: 'DRIVING'
-            }, function(response, status) {
-              console.log('Response: ', response);
-              console.log('Status: ', status);
-              if (status === 'OK') {
-                directionsDisplay.setDirections(response);
-              } else {
-                window.alert('Directions request failed due to ' + status);
-              }
-            });
-          }
-
           // Immediately invoke the method with the passed in data.
-          calculateAndDisplayRoute(directionsService, directionsDisplay);
+          RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay);
 
           // initialize the map to map.html
           console.log('map initiated');

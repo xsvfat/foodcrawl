@@ -66,6 +66,24 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         marker.setMap(null);
         marker = null;
       });
+    },
+
+    calculateAndDisplayRoute: (directionsService, directionsDisplay) => {
+      directionsService.route({
+        // hardcoded the important route from where Eric and I live to school
+        origin: '944 market st',
+        destination: '1412 15th st, sf, CA',
+        travelMode: 'DRIVING'
+      }, function(response, status) {
+        console.log('Response: ', response);
+        console.log('Status: ', status);
+        if (status === 'OK') {
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
     }
+
   }
 }])
