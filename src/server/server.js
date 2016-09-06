@@ -1,7 +1,11 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var handlers = require('./handlers.js');
+
+// open connection to MongoDB database
+mongoose.connect('mongodb://localhost/foodfood');
 
 var app = express();
 

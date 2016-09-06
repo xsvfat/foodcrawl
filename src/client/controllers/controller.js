@@ -1,5 +1,5 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', '$sce', function($scope, $http, $state, $sce) {
+app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', function($scope, $http, $state, $sce, RestaurantAndRoute) {
 
   $scope.start; // start location input
   $scope.end; // end location input
