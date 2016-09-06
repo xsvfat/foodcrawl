@@ -68,15 +68,17 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       });
     },
 
+    /*
+      Input: DirectionsService instance, DirectionsRenderer instance, start string, end string
+      Output: null
+      Description: Renders a route to the map with the given start and end points.
+    */
     calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end) => {
       directionsService.route({
-        // hardcoded the important route from where Eric and I live to school
         origin: start,
         destination: end,
         travelMode: 'DRIVING'
       }, function(response, status) {
-        console.log('Response: ', response);
-        console.log('Status: ', status);
         if (status === 'OK') {
           directionsDisplay.setDirections(response);
         } else {

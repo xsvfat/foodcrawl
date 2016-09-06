@@ -27,17 +27,16 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       if (form.$valid) {
         RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end).then(restaurants => {
 
-          // // update list of restaurants in the factory
+          // update list of restaurants in the factory
           console.log('restaurants: ', restaurants);
 
           var directionsService = new google.maps.DirectionsService;
           var directionsDisplay = new google.maps.DirectionsRenderer;
           var map;
-          var coord = new google.maps.LatLng(37.8, -122.4);
 
-          function initMap(coord) { // creates a map
+          // create a map with restaurant markers and rendered route
+          function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-              center: coord,
               zoom: 14
             })
             // Associate the route with our current map
@@ -46,9 +45,10 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             RestaurantAndRoute.removeMarkers();
             //add restaurant markers
             RestaurantAndRoute.addMarkers(map);
+            // set the current route
+            RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end);
           }
-          initMap(coord);
-          RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end);
+          initMap();
         }).catch(err => {
           console.log('Error submitting: ', err);
         })
