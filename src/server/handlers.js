@@ -17,13 +17,13 @@ var yelp = new Yelp({
 
 module.exports = {
   login: (req, res, next) => {
-    var username: req.body.username;
-    var password: req.body.password; // need to hash later
-    
+    var username = req.body.username;
+    var password = req.body.password; // need to hash later
+
   },
 
 
-  
+
   /*
    * Input: (String, String, Function) 
    * Output: Promise
