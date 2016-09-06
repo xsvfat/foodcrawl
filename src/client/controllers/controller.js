@@ -14,6 +14,11 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     
     $scope.directions = ''; // directions from start to end
 
+    $scope.logout = () => {
+      Auth.delete();
+      $state.go('login');
+    }
+
     // POST users' start and end locations to server
     $scope.submit = function(form) {
 
