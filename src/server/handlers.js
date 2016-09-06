@@ -89,6 +89,8 @@ module.exports = {
       stepsArray = stepsArray.concat(leg.steps);
     });
 
+    console.log(stepsArray.length);
+
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
     
