@@ -2,9 +2,14 @@ var app = angular.module('foodfood', ['ui.router', 'ngSanitize']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/main');
+  $urlRouterProvider.otherwise('/login');
 
   $stateProvider
+  .state('login', {
+    url: '/login',
+    templateUrl: './views/login.html',
+    controller: 'loginController'
+  })
   .state('main', {
     url: '/main',
     templateUrl: './views/main.html',

@@ -18,10 +18,12 @@ var yelp = new Yelp({
 
 module.exports = {
   login: (req, res, next) => {
+    console.log(req.body);
     var username = req.body.username;
     var password = req.body.password; // need to hash later
     req.session.username = username;
     req.session.password = password;
+    res.send('Successfully signed in.');
   },
 
 

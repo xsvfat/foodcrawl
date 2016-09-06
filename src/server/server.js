@@ -12,7 +12,7 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: 'FOOD' }))
+app.use(session({ secret: 'FOOD', resave: true, saveUninitialized: true }))
 
 // serves initial static index file
 app.use('/', express.static(path.join(__dirname, '../client')));
