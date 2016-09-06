@@ -41,6 +41,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           }
           initMap(coord);
 
+          // Associate the route with our current map
           directionsDisplay.setMap(map);
 
 
