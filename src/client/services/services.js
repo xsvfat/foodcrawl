@@ -1,6 +1,7 @@
 app.factory('RestaurantAndRoute', ['$http', function($http) {
 
   var restaurants = [];
+  var markers = [];
 
   return {
 
@@ -36,6 +37,35 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
 
     getRestaurants: function() {
       return restaurants;
+    },
+
+    /**
+     * Input: (Map, Array of Yelp Objects)
+     * Output: Undefined
+     * Description: Adds a list of markers to a map
+     */
+    addMarkers: (map) => {
+      restaurants.forEach((place) => {
+        let lat = place.location.coordinate.latitude;
+        let lng = place.location.coordinate.longitude;
+
+        markers.push(marker = new google.maps.Marker({
+          position: new google.maps.LatLng(lat, lng),
+          map: map,
+          title: place.name
+        }));
+      });
+    },
+
+    /**
+     * Output: Undefined
+     * Description: Removes a list of Markers from their map
+     */
+    removeMarkers: () => {
+      markers.forEach((marker) => {
+        marker.setMap(null);
+        marker = null;
+      });
     }
   }
 }])
