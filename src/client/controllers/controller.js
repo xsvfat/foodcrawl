@@ -12,6 +12,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       // switch states to show restaurants and map
       $state.go('main.map');
 
+      RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end);
+
       // POST start & end locations to server
       // server *should* return directions and list of restaurants
       $http({
@@ -27,8 +29,10 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       }).then((response) => {
 
         var results = response.data.route;
-        console.log('Returned route: ', results);
-        console.log('Returned restaurant: ', response.data.restaurants);
+        var route = response.data.route[0];
+        var list = response.data.restaurants;
+        console.log('Returned route: ', route);
+        console.log('Returned restaurant: ', list);
 
         // reset the directions upon new search
         $scope.directions = '';

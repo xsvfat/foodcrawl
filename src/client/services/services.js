@@ -9,7 +9,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       restaurants = [];
 
       // request the restaurants from the server
-      $http({
+      return $http({
         method: 'POST',
         url: '/maps/submit',
         headers: {
@@ -21,6 +21,9 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         }
       }).then(data => {
 
+        console.log('factory', data.data);
+        restaurants = data.data.restaurants;
+        return restaurants;
         // push fetched restaurants to the restaurants array
         // each restaurant should be an object with properties:
         // name, address, rating, foodType, hours, priceRange
