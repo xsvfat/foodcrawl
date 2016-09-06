@@ -88,8 +88,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         $scope.tags = [];
 
         $scope.submitTag = () => {
-          if ($scope.tags.indexOf($scope.prefs) === -1) {
-            $scope.tags.push($scope.prefs);
+          if ($scope.tags.indexOf($scope.prefs.toLowerCase()) === -1) {
+            $scope.tags.push($scope.prefs.toLowerCase());
           }
           $scope.prefs = '';
         }

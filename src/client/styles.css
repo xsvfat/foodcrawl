@@ -16,6 +16,10 @@
   height: 400px;
 }
 
+#routeSearch {
+  margin-bottom: 10px;
+}
+
 tr th {
   padding: 3px 10px;
 }
@@ -32,6 +36,7 @@ tr th {
 }
 
 .pref {
+  font-family: 'Arial', sans-serif;
   display: inline-block;
   margin: 5px;
   margin-right: 15px;
@@ -40,8 +45,10 @@ tr th {
   border-left: 1px solid black; 
 }
 
-.pref:hover {
+.pref:hover, a:hover {
   cursor: pointer;
+  background-color: #d39797;
+  font-weight: bold;
 }
 
 #tags {
