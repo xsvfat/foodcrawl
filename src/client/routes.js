@@ -76,4 +76,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       }
     }
   })
+  .state('options', {
+    url: '/options',
+    templateUrl: './views/options.html',
+    controller: function($scope) {
+      
+    }
+  })
 }])
