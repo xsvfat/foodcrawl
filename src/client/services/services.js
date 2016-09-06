@@ -58,6 +58,43 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
     },
 
     /**
+     * Input: Yelp Object
+     * Output: Undefined
+     * Description: Creates an info window
+     */
+    createInfoWindow: (place) => {
+      //parse categories
+      var categories = [];
+      place.categories.forEach((category) => {
+        category[0].push(categories);
+      });
+      console.log('categories: ', categories);
+
+      //info window html
+      var displayHTML = `
+        <div class="infoWindow">
+          <img class="infoImage" src="${place.image_url}"> 
+          <h2 class="infoName">${place.name}</h2>
+          <p class="infoLocation">
+            ${place.display_address[0]}<br>
+            ${place.display_address[1]}<br>
+            ${place.display_address[2]}<br>
+            ${place.display_phone}
+          </p>
+          <p class="infoDescription">
+            ${categories.join(', ')}
+          </p>
+        </div>`;
+
+      //create info window
+      var infoWindow = new google.maps.InfoWindow({
+        content: displayHTML
+      });
+
+      return infoWindow;
+    },
+
+    /**
      * Output: Undefined
      * Description: Removes a list of Markers from their map
      */
