@@ -85,13 +85,46 @@ module.exports = {
       restaurants: [],
     };
 
-    // Grab the array of steps out of Googles nested objects.
+    // Stores the steps along a route for querying Yelp.
     var stepsArray = [];
-    routesArray[0].legs.forEach(function (leg, index) {
-      stepsArray = stepsArray.concat(leg.steps);
-    });
 
-    console.log(stepsArray.length);
+    // Checks to see if a step's length is too long, and chops it in half
+    // if it is. Then it adds it to the steps array.
+    var addStep = function (step) {
+      
+      // The base case.
+      if (step.distance.value <= 500) {
+        stepsArray.push(step);
+      } else {
+
+        // Calculates the midpoint between the start and end of a step.
+        var midpoint = {
+          lat: (step.start_location.lat + step.end_location.lat) / 2,
+          lng: (step.start_location.lng + step.end_location.lng) / 2,
+        };
+
+        // Chops off the first half of the step.
+        var step1 = JSON.parse(JSON.stringify(step));
+        step1['end_location'] = midpoint;
+        step1.distance.value /= 2;
+
+        // Chops off the second half of the step.
+        var step2 = JSON.parse(JSON.stringify(step));
+        step2['start_location'] = midpoint;
+        step2.distance.value /= 2;
+        
+        // Recursively calls itself on each "half-step".
+        addStep(step1);
+        addStep(step2);
+      }
+    };
+
+    // Calls addStep on every single step along a route.
+    routesArray[0].legs.forEach(function (leg, index) {
+      leg.steps.forEach(function (stepObj) {
+        addStep(stepObj);
+      });
+    });
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
@@ -107,7 +140,8 @@ module.exports = {
       let searchParameters = {
         'radius_filter': Math.min((step.distance.value / 2), 39999),
         'll': `${midpointLatitude},${midpointLongitude}`,
-        'term': 'food',
+        // 'category_filter': 'food',
+        'term': 'restaurant'
       };
 
       // Query Yelp's API.
