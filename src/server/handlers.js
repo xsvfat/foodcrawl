@@ -93,7 +93,7 @@ module.exports = {
     var addStep = function (step) {
       
       // The base case.
-      if (step.distance.value <= routesArray[0].legs[0].distance.value / 5) {
+      if (step.distance.value <= routesArray[0].legs[0].distance.value / 6) {
         stepsArray.push(step);
       } else {
 
