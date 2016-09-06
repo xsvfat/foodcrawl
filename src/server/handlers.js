@@ -155,7 +155,7 @@ module.exports = {
           
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= stepsArray.length ? res.send(responseObject) : null;
+          queryCounter >= Math.min(21, stepsArray.length) ? res.send(responseObject) : null;
         }) 
 
         // Error callback
@@ -164,7 +164,7 @@ module.exports = {
 
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= stepsArray.length ? res.send(responseObject) : null;
+          queryCounter >= Math.min(21, stepsArray.length) ? res.send(responseObject) : null;
         });
     });
   },
