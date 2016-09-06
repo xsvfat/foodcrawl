@@ -20,7 +20,8 @@ module.exports = {
   login: (req, res, next) => {
     var username = req.body.username;
     var password = req.body.password; // need to hash later
-
+    req.session.username = username;
+    req.session.password = password;
   },
 
 
