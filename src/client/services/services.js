@@ -24,7 +24,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
 
         // filter out any restaurants farther than 60m
         restaurants = data.data.restaurants.filter(restaurant => {
-          return restaurant.distance < 60;
+          return restaurant.distance;
         })
 
         // resolve restaurants for promise chaining
