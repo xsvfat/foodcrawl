@@ -6,6 +6,7 @@ var qs = require('querystring');
 var Yelp = require('yelp');
 var session = require('express-session');
 var _ = require('lodash');
+var User = require('./dbconfig/schema.js').User;
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -18,12 +19,33 @@ var yelp = new Yelp({
 
 module.exports = {
   login: (req, res, next) => {
-    console.log(req.body);
     var username = req.body.username;
     var password = req.body.password; // need to hash later
-    req.session.username = username;
-    req.session.password = password;
-    res.send('Successfully signed in.');
+
+    User.findOne({username: username, password: password}).then(user => {
+      if (user) {
+        // sets the current session to the logged in user
+        req.session.username = username;
+        res.send({message: 'Successfully signed in.', valid: true});
+      } else {
+        res.send({message: 'Invalid username and password.', valid: false});
+      }
+    })
+  },
+
+  signup: (req, res, next) => {
+    var username = req.body.username;
+    var password = req.body.password; // need to hash later
+    User.find({username: username}).then(users => {
+      if (users.length) {
+        res.send({message: 'That username already exists.', valid: false});
+      } else {
+        // adds a new user to the database
+        new User({username: username, password: password}).save().then(user => {
+          res.send({message: 'New user added to database', valid: true});
+        })
+      }
+    });
   },
 
 

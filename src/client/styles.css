@@ -24,10 +24,10 @@ tr th {
   padding: 3px 10px;
 }
 
-#loginDiv form {
+#loginDiv form, #signupDiv form {
   margin-left: 10px;
 }
-#loginDiv form input {
+#loginDiv form input, #signupDiv form input {
   margin: 5px 0px;
 }
 
@@ -57,6 +57,11 @@ tr th {
 
 #savePref {
   float: right;
+}
+
+.invalid {
+  color: red;
+  margin: 5px 0px;
 }
 
 .infoDescription {

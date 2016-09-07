@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 var session = require('express-session');
 var handlers = require('./handlers.js');
 
@@ -24,6 +25,7 @@ app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
 app.post('/maps/submit', handlers.submit);
 
 app.post('/login', handlers.login);
+app.post('/signup', handlers.signup);
 
 app.listen(8000);
 console.log('Now listening on 127.0.0.1:8000')
