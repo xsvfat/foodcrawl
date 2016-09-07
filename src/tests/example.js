@@ -18,7 +18,7 @@ describe('Examples', function() {
 
   //'describe' statements can be nested to create sub-sections
   describe('someFunction()', function() {
-    
+
     //'it' statements describe what the test is checking for
     //Descriptions should describe the intended behavior
     it('should be a string', function() {
@@ -29,7 +29,7 @@ describe('Examples', function() {
     });
 
     it('should equal some value', function() {
-    
+
       //Check equality
       var foo = 'bar';
       expect(foo).to.equal('bar');
@@ -37,7 +37,7 @@ describe('Examples', function() {
   });
 
   describe('someArray', function() {
-    
+
     it('should have some length', function() {
 
       //Check for property
@@ -46,7 +46,7 @@ describe('Examples', function() {
     })
 
     it('should have a nested array with a specific length', function() {
-      
+
       //Check for nested property
       var beverages = {
         tea: [1,2,3]

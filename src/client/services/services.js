@@ -16,7 +16,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
     let displayHTML = `
       <div class="infoWindow">
         <h2 class="infoName">${place.name}</h2>
-        <img class="ratingImg" src="${place.rating_img_url_small}"> 
+        <img class="ratingImg" src="${place.rating_img_url_small}">
         <p class="infoLocation">
           ${place.location.display_address[0]}<br>
           ${place.location.display_address[1]}<br>
@@ -92,7 +92,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         markers.push(marker);
 
         //Display an info window when marker is clicked
-        let infoWindow = createInfoWindow(place);
+        let infoWindow = Window(place);
         marker.addListener('click', () => {
           //close open info windows
           openInfoWindows.forEach((infoWin) => {
