@@ -45,7 +45,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state('options', {
     url: '/options',
     templateUrl: './views/options.html',
-    controller: function($scope, $state, Auth) {
+    controller: function($scope, $state, Auth, $http, $localStorage) {
 
       if (!Auth.check()) {
         $state.go('login');
@@ -67,9 +67,21 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         $scope.save = () => {
 
           // TODO: save the collection of preferences to database
+          $http({
+            method: 'POST',
+            url: '/options',
+            data: {
+              username: $localStorage.username,
+              userPrefs: $scope.tags
+            }
+          }).then(results => {
+            console.log('Saved preferences: ', results.data);
+            $state.go('main.map');
+          }).catch(err => {
+            console.log('Error saving prefs: ', err);
+          })
 
           // redirect the user back to /main/map
-          $state.go('main.map')
 
         }
       }

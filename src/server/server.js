@@ -26,6 +26,7 @@ app.post('/maps/submit', handlers.submit);
 
 app.post('/login', handlers.login);
 app.post('/signup', handlers.signup);
+app.post('/options', handlers.options);
 
 app.listen(8000);
 console.log('Now listening on 127.0.0.1:8000')

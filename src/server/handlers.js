@@ -48,6 +48,21 @@ module.exports = {
     });
   },
 
+  options: (req, res, next) => {
+    var username = req.body.username;
+    var prefs = req.body.userPrefs;
+    User.findOneAndUpdate({username: username},
+                          {$set: {preferences: prefs}}, 
+                          {new: true}, 
+                          (err, result) => {
+      if (err) {
+        res.send({message: 'Error updating preferences.', valid: false});
+      } else {
+        res.send({message: 'Preferences updated.', valid: true});
+      }
+    })
+  },
+
 
 
   /*
