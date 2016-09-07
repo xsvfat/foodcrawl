@@ -38,12 +38,11 @@ module.exports = {
     var password = req.body.password; // need to hash later
     User.find({username: username}).then(users => {
       if (users.length) {
-        res.send('That username already exists.');
+        res.send({message: 'That username already exists.', valid: false});
       } else {
         // adds a new user to the database
         new User({username: username, password: password}).save().then(user => {
-          console.log(user);
-          res.send('New user added to database');
+          res.send({message: 'New user added to database', valid: true});
         })
       }
     });

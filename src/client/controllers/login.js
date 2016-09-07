@@ -20,10 +20,9 @@ app.controller('loginController', ['$http', '$scope', '$state', '$localStorage',
           $localStorage.username = $scope.username;
           $state.go('main');
         } else {
+          $scope.password = '';
           $scope.invalid = true;
         }
-
-
       }).catch(err => {
         console.log('Error signing in: ', err);
       })

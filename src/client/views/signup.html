@@ -6,5 +6,6 @@
     Password: <input type='password' ng-model='password' required/><br>
     <input type='submit' />
   </form>
+  <p class='invalid' ng-show='invalid'>That username already exists!</p>
   <a ui-sref='login'>Already have an account? Log in!</a>
 </div>
