@@ -1,10 +1,10 @@
 <div id='loginDiv' ng-controller='loginController'>
-  <h1>Login</h1>
+  <h1>Sign up</h1>
   <hr></hr>
-  <form name='loginForm' ng-submit='loginSubmit(loginForm)'>
+  <form name='signupForm' ng-submit='signupSubmit(signupForm)'>
     Username: <input type='text' ng-model='username' required/><br>
     Password: <input type='password' ng-model='password' required/><br>
     <input type='submit' />
   </form>
-  <a ui-sref='signup'>Don't have an account? Sign up!</a>
+  <a ui-sref='login'>Already have an account? Log in!</a>
 </div>
