@@ -23,13 +23,6 @@ app.controller('signupController', ['$http', '$scope', '$state', '$localStorage'
           $scope.password = '';
           $scope.invalid = true;
         }
-
-        // if username exists, show error
-
-        // otherwise save to local storage & redirect to '/main'
-        // $localStorage.username = $scope.username;
-        // $state.go('main');
-
       }).catch(err => {
         console.log('Error signing up: ', err);
       })
