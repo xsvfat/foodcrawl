@@ -63,3 +63,7 @@ tr th {
   color: red;
   margin: 5px 0px;
 }
+
+.infoDescription {
+  font-weight: bold;
+}
