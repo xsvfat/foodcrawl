@@ -26,6 +26,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
       if (form.$valid) {
         RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end).then(restaurants => {
+          $state.go('main.map');
 
           // update list of restaurants in the factory
           console.log('restaurants: ', restaurants);
