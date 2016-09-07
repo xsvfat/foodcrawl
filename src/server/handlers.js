@@ -105,9 +105,11 @@ module.exports = {
     var target = averageSegmentLength / 2;
     for (var i = 0; i < steps.length; i++) {
       if (steps[i].distance.value >= target) {
+        var start = steps[i].start_location;
+        var end = steps[i].end_location;
         var midpoint = {
-          lat: steps[i].start_location.lat + (steps[i].end_location.lat - steps[i].start_location.lat) / (steps[i].distance.value / target),
-          lng: steps[i].start_location.lng + (steps[i].end_location.lng - steps[i].start_location.lng) / (steps[i].distance.value / target),
+          lat: start.lat + ((end.lat - start.lat) / (steps[i].distance.value / target)),
+          lng: start.lng + ((end.lng - start.lng) / (steps[i].distance.value / target)),
         };
         
         segmentsArray.push({
