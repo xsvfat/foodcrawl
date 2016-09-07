@@ -102,27 +102,42 @@ module.exports = {
     var averageSegmentLength = totalRouteDistance / 10;
 
     // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
-    var target = averageSegmentLength / 2;
+    var start, end;
+    var distanceFromTarget = averageSegmentLength / 2;
+    
+    // Iterate over each step along a route.
     for (var i = 0; i < steps.length; i++) {
-      if (steps[i].distance.value >= target) {
-        var start = steps[i].start_location;
-        var end = steps[i].end_location;
+
+      // Check if a segment's target midpoint lies along a given step.
+      if (steps[i].distance.value >= distanceFromTarget) {
+        
+        // Grab the step's start and stop coordinates.
+        start = steps[i].start_location;
+        end = steps[i].end_location;
+
+        // Calculate the midpoint of the given segment using MATH!
         var midpoint = {
-          lat: start.lat + ((end.lat - start.lat) / (steps[i].distance.value / target)),
-          lng: start.lng + ((end.lng - start.lng) / (steps[i].distance.value / target)),
+          lat: start.lat + ((end.lat - start.lat) / (steps[i].distance.value / distanceFromTarget)),
+          lng: start.lng + ((end.lng - start.lng) / (steps[i].distance.value / distanceFromTarget)),
         };
         
+        // Generate the appropriate segment object and add it to the storage array.
         segmentsArray.push({
           distance: averageSegmentLength,
           midpoint: midpoint,
         });
 
-        steps[i].start_location = midpoint;
-        steps[i].distance.value -= target;
-        target = averageSegmentLength;
+        // Chop off the beginning of a given step that has already been evaluated.
+        start = midpoint;
+        steps[i].distance.value -= distanceFromTarget;
+        distanceFromTarget = averageSegmentLength;
         i--;
       } else {
-        target -= steps[i].distance.value;
+
+        // If the step doesn't contain the midpoint for a segment,
+        // move on to the next step and decrease the remaining distance from target
+        // by the step's distance.
+        distanceFromTarget -= steps[i].distance.value;
       }
     }
 
