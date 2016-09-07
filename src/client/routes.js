@@ -66,7 +66,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
         $scope.save = () => {
 
-          // TODO: save the collection of preferences to database
+          // save the collection of preferences to database
           $http({
             method: 'POST',
             url: '/options',
@@ -75,13 +75,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
               userPrefs: $scope.tags
             }
           }).then(results => {
-            console.log('Saved preferences: ', results.data);
-            $state.go('main.map');
+            if (results.data.valid) {
+              console.log('Preferences saved.');
+
+              // redirect the user back to /main/map
+              $state.go('main.map');
+
+            } else {
+              console.log('Something went wrong', results.data.message);
+            }
           }).catch(err => {
             console.log('Error saving prefs: ', err);
           })
 
-          // redirect the user back to /main/map
 
         }
       }

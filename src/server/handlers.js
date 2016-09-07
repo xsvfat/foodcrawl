@@ -48,7 +48,8 @@ module.exports = {
     });
   },
 
-  options: (req, res, next) => {
+  saveOptions: (req, res, next) => {
+    // updates user preferences in the database
     var username = req.body.username;
     var prefs = req.body.userPrefs;
     User.findOneAndUpdate({username: username},
