@@ -16,6 +16,10 @@
   height: 400px;
 }
 
+#routeSearch {
+  margin-bottom: 10px;
+}
+
 tr th {
   padding: 3px 10px;
 }
@@ -28,5 +32,29 @@ tr th {
 }
 
 #logout {
+  float: right;
+}
+
+.pref {
+  font-family: 'Arial', sans-serif;
+  display: inline-block;
+  margin: 5px;
+  margin-right: 15px;
+  padding-right: 5px;
+  padding-left: 3px;
+  border-left: 1px solid black; 
+}
+
+.pref:hover, a:hover {
+  cursor: pointer;
+  background-color: #d39797;
+  font-weight: bold;
+}
+
+#tags {
+  margin: 15px 0px;
+}
+
+#savePref {
   float: right;
 }
