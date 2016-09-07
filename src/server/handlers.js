@@ -105,20 +105,25 @@ module.exports = {
     var target = averageSegmentLength / 2;
     for (var i = 0; i < steps.length; i++) {
       if (steps[i].distance.value >= target) {
+        var midpoint = {
+          lat: steps[i].start_location.lat + (steps[i].end_location.lat - steps[i].start_location.lat) / (steps[i].distance.value / target),
+          lng: steps[i].start_location.lng + (steps[i].end_location.lng - steps[i].start_location.lng) / (steps[i].distance.value / target),
+        };
+        
         segmentsArray.push({
           distance: averageSegmentLength,
-          midpoint: {
-            lat: Number,
-            lng: Number,          
-          },
+          midpoint: midpoint,
         });
+
+        steps[i].start_location = midpoint;
+        steps[i].distance.value -= target;
         target = averageSegmentLength;
+        i--;
       } else {
         target -= steps[i].distance.value;
       }
     }
 
-      target = averageSegmentLength;
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
@@ -126,15 +131,12 @@ module.exports = {
     // Makes a unique Yelp query for each step along the given route.
     segmentsArray.forEach(function (step, index) {
       if (index > 20) { return; }
-
-      // Calculate the geographical midpoint along each step of the journey.
-      let midpointLatitude = (step.start_location.lat + step.end_location.lat) / 2;
-      let midpointLongitude = (step.start_location.lng + step.end_location.lng) / 2;
+      // console.log(step);
 
       // Establish parameters for each individual yelp query.
       let searchParameters = {
         'radius_filter': Math.min((step.distance / 2), 39999),
-        'll': `${midpointLatitude},${midpointLongitude}`,
+        'll': `${step.midpoint.lat},${step.midpoint.lng}`,
         // 'category_filter': 'food',
         'term': 'restaurant'
       };
