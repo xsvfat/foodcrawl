@@ -1,7 +1,7 @@
 app.controller('signupController', ['$http', '$scope', '$state', '$localStorage', function($http, $scope, $state, $localStorage) {
   $scope.username;
   $scope.password;
-  $scope.loginSubmit = (form) => {
+  $scope.signupSubmit = (form) => {
     if (form.$valid) {
       $http({
         method: 'POST',
@@ -17,11 +17,11 @@ app.controller('signupController', ['$http', '$scope', '$state', '$localStorage'
         // if username exists, show error
 
         // otherwise save to local storage & redirect to '/main'
-        $localStorage.username = $scope.username;
-        $state.go('main');
+        // $localStorage.username = $scope.username;
+        // $state.go('main');
 
       }).catch(err => {
-        console.log('Error signing in: ', err);
+        console.log('Error signing up: ', err);
       })
     }
   }
