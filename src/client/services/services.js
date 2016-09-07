@@ -3,6 +3,38 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
   var restaurants = [];
   var markers = [];
 
+  //Creates an info window for a marker
+  let createInfoWindow = (place) => {
+    //parse categories
+    let categories = [];
+    place.categories.forEach((category) => {
+      categories.push(category[0]);
+    });
+
+    //info window html
+    let displayHTML = `
+      <div class="infoWindow">
+        <h2 class="infoName">${place.name}</h2>
+        <img class="ratingImg" src="${place.rating_img_url_small}"> 
+        <p class="infoLocation">
+          ${place.location.display_address[0]}<br>
+          ${place.location.display_address[1]}<br>
+          ${place.location.display_address[2]}<br>
+          ${place.display_phone}
+        </p>
+        <p class="infoDescription">
+          ${categories.join(', ')}
+        </p>
+      </div>`;
+
+    //create info window
+    let infoWindow = new google.maps.InfoWindow({
+      content: displayHTML
+    });
+
+    return infoWindow;
+  };
+
   return {
 
     fetchRestaurants: function(origin, destination) {
@@ -49,49 +81,21 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         let lat = place.location.coordinate.latitude;
         let lng = place.location.coordinate.longitude;
 
-        markers.push(new google.maps.Marker({
+        let marker = new google.maps.Marker({
           position: new google.maps.LatLng(lat, lng),
           map: map,
           title: place.name
-        }));
+        });
+
+        //store for removal later
+        markers.push(marker);
+
+        //Display an info window when marker is clicked
+        let infoWindow = createInfoWindow(place);
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
+        });
       });
-    },
-
-    /**
-     * Input: Yelp Object
-     * Output: Undefined
-     * Description: Creates an info window
-     */
-    createInfoWindow: (place) => {
-      //parse categories
-      var categories = [];
-      place.categories.forEach((category) => {
-        category[0].push(categories);
-      });
-      console.log('categories: ', categories);
-
-      //info window html
-      var displayHTML = `
-        <div class="infoWindow">
-          <img class="infoImage" src="${place.image_url}"> 
-          <h2 class="infoName">${place.name}</h2>
-          <p class="infoLocation">
-            ${place.display_address[0]}<br>
-            ${place.display_address[1]}<br>
-            ${place.display_address[2]}<br>
-            ${place.display_phone}
-          </p>
-          <p class="infoDescription">
-            ${categories.join(', ')}
-          </p>
-        </div>`;
-
-      //create info window
-      var infoWindow = new google.maps.InfoWindow({
-        content: displayHTML
-      });
-
-      return infoWindow;
     },
 
     /**

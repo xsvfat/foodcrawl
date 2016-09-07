@@ -30,3 +30,7 @@ tr th {
 #logout {
   float: right;
 }
+
+.infoDescription {
+  font-weight: bold;
+}
