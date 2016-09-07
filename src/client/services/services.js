@@ -2,6 +2,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
 
   var restaurants = [];
   var markers = [];
+  var openInfoWindows = [];
 
   //Creates an info window for a marker
   let createInfoWindow = (place) => {
@@ -93,6 +94,16 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         //Display an info window when marker is clicked
         let infoWindow = createInfoWindow(place);
         marker.addListener('click', () => {
+          //close open info windows
+          openInfoWindows.forEach((infoWin) => {
+            infoWin.close();
+          });
+          //remove closed info windows from openInfoWindows
+          openInfoWindows = [];
+
+          //keep track of open info windows
+          openInfoWindows.push(infoWindow);
+          //open current info window
           infoWindow.open(map, marker);
         });
       });
