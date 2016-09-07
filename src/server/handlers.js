@@ -22,8 +22,9 @@ module.exports = {
     console.log(req.body);
     var username = req.body.username;
     var password = req.body.password; // need to hash later
+
+    // sets the current session to the logged in user
     req.session.username = username;
-    req.session.password = password;
     res.send('Successfully signed in.');
   },
 
@@ -35,6 +36,7 @@ module.exports = {
       if (users.length) {
         res.send('That username already exists.');
       } else {
+        // adds a new user to the database
         new User({username: username, password: password}).save().then(user => {
           console.log(user);
           res.send('New user added to database');
