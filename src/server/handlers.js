@@ -19,17 +19,21 @@ var yelp = new Yelp({
 
 module.exports = {
   login: (req, res, next) => {
-    console.log(req.body);
     var username = req.body.username;
     var password = req.body.password; // need to hash later
 
-    // sets the current session to the logged in user
-    req.session.username = username;
-    res.send('Successfully signed in.');
+    User.findOne({username: username, password: password}).then(user => {
+      if (user) {
+        // sets the current session to the logged in user
+        req.session.username = username;
+        res.send({message: 'Successfully signed in.', valid: true});
+      } else {
+        res.send({message: 'Invalid username and password.', valid: false});
+      }
+    })
   },
 
   signup: (req, res, next) => {
-    console.log('signup: ', req.body);
     var username = req.body.username;
     var password = req.body.password; // need to hash later
     User.find({username: username}).then(users => {

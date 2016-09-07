@@ -12,12 +12,17 @@ app.controller('loginController', ['$http', '$scope', '$state', '$localStorage',
         }
       }).then(result => {
 
-        console.log('Login result: ', result);
+        console.log('Login result: ', result.data);
+        if (result.data.valid) {
+          /* if username and password are correct,
+             save to local storage and redirect to '/main' */
+          $localStorage.username = $scope.username;
+          $state.go('main');
+        } else {
+          $scope.username = 'WRONG!';
+          $scope.password = 'WRONG!';
+        }
 
-        /* if username and password are correct,
-           save to local storage and redirect to '/main' */
-        $localStorage.username = $scope.username;
-        $state.go('main');
 
       }).catch(err => {
         console.log('Error signing in: ', err);
