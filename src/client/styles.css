@@ -58,3 +58,8 @@ tr th {
 #savePref {
   float: right;
 }
+
+.invalid {
+  color: red;
+  margin: 5px 0px;
+}

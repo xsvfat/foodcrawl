@@ -1,6 +1,7 @@
 app.controller('loginController', ['$http', '$scope', '$state', '$localStorage', function($http, $scope, $state, $localStorage) {
   $scope.username;
   $scope.password;
+  $scope.invalid = false;
   $scope.loginSubmit = (form) => {
     if (form.$valid) {
       $http({
@@ -19,8 +20,7 @@ app.controller('loginController', ['$http', '$scope', '$state', '$localStorage',
           $localStorage.username = $scope.username;
           $state.go('main');
         } else {
-          $scope.username = 'WRONG!';
-          $scope.password = 'WRONG!';
+          $scope.invalid = true;
         }
 
 
