@@ -82,12 +82,14 @@ module.exports = {
    * Description: Given a starting and ending address, gives an object
    *              containing an array of routes in promise form.
    */
-  getRoutes: function (origin, destination) {
+  getRoutes: function (origin, destination, mode) {
+    console.log(mode);
     // Concatenate query parameters into HTTP request friendly string.
     let queryString = qs.stringify({
       origin: origin,
       destination: destination,
-      key: keys.googleMaps
+      key: keys.googleMaps,
+      mode: mode,
     });
 
     // Specify parameters for request.
@@ -103,7 +105,7 @@ module.exports = {
   // Takes form data from submit
   // Outputs routes or addresses for the map
   submit: function(req, res, next) {
-    module.exports.getRoutes(req.body.start, req.body.end)
+    module.exports.getRoutes(req.body.start, req.body.end, req.body.mode)
     .then(results => {
       // Parse nested object returned by Google's API to
       // specifically get Array of routes.
