@@ -10,7 +10,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
     $scope.start; // start location input
     $scope.end; // end location input
-
+    $scope.map; //store map
     $scope.directions = ''; // directions from start to end
 
     $scope.logout = () => {
@@ -40,6 +40,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             map = new google.maps.Map(document.getElementById('map'), {
               zoom: 14
             })
+            $scope.map = map;
             // Associate the route with our current map
             directionsDisplay.setMap(map);
             //clear existing markers
@@ -53,42 +54,12 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
         }).catch(err => {
           console.log('Error submitting: ', err);
         })
-
-
-
-
-
-        // // POST start & end locations to server
-        // // server *should* return directions and list of restaurants
-        // $http({
-        //   method: 'POST',
-        //   url: '/maps/submit',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   data: {
-        //     start: $scope.start,
-        //     end: $scope.end
-        //   }
-        // }).then((response) => {
-
-        //   var results = response.data.route;
-        //   var route = response.data.route[0];
-        //   var list = response.data.restaurants;
-        //   console.log('Returned route: ', route);
-        //   console.log('Returned restaurant: ', list);
-
-        //   // reset the directions upon new search
-        //   $scope.directions = '';
-
-        //   // write out the steps from start to end
-        //   results[0].legs[0].steps.forEach((step => {
-        //     $scope.directions += step['html_instructions'] + '<br>';
-        //   }));
-        // }).catch((err) => {
-        //   console.log('Error submitting: ', err);
-        // })
       }
+    };
+
+    //Shows the appropriate restaurant info window on the map when clicked in the list
+    $scope.showInfoWindow = (restaurant) => {
+      RestaurantAndRoute.openInfoWindow($scope.map, restaurant.name);
     };
   }
 
