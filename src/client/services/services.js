@@ -36,7 +36,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
 
     //store info window
     infoWindows.push(infoWindow);
-    
+
     return infoWindow;
   };
 
@@ -165,6 +165,5 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       //open info window
       infoWindows[markerIndex].open(map, markers[markerIndex]);
     }
-
   }
 }])

@@ -7,11 +7,17 @@
   border-top: 1px solid black;
 }
 
+#restaurantDiv {
+  max-height: 420px;
+  overflow-y: scroll;
+  display: inline-block;
+}
+
 .address {
   text-align: right;
 }
 
-#map, #map2 {
+#map {
   width: 400px;
   height: 400px;
 }
@@ -24,11 +30,26 @@ tr th {
   padding: 3px 10px;
 }
 
+#loginDiv h1, #signupDiv h1 {
+  background-color: #e3e3e3;
+  padding: 15px 12px;
+  margin: 0px;
+  border-left: 15px solid #bababa;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-weight: bold;
+}
+
 #loginDiv form, #signupDiv form {
+  text-align: right;
   margin-left: 10px;
+  width: 230px;
 }
 #loginDiv form input, #signupDiv form input {
   margin: 5px 0px;
+}
+
+#loginDiv a, #signupDiv a {
+  margin-left: 30px;
 }
 
 #logout {
@@ -67,4 +88,8 @@ tr th {
 
 .infoDescription {
   font-weight: bold;
+}
+
+.blockDisplay {
+  display: block;
 }

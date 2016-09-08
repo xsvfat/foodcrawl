@@ -5,11 +5,11 @@ describe('Examples', function() {
 
     //'it' statements describe what the test is checking for
     //Descriptions should describe the intended behavior
-    it('should be a string', function() {
+    it('should be a number', function() {
 
       //Check type
-      var foo = 'example';
-      expect(foo).to.be.a('string');
+      var foo = 15;
+      expect(foo).to.eql(15);
     });
 
     it('should equal some value', function() {
