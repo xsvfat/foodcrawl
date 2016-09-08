@@ -40,10 +40,16 @@ tr th {
 }
 
 #loginDiv form, #signupDiv form {
+  text-align: right;
   margin-left: 10px;
+  width: 230px;
 }
 #loginDiv form input, #signupDiv form input {
   margin: 5px 0px;
+}
+
+#loginDiv a, #signupDiv a {
+  margin-left: 30px;
 }
 
 #logout {
