@@ -42,7 +42,8 @@ tr th {
   margin-right: 15px;
   padding-right: 5px;
   padding-left: 3px;
-  border-left: 1px solid black; 
+  border-left: 1px solid black;
+  width: 125px;
 }
 
 .pref:hover, a:hover {

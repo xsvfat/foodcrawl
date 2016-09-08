@@ -42,12 +42,38 @@ module.exports = {
       } else {
         // adds a new user to the database
         new User({username: username, password: password}).save().then(user => {
+          req.session.username = username;
           res.send({message: 'New user added to database', valid: true});
         })
       }
     });
   },
 
+  saveOptions: (req, res, next) => {
+    // updates user preferences in the database
+    var username = req.body.username;
+    var prefs = req.body.userPrefs;
+    User.findOneAndUpdate({username: username},
+                          {$set: {preferences: prefs}}, 
+                          {new: true}, 
+                          (err, result) => {
+      if (err) {
+        res.send({message: 'Error updating preferences.', valid: false});
+      } else {
+        res.send({message: 'Preferences updated.', valid: true});
+      }
+    })
+  },
+
+  getOptions: (req, res, next) => {
+    // sends user preferences to the client
+    var username = req.query.user;
+    User.findOne({username: username}).then(user => {
+      res.send(user.preferences);
+    }).catch(err => {
+      res.send('Error retrieving preferences.');
+    })
+  },
 
 
   /*

@@ -15,17 +15,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'FOOD', resave: true, saveUninitialized: true }))
 
-// serves initial static index file
+// serves initial static files
 app.use('/', express.static(path.join(__dirname, '../client')));
-
-// We won't have access to node_modules because we are in the client dir
 app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
 
-// handles 'start' & 'end' POST request
-app.post('/maps/submit', handlers.submit);
+app.get('/options', handlers.getOptions); // retrieves user prefs
 
+app.post('/maps/submit', handlers.submit);
 app.post('/login', handlers.login);
 app.post('/signup', handlers.signup);
+app.post('/options', handlers.saveOptions); // saves user prefs
 
 app.listen(8000);
 console.log('Now listening on 127.0.0.1:8000')

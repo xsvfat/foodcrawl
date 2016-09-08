@@ -7,6 +7,7 @@ var userSchema = new mongoose.Schema({
     name: String,
     visits: Number
   }],
+  preferences: [String],
   locations: [String]
 });
 
