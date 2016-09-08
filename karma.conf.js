@@ -10,6 +10,8 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+
+    // leave jasmine as an optional testing framework for development
     frameworks: ['mocha', 'chai'],
     // frameworks: ['jasmine'],
 
@@ -20,7 +22,6 @@ module.exports = function(config) {
       'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/ngstorage/ngStorage.js',
       'node_modules/angular-sanitize/angular-sanitize.js',
-
       'node_modules/angular-ui-router/release/angular-ui-router.js',
 
       // our application code

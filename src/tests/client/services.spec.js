@@ -5,11 +5,13 @@ describe('Services', function() {
   describe('RestaurantAndRoute factory')
   var $httpBackend, RestaurantAndRoute;
 
+    // inject the necessary dependencies
     beforeEach(inject(function (_$httpBackend_, _RestaurantAndRoute_) {
       $httpBackend = _$httpBackend_;
       RestaurantAndRoute = _RestaurantAndRoute_;
     }));
 
+    // these tests just test for the existence of our methods
     it('should exist', function () {
       expect(RestaurantAndRoute).to.exist;
     });
