@@ -1,21 +1,27 @@
  <div ng-controller='inputsController'>
+
    <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
      Start: <input name='start' type='text' ng-model='start' required/>
      End: <input name='end' type='text' ng-model='end' required/>
      <input type='submit'/>
   </form>
+
   <button id='logout' ng-click='logout()'>Logout</button>
   <a ui-sref='options' class='blockDisplay'>Options</a>
-  <div ui-view='restaurantList' id='restaurantDiv'>
-  </div>
-  <!-- This is now hard coding the map element rather than using a ui-view -->
-  <div id='mapContainer'>
-    <h4>MAP</h4>
-    <div id='map'>
+
+  <div>
+    <div ui-view='restaurantList' id='restaurantDiv'>
     </div>
+    <!-- This is now hard coding the map element rather than using a ui-view -->
+    <div id='mapContainer'>
+      <h4>MAP</h4>
+      <div id='map'>
+      </div>
+    </div>
+    <!-- <div ui-view='map'>
+    </div> -->
   </div>
-  <!-- <div ui-view='map'>
-  </div> -->
+
   <div ng-bind-html='directions'>
   </div>
  </div>

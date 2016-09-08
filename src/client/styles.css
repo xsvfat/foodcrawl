@@ -8,7 +8,7 @@
 }
 
 #restaurantDiv {
-  max-height: 500px;
+  max-height: 420px;
   overflow-y: scroll;
   display: inline-block;
 }
@@ -17,7 +17,7 @@
   text-align: right;
 }
 
-#map, #map2 {
+#map {
   width: 400px;
   height: 400px;
 }
@@ -28,6 +28,15 @@
 
 tr th {
   padding: 3px 10px;
+}
+
+#loginDiv h1, #signupDiv h1 {
+  background-color: #e3e3e3;
+  padding: 15px 12px;
+  margin: 0px;
+  border-left: 15px solid #bababa;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-weight: bold;
 }
 
 #loginDiv form, #signupDiv form {
