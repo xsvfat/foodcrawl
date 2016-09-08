@@ -25,7 +25,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       $state.go('main');
 
       if (form.$valid) {
-        RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end).then(restaurants => {
+        RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end, $scope.mode).then(restaurants => {
           $state.go('main.map');
 
           // update list of restaurants in the factory
@@ -48,7 +48,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             //add restaurant markers
             RestaurantAndRoute.addMarkers(map);
             // set the current route
-            RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end);
+            RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end, $scope.mode);
           }
           initMap();
         }).catch(err => {

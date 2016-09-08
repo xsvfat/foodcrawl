@@ -42,7 +42,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
 
   return {
 
-    fetchRestaurants: function(origin, destination) {
+    fetchRestaurants: function(origin, destination, mode) {
       // clear out the array for the new batch of restaurants
       restaurants = [];
 
@@ -55,7 +55,8 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         },
         data: {
           start: origin,
-          end: destination
+          end: destination,
+          mode: mode,
         }
       }).then(data => {
 
@@ -83,6 +84,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
      */
     addMarkers: (map) => {
       restaurants.forEach((place) => {
+        if (!place.location.coordinate) { return; }
         let lat = place.location.coordinate.latitude;
         let lng = place.location.coordinate.longitude;
 
@@ -129,11 +131,11 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       Output: null
       Description: Renders a route to the map with the given start and end points.
     */
-    calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end) => {
+    calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end, mode) => {
       directionsService.route({
         origin: start,
         destination: end,
-        travelMode: 'DRIVING'
+        travelMode: mode.toUpperCase(),
       }, function(response, status) {
         if (status === 'OK') {
           directionsDisplay.setDirections(response);
