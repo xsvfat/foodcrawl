@@ -40,6 +40,15 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
     return infoWindow;
   };
 
+  //Close open info windows
+  let closeInfoWindows = () => {
+    openInfoWindows.forEach((infoWin) => {
+      infoWin.close();
+    });
+    //remove closed info windows from openInfoWindows
+    openInfoWindows = [];
+  };
+
   return {
 
     fetchRestaurants: function(origin, destination, mode) {
@@ -100,12 +109,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
         //Display an info window when marker is clicked
         let infoWindow = createInfoWindow(place);
         marker.addListener('click', () => {
-          //close open info windows
-          openInfoWindows.forEach((infoWin) => {
-            infoWin.close();
-          });
-          //remove closed info windows from openInfoWindows
-          openInfoWindows = [];
+          closeInfoWindows();
 
           //keep track of open info windows
           openInfoWindows.push(infoWindow);
@@ -159,6 +163,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
           markerIndex = index;
         }
       });
+      closeInfoWindows();
 
       //record info window as open
       openInfoWindows.push(infoWindows[markerIndex]);
