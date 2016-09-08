@@ -42,6 +42,7 @@ module.exports = {
       } else {
         // adds a new user to the database
         new User({username: username, password: password}).save().then(user => {
+          req.session.username = username;
           res.send({message: 'New user added to database', valid: true});
         })
       }
@@ -64,6 +65,15 @@ module.exports = {
     })
   },
 
+  getOptions: (req, res, next) => {
+    // sends user preferences to the client
+    var username = req.query.user;
+    User.findOne({username: username}).then(user => {
+      res.send(user.preferences);
+    }).catch(err => {
+      res.send('Error retrieving preferences.');
+    })
+  },
 
 
   /*

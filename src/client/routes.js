@@ -53,6 +53,20 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         // a collection of user submitted preferences
         $scope.tags = [];
 
+        // on page load, retrieve the user preferences from database
+        $http({
+          method: 'GET',
+          url: '/options',
+          params: {
+            user: $localStorage.username
+          }
+        }).then(result => {
+          // push the preferences to the list
+          $scope.tags = result.data;
+        }).catch(err => {
+          console.log('Error retrieving preferences: ', err);
+        });
+
         $scope.submitTag = () => {
           if ($scope.tags.indexOf($scope.prefs.toLowerCase()) === -1) {
             $scope.tags.push($scope.prefs.toLowerCase());
