@@ -12,6 +12,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.end; // end location input
     $scope.map; //store map
     $scope.directions = ''; // directions from start to end
+    $scope.mode = 'walking';
 
     $scope.logout = () => {
       Auth.delete();
