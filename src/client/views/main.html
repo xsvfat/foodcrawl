@@ -5,11 +5,11 @@
      <input type='submit'/>
   </form>
   <button id='logout' ng-click='logout()'>Logout</button>
-  <a ui-sref='options'>Options</a>
-  <div ui-view='restaurantList'>
+  <a ui-sref='options' class='blockDisplay'>Options</a>
+  <div ui-view='restaurantList' id='restaurantDiv'>
   </div>
   <!-- This is now hard coding the map element rather than using a ui-view -->
-  <div>
+  <div id='mapContainer'>
     <h4>MAP</h4>
     <div id='map'>
     </div>

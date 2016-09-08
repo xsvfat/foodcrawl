@@ -7,6 +7,12 @@
   border-top: 1px solid black;
 }
 
+#restaurantDiv {
+  max-height: 500px;
+  overflow-y: scroll;
+  display: inline-block;
+}
+
 .address {
   text-align: right;
 }
@@ -67,4 +73,8 @@ tr th {
 
 .infoDescription {
   font-weight: bold;
+}
+
+.blockDisplay {
+  display: block;
 }
