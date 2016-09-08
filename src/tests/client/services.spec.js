@@ -2,8 +2,8 @@ describe('Services', function() {
   // Import the corresponding module
   beforeEach(module('foodfood'));
 
-  describe('RestaurantAndRoute factory')
-  var $httpBackend, RestaurantAndRoute;
+  describe('RestaurantAndRoute factory', function() {
+    var $httpBackend, RestaurantAndRoute;
 
     // inject the necessary dependencies
     beforeEach(inject(function (_$httpBackend_, _RestaurantAndRoute_) {
@@ -16,9 +16,31 @@ describe('Services', function() {
       expect(RestaurantAndRoute).to.exist;
     });
 
-    it('should have a method `fetchRestaurants`', function () {
-      expect(RestaurantAndRoute.fetchRestaurants).to.be.a('function');
-    });
+    describe('fetchRestaurants', function() {
+      it('should have a method `fetchRestaurants`', function () {
+        expect(RestaurantAndRoute.fetchRestaurants).to.be.a('function');
+      });
+
+      it('should return a list of restaurants', function() {
+        var mockResponse = [
+        { name: 'Delicious Restaurant',
+          rating: 5 },
+        { title: 'Bad Restaurant',
+          rating: 1 }
+        ];
+
+        $httpBackend.expect('POST', '/maps/submit').respond(mockResponse);
+
+        // I'm running into problems right now due to login
+        // It's posting a GET request to .views/login/html
+        RestaurantAndRoute.fetchRestaurants().then(function (restaurants) {
+          console.log('AAAAAA', restaurants);
+          expect(restaurants).to.deep.equal(mockResponse);
+        });
+
+        $httpBackend.flush();
+      });
+    })
 
     it('should have a method `getRestaurants`', function () {
       expect(RestaurantAndRoute.getRestaurants).to.be.a('function');
@@ -40,4 +62,6 @@ describe('Services', function() {
       expect(RestaurantAndRoute.openInfoWindow).to.be.a('function');
     });
 
-})
+  });
+
+});
