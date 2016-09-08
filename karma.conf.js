@@ -10,24 +10,34 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai'],
 
+    // leave jasmine as an optional testing framework for development
+    frameworks: ['mocha', 'chai'],
+    // frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
       // angular source code
       'node_modules/angular/angular.js',
-      'node_modules/angular-ui-router/angular-ui-router.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/ngstorage/ngStorage.js',
+      'node_modules/angular-sanitize/angular-sanitize.js',
+      'node_modules/angular-ui-router/release/angular-ui-router.js',
 
       // our application code
-      'src/client/**/*.js',
+      // Wildcards will not work here, as it defaults to alphabetical order
+      'compiled/client/routes.js',
+      'compiled/client/controllers/controller.js',
+      'compiled/client/services/services.js',
+      'compiled/tests/client/serviceGreeter.js',
 
       // example file
       'src/tests/client/example.js',
 
       // spec files
-      'src/tests/client/controller.js'
+      'src/tests/client/services.spec.js',
+      'src/tests/client/serviceGreeter.spec.js',
+      'src/tests/client/controller.spec.js'
     ],
 
 
@@ -45,7 +55,9 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+
+    // Use karma-mocha-reporter to pretty print test results in the console
+    reporters: ['mocha'],
 
 
     // web server port
@@ -67,7 +79,8 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
