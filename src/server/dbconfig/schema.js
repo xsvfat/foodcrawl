@@ -8,7 +8,11 @@ var userSchema = new mongoose.Schema({
     visits: Number
   }],
   preferences: [String],
-  locations: [String]
+  locations: [String],
+  addresses: [{
+    type: Number,
+    ref: 'Address'
+  }]
 });
 
 var restaurantSchema = new mongoose.Schema({
@@ -22,12 +26,25 @@ var restaurantSchema = new mongoose.Schema({
     max: String
   },
   visits: Number
-})
+});
+
+var addressSchema = new mongoose.Schema({
+  user: {
+    type: Number,
+    ref: 'User'
+  },
+  label: String,
+  lineOne: String,
+  lineTwo: String,
+  lineThree: String
+});
 
 var User = mongoose.model('User', userSchema);
 var Restaurant = mongoose.model('Restaurant', restaurantSchema);
+var Address = mongoose.model('Address', addressSchema);
 
 module.exports = {
   User: User,
-  Restaurant: Restaurant
+  Restaurant: Restaurant,
+  Address: Address
 }
