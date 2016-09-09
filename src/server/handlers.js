@@ -7,6 +7,7 @@ var Yelp = require('yelp');
 var session = require('express-session');
 var _ = require('lodash');
 var User = require('./dbconfig/schema.js').User;
+var Address = require('./dbconfig/schema.js').Address;
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -231,6 +232,26 @@ module.exports = {
         });
     });
   },
+
+  /*
+   * Input: 
+   * Output: 
+   * Description: Returns a list of all user preferences
+   */
+  getAddresses: (req, res, next) => {
+    console.log(req.query.user);
+    Address.findOne();
+    res.send(['waddup']);
+  },
+
+  /*
+   * Input: 
+   * Output: 
+   * Description: 
+   */
+  saveAddress: (req, res, next) => {
+
+  }
 };
 
 
