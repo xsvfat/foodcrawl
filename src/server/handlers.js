@@ -229,9 +229,7 @@ module.exports = {
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(searchResults.businesses);
 
-          _.uniqBy(responseObject.restaurants, function (item) {
-            return item.id;
-          });
+          responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
 
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
