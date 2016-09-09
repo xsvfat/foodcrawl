@@ -3,7 +3,7 @@
   min-width: 200px;
   margin: 10px;
 }
-.restaurant, .rating, .address {
+.restaurant, .rating, .addressTable {
   border-top: 1px solid black;
 }
 
@@ -18,13 +18,13 @@
   display: inline-block;
 }
 
-.address {
+.addressTable {
   text-align: right;
 }
 
 #map {
-/*  width: 400px;
-  height: 400px;*/
+  width: 400px;
+  height: 400px;
 }
 
 #routeSearch {
