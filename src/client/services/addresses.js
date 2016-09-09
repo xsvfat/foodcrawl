@@ -16,8 +16,19 @@ app.factory('Addresses', ['$http', '$localStorage', function($http, $localStorag
       });
     },
 
-    saveAddress: () => {
-      console.log('sup');
+    //Saves a new address
+    saveAddress: (address) => {
+      //add username to address
+      address.user = $localStorage.username;
+
+      return $http({
+        method: 'POST',
+        url: '/addresses',
+        data: address
+      })
+      .catch(error => {
+        console.log('Error saving user address: ', error);
+      })      
     }
   };
 }]);

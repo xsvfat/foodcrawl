@@ -19,6 +19,16 @@
       <span>{{place.address[1]}}</span>
       <span>{{place.address[2]}}</span>
     </div>
+
+    <form id='addAddress' name='newAddress' ng-submit='saveAddress(newAddress)'>
+      Label:<br>
+      <input name='label' type='text' ng-model='address.label' required><br>
+      Address:<br>
+      <input name='lineOne' type='text' ng-model='address.one' required><br>
+      <input name='lineTwo' type='text' ng-model='address.two'><br>
+      <input name='lineThree' type='text' ng-model='address.three' required><br>
+      <input type='submit'>
+    </form>
   </div>
 
   <button id='logout' ng-click='logout()'>Logout</button>

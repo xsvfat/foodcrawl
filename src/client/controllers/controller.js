@@ -14,16 +14,33 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', '$local
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'walking';
     $scope.places = [];
+    $scope.address = {
+      label: '',
+      one: '',
+      two: '',
+      three: ''
+    };
 
     //Set any retrieved addresses
     $scope.getAddresses = () => {
-      Addresses.getAddresses().then(addresses => {
+      Addresses.getAddresses()
+      .then(addresses => {
         $scope.places = addresses.data;
       });
     };
 
     //get addresses when logging in
     $scope.getAddresses();
+
+    //Add an address, then refresh addresses
+    $scope.saveAddress = (address) => {
+      if (address.$valid) {
+        Addresses.saveAddress($scope.address)
+        .then(() => {
+          $scope.getAddresses();
+        })
+      }
+    };
 
     $scope.logout = () => {
       Auth.delete();

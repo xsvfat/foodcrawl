@@ -233,7 +233,7 @@ module.exports = {
     });
   },
 
-  /*
+  /**
    * Input: String
    * Output: Array
    * Description: Returns a list of addresses for a specific user
@@ -259,25 +259,35 @@ module.exports = {
     .then(addresses => {
       res.send(addresses);
     })
-    
+
     .catch(error => {
       console.log('Error getting addresses: ', erorr);
     })
   },
 
-  /*
-   * Input: 
-   * Output: 
-   * Description: 
+  /**
+   * Input: Object
+   * Output: Undefined
+   * Description: Saves a new address
    */
   saveAddress: (req, res, next) => {
-    // new Address({
-    //   user: user._id,
-    //   address: ['hey','sup','yo']
-    // })
-    // .save()
-    // .then((result)=> {
-    //   console.log('SAVED RESULT: ', result);
-    // })
+    let address = req.body;
+
+    //Get user id by username
+    User.findOne({username: address.user})
+    .then(user => {
+      //create new address
+      return new Address({
+        user: user._id,
+        //address lines
+        address: [address.one, address.two, address.three]
+      }).save();
+    })
+    .then(() => {
+      res.send();
+    })
+    .catch(error => {
+      console.log('Error saving address: ', error);
+    })
   }
 };
