@@ -1,14 +1,30 @@
- <div ng-controller='inputsController'>
+<div ng-controller='inputsController'>
 
-   <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
-     Start: <input name='start' type='text' ng-model='start' required/>
-     End: <input name='end' type='text' ng-model='end' required/>
-     <input type='submit'/>
-     <select ng-model='mode'>
-       <option value='walking'>Walking</option>
-       <option value='driving'>Driving</option>
-       <option value='bicycling'>Bicycling</option>
-     </select>
+  <div class='header'>
+    <div class='inline'>
+      <h2>FoodFood</h2>
+    </div>
+    <div class='inline rightSide'>
+      <div>
+        <h4>Log in</h4>
+      </div>
+      <div>
+        Username: <input />
+        Password: <input />
+      </div>
+    </div>
+  </div>
+  <hr></hr>
+
+  <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
+    Start: <input name='start' type='text' ng-model='start' required/>
+    End: <input name='end' type='text' ng-model='end' required/>
+    <input type='submit'/>
+    <select ng-model='mode'>
+      <option value='walking'>Walking</option>
+      <option value='driving'>Driving</option>
+      <option value='bicycling'>Bicycling</option>
+    </select>
   </form>
 
   <button id='logout' ng-click='logout()'>Logout</button>
@@ -29,4 +45,4 @@
 
   <div ng-bind-html='directions'>
   </div>
- </div>
+</div>

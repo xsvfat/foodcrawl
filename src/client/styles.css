@@ -93,3 +93,31 @@ tr th {
 .blockDisplay {
   display: block;
 }
+
+.inline {
+  display: inline-block;
+}
+
+.rightSide {
+  float: right;
+}
+
+.rightSide h4, .rightSide p {
+  margin: 3px 10px;
+  float: right;
+}
+.rightSide h4 {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.header h2 {
+  margin: 0px 15px;
+  padding: 15px 0px;
+}
+
+.header {
+  background-color: #e3e3e3;
+  border-left: 15px solid #bababa;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
