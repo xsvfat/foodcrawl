@@ -116,10 +116,8 @@ module.exports = {
         username: req.body.user,
       }).then(function (response) {
 
-        var preferences = response.preferences || [];
-        
         // Call getRestaurants along the returned route.
-        module.exports.getRestaurants(req, res, routesArray, preferences);
+        module.exports.getRestaurants(req, res, routesArray, response.preferences);
 
       }).catch(function (error) {
         
@@ -141,6 +139,8 @@ module.exports = {
    *              and returns an array of restaurant objects from Yelp.
    */
   getRestaurants: (req, res, routesArray, preferences) => {
+    preferences = preferences || [];
+
     console.log(preferences.join(' ') + ' restaurants');
     // Object to be returned to the client. 
     // Stores route and restaurants in two seperate arrays.
@@ -211,12 +211,11 @@ module.exports = {
 
     // Makes a unique Yelp query for each step along the given route.
     segmentsArray.forEach(function (step, index) {
-      if (index > 20) { return; }
       // console.log(step);
 
       // Establish parameters for each individual yelp query.
       let searchParameters = {
-        'radius_filter': Math.min((step.distance / 2), 39999),
+        'radius_filter': Math.min((step.distance / 1.7), 39999),
         'll': `${step.midpoint.lat},${step.midpoint.lng}`,
         'category_filter': 'restaurants',
         'term': preferences.join('_') + '_restaurant'
@@ -229,10 +228,14 @@ module.exports = {
         .then(function (searchResults) {
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(searchResults.businesses);
-          
+
+          _.uniqBy(responseObject.restaurants, function (item) {
+            return item.id;
+          });
+
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= Math.min(21, segmentsArray.length) ? res.send(responseObject) : null;
+          queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
         }) 
 
         // Error callback
@@ -241,7 +244,7 @@ module.exports = {
 
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= Math.min(21, segmentsArray.length) ? res.send(responseObject) : null;
+          queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
         });
     });
   },
