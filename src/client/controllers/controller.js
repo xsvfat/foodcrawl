@@ -62,6 +62,23 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.showInfoWindow = (restaurant) => {
       RestaurantAndRoute.openInfoWindow($scope.map, restaurant.name);
     };
+
+    $scope.places = [{
+      label: 'hey',
+      lineOne: 'yo',
+      lineTwo: 'dawg',
+      lineThree: 'sup'
+    }, {
+      label: 'hey',
+      lineOne: 'yo',
+      lineTwo: 'dawg',
+      lineThree: 'sup'
+    }, {
+      label: 'hey',
+      lineOne: 'yo',
+      lineTwo: 'dawg',
+      lineThree: 'sup'
+    }];
   }
 
 }]);
