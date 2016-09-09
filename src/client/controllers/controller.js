@@ -23,6 +23,12 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.usernameNew;
     $scope.passwordNew;
 
+    $scope.showLoginForm = () => {
+      // displays the login form
+      $scope.newUser = false;
+      $scope.activeUser = false;
+    }
+
     $scope.loginSubmit = (form) => {
       if (form.$valid) {
         $http({
@@ -55,7 +61,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     };
 
     $scope.showNewUserForm = () => {
+      // displays the sign-up form
       $scope.newUser = true;
+      $scope.activeUser = false;
     };
 
     $scope.newUserSubmit = (form) => { // adds a new user to database
@@ -94,6 +102,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       delete $localStorage.username;
       $scope.user = null;
       $scope.activeUser = false;
+      $scope.newUser = false;
     }
 
 

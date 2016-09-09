@@ -8,13 +8,13 @@
 <!-- Show login option for users who want to login -->
     <div class='inline rightSide' ng-hide='activeUser || newUser'>
       <div>
-        <h4>Log in or <span id='create' ng-click='showNewUserForm()'>create account</span></h4>
+        <h4>Log in or <span ng-click='showNewUserForm()'>create account</span></h4>
       </div>
       <div>
         <form name='loginForm' ng-submit='loginSubmit(loginForm)'>
           <span>Username: </span><input ng-model='username' required/><br>
           <span>Password: </span><input ng-model='password' type='password' required/><br>
-          <span class='invalid' ng-show='invalid'>Invalid username and password!</span><input type='submit' />
+          <span class='invalid' ng-show='invalid'>Invalid username and password!</span><input type='submit' value='Log in'/>
         </form>
       </div>
     </div>
@@ -28,13 +28,13 @@
 <!-- Show sign-up for creating new account -->
     <div class='inline rightSide' ng-show='newUser'>
       <div>
-        <h4>Sign up</h4>
+        <h4>Sign up now or <span ng-click='showLoginForm()'>log in</span></h4>
       </div>
       <div>
         <form name='newUserForm' ng-submit='newUserSubmit(newUserForm)'>
           <span>Username: </span><input ng-model='usernameNew' required/><br>
           <span>Password: </span><input ng-model='passwordNew' type='password' required/><br>
-          <span class='invalid' ng-show='invalid'>That username already exists!</span><input type='submit' />
+          <span class='invalid' ng-show='invalid'>That username already exists!</span><input type='submit' value='Sign up'/>
         </form>
       </div>
     </div>
