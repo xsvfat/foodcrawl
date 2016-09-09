@@ -1,5 +1,6 @@
 <div ng-controller='inputsController'>
 
+<!-- - - - -HEADER- - - - -->
   <div class='header'>
     <div class='inline'>
       <h1>FoodFood</h1>
@@ -41,7 +42,10 @@
 
   </div>
   <hr></hr>
+<!-- - - - - -END OF HEADER- - - - -  -->
 
+
+<!-- - - - -Start and End for user input- - - - -->
   <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
     Start: <input name='start' type='text' ng-model='start' required/>
     End: <input name='end' type='text' ng-model='end' required/>
@@ -53,8 +57,8 @@
     </select>
   </form>
 
-  <!-- <button id='logout' ng-click='logout()'>Logout</button> -->
-  
+
+<!-- - - - -List of user's saved addresses- - - - -->
   <div id='places'>
     <h4>Addresses</h4>
     <div ng-repeat='place in places' ng-click='addAddress(place)' class='address'>
@@ -64,7 +68,7 @@
       <span class='addressLineThree'>{{place.address[2]}}</span>
     </div>
   </div>
-
+<!-- - - - -Form for user inputting addresses- - - - -->
   <form id='addAddress' name='newAddress' ng-submit='saveAddress(newAddress)'>
     <fieldset>
       <legend>Add an Address</legend>
@@ -80,23 +84,20 @@
 
   <a ui-sref='options' class='blockDisplay'>Options</a>
 
+
+<!-- - - - -Restaurant list and map- - - - -->
   <div>
     <div class='inline'>
       <div ui-view='restaurantList' id='restaurantDiv'>
       </div>
     </div>
     <div class='inline'>
-    <!-- This is now hard coding the map element rather than using a ui-view -->
       <div id='mapContainer'>
         <h4>MAP</h4>
         <div id='map'>
         </div>
       </div>
     </div>
-    <!-- <div ui-view='map'>
-    </div> -->
   </div>
 
-  <div ng-bind-html='directions'>
-  </div>
 </div>
