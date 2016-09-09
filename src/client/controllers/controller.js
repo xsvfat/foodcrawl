@@ -1,5 +1,5 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth) {
+app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', 'Addresses', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, Addresses) {
 
   if (!Auth.check()) {
     // if a user is not logged in, redirect to login page
@@ -79,6 +79,11 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       lineTwo: 'dawg',
       lineThree: 'sup'
     }];
+
+    $scope.check = () => {
+      console.log('checking');
+      Addresses.getAddresses();
+    };
   }
 
 }]);

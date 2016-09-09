@@ -25,7 +25,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     views: {
       'restaurantList': {
         templateUrl: './views/places.html',
-        controller: function($scope, RestaurantAndRoute, Auth) {
+        controller: function($scope, RestaurantAndRoute, Auth, Addresses) {
           // restaurants from the server
           $scope.restaurants = RestaurantAndRoute.getRestaurants();
         }
