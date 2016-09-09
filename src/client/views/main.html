@@ -6,7 +6,7 @@
     </div>
 
 <!-- Show login option for users who want to login -->
-    <div class='inline rightSide' ng-hide='activeUser'>
+    <div class='inline rightSide' ng-hide='activeUser || newUser'>
       <div>
         <h4>Log in</h4>
       </div>
@@ -19,10 +19,13 @@
       </div>
     </div>
 
-    <div class='inline rightSide' ng-show='activeUser'>
+<!-- Show logout option for logged in users -->
+    <div class='inline rightSide' ng-show='activeUser && !newUser'>
       Logged in as <span class='bold'>{{user}}</span>
       <button ng-click='logout()'>Log out</button>
     </div>
+
+    
 
   </div>
   <hr></hr>

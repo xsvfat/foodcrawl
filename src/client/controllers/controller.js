@@ -17,7 +17,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.username;
     $scope.password;
     $scope.invalid = false; // true if username/password is invalid
-    $scope.activeUser = false; // true if a user is logged in
+    $scope.activeUser = true; // true if a user is logged in
+    $scope.newUser = false; // true if a new user wants to sign up
 
     $scope.loginSubmit = (form) => {
       if (form.$valid) {
