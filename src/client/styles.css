@@ -93,3 +93,62 @@ tr th {
 .blockDisplay {
   display: block;
 }
+
+.inline {
+  display: inline-block;
+}
+
+.rightSide {
+  float: right;
+  text-align: right;
+}
+
+.rightSide span {
+  font-size: 12px;
+}
+
+.rightSide input {
+  margin-right: 6px;
+}
+
+.rightSide p {
+  margin: 0px;
+}
+
+.rightSide h4 {
+  margin: 3px 10px;
+  /*float: right;*/
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.rightSide h4 span {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 1.0em;
+}
+.rightSide h4 span:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+.rightSide .bold {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.header h1 {
+  margin: 0px 15px;
+  padding: 10px 0px;
+  font-size: 3.8em;
+  font-weight: bold;
+}
+
+.header {
+  background-color: #e3e3e3;
+  border-left: 15px solid #bababa;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+
+.header button {
+  margin: 90px 8px 0px 0px;
+}

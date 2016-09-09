@@ -1,23 +1,124 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth) {
+app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', '$localStorage', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, $localStorage) {
 
-  if (!Auth.check()) {
+  if (true === false) { // bypass the conditional statement; remove later
+
     // if a user is not logged in, redirect to login page
     console.log('You are not logged in!');
     $state.go('login');
 
   } else {
-
+    $scope.user; // the logged in user
     $scope.start; // start location input
     $scope.end; // end location input
     $scope.map; //store map
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'walking';
 
-    $scope.logout = () => {
-      Auth.delete();
-      $state.go('login');
+    $scope.username;
+    $scope.password;
+    $scope.activeUser; // true if a user is logged in
+    $scope.newUser = false; // true if a new user wants to sign up
+    $scope.invalid = false; // true if username/password is invalid
+
+    $scope.usernameNew;
+    $scope.passwordNew;
+
+    if ($localStorage.username) {
+      $scope.user = $localStorage.username;
+      $scope.activeUser = true;
+    } else {
+      $scope.user = null;
+      $scope.activeUser = false;
     }
+
+    $scope.showLoginForm = () => {
+      // displays the login form
+      $scope.newUser = false;
+      $scope.activeUser = false;
+    }
+
+    $scope.loginSubmit = (form) => {
+      if (form.$valid) {
+        $http({
+          method: 'POST',
+          url: '/login',
+          data: {
+            username: $scope.username,
+            password: $scope.password
+          }
+        }).then(result => {
+          console.log('Login result: ', result.data);
+          if (result.data.valid) {
+            /* if username and password are correct,
+               save to local storage and set active user */
+            $localStorage.username = $scope.username;
+            $scope.user = $scope.username;
+            $scope.activeUser = true;
+            $scope.username = '';
+            $scope.password = '';
+            $scope.invalid = false;
+          } else {
+            // show error message if credentials are invalid
+            $scope.password = '';
+            $scope.invalid= true;
+          }
+        }).catch(err => {
+          console.log('Error signing in: ', err);
+        })
+      }
+    };
+
+    $scope.showNewUserForm = () => {
+      // displays the sign-up form
+      $scope.newUser = true;
+      $scope.activeUser = false;
+    };
+
+    $scope.newUserSubmit = (form) => { // adds a new user to database
+      if (form.$valid) {
+        $http({
+          method: 'POST',
+          url: '/signup',
+          data: {
+            username: $scope.usernameNew,
+            password: $scope.passwordNew
+          }
+        }).then(result => {
+          console.log('Signup result: ', result.data);
+          if (result.data.valid) {
+            // if signup is valid, save user to local storage and redirect to '/main'
+            $localStorage.username = $scope.usernameNew;
+            $scope.user = $scope.usernameNew;
+            $scope.activeUser = true;
+            $scope.usernameNew = '';
+            $scope.passwordNew = '';
+            $scope.invalid = false;
+            $scope.newUser = false; // hides newUser div
+          } else {
+            // if invalid signup, show error message
+            $scope.passwordNew = '';
+            $scope.invalid = true;
+          }
+        }).catch(err => {
+          console.log('Error signing up: ', err);
+        })
+      }
+    }
+
+    $scope.logout = () => {
+      console.log('Logged out');
+      delete $localStorage.username;
+      $scope.user = null;
+      $scope.activeUser = false;
+      $scope.newUser = false;
+    }
+
+
+    // $scope.logout = () => {
+    //   Auth.delete();
+    //   $state.go('login');
+    // }
 
     // POST users' start and end locations to server
     $scope.submit = function(form) {

@@ -2,19 +2,19 @@ var app = angular.module('foodfood', ['ui.router', 'ngSanitize', 'ngStorage']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/main');
 
   $stateProvider
-  .state('login', {
-    url: '/login',
-    templateUrl: './views/login.html',
-    controller: 'loginController'
-  })
-  .state('signup', {
-    url: '/signup',
-    templateUrl: './views/signup.html',
-    controller: 'signupController'
-  })
+  // .state('login', {
+  //   url: '/login',
+  //   templateUrl: './views/login.html',
+  //   controller: 'loginController'
+  // })
+  // .state('signup', {
+  //   url: '/signup',
+  //   templateUrl: './views/signup.html',
+  //   controller: 'signupController'
+  // })
   .state('main', {
     url: '/main',
     templateUrl: './views/main.html',
@@ -48,7 +48,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     controller: function($scope, $state, Auth, $http, $localStorage) {
 
       if (!Auth.check()) {
-        $state.go('login');
+        console.log('Must log in to choose preferences!');
+        $state.go('main');
       } else {
         // a collection of user submitted preferences
         $scope.tags = [];
