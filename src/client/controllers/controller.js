@@ -1,13 +1,14 @@
 // controller for start & end inputs
 app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', '$localStorage', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, $localStorage) {
 
-  if (true === false) {
+  if (true === false) { // bypass the conditional statement; remove later
+
     // if a user is not logged in, redirect to login page
     console.log('You are not logged in!');
     $state.go('login');
 
   } else {
-    $scope.user = null; // the logged in user
+    $scope.user; // the logged in user
     $scope.start; // start location input
     $scope.end; // end location input
     $scope.map; //store map
@@ -16,12 +17,20 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
     $scope.username;
     $scope.password;
-    $scope.invalid = false; // true if username/password is invalid
-    $scope.activeUser = false; // true if a user is logged in
+    $scope.activeUser; // true if a user is logged in
     $scope.newUser = false; // true if a new user wants to sign up
+    $scope.invalid = false; // true if username/password is invalid
 
     $scope.usernameNew;
     $scope.passwordNew;
+
+    if ($localStorage.username) {
+      $scope.user = $localStorage.username;
+      $scope.activeUser = true;
+    } else {
+      $scope.user = null;
+      $scope.activeUser = false;
+    }
 
     $scope.showLoginForm = () => {
       // displays the login form

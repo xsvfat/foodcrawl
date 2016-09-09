@@ -48,7 +48,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     controller: function($scope, $state, Auth, $http, $localStorage) {
 
       if (!Auth.check()) {
-        $state.go('login');
+        console.log('Must log in to choose preferences!');
+        $state.go('main');
       } else {
         // a collection of user submitted preferences
         $scope.tags = [];
