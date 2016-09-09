@@ -113,11 +113,13 @@ module.exports = {
 
 
       User.findOne({
-        username: req.body.user || 'ZolayvarE',
+        username: req.body.user,
       }).then(function (response) {
+
+        var preferences = response.preferences || [];
         
         // Call getRestaurants along the returned route.
-        module.exports.getRestaurants(req, res, routesArray, response.preferences);
+        module.exports.getRestaurants(req, res, routesArray, preferences);
 
       }).catch(function (error) {
         
