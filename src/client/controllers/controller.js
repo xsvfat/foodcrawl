@@ -7,7 +7,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $state.go('login');
 
   } else {
-
+    $scope.user = null; // the logged in user
     $scope.start; // start location input
     $scope.end; // end location input
     $scope.map; //store map
@@ -18,6 +18,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.password;
     $scope.invalid = false; // true if username/password is invalid
     $scope.activeUser = false; // true if a user is logged in
+
     $scope.loginSubmit = (form) => {
       if (form.$valid) {
         $http({
@@ -33,20 +34,30 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             /* if username and password are correct,
                save to local storage and set active user */
             $localStorage.username = $scope.username;
+            $scope.user = $scope.username;
             $scope.activeUser = true;
+            $scope.username = '';
+            $scope.password = '';
           } else {
+            // show error message if credentials are invalid
             $scope.password = '';
             $scope.invalid='true';
           }
         })
       }
     }
-
-
+    
     $scope.logout = () => {
-      Auth.delete();
-      $state.go('login');
+      delete $localStorage.username;
+      $scope.user = null;
+      $scope.activeUser = false;
     }
+
+
+    // $scope.logout = () => {
+    //   Auth.delete();
+    //   $state.go('login');
+    // }
 
     // POST users' start and end locations to server
     $scope.submit = function(form) {
