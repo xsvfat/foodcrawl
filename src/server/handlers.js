@@ -276,7 +276,7 @@ module.exports = {
     })
 
     .catch(error => {
-      console.log('Error getting addresses: ', erorr);
+      console.log('Error getting addresses: ', error);
     })
   },
 
