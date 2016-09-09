@@ -113,7 +113,7 @@ module.exports = {
 
 
       User.findOne({
-        username: 'ZolayvarE',
+        username: req.body.user || 'ZolayvarE',
       }).then(function (response) {
         
         // Call getRestaurants along the returned route.
