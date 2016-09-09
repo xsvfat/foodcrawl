@@ -2,19 +2,19 @@ var app = angular.module('foodfood', ['ui.router', 'ngSanitize', 'ngStorage']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/main');
 
   $stateProvider
-  .state('login', {
-    url: '/login',
-    templateUrl: './views/login.html',
-    controller: 'loginController'
-  })
-  .state('signup', {
-    url: '/signup',
-    templateUrl: './views/signup.html',
-    controller: 'signupController'
-  })
+  // .state('login', {
+  //   url: '/login',
+  //   templateUrl: './views/login.html',
+  //   controller: 'loginController'
+  // })
+  // .state('signup', {
+  //   url: '/signup',
+  //   templateUrl: './views/signup.html',
+  //   controller: 'signupController'
+  // })
   .state('main', {
     url: '/main',
     templateUrl: './views/main.html',

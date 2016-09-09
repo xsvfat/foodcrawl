@@ -58,7 +58,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       $scope.newUser = true;
     };
 
-    $scope.newUserSubmit = (form) => {
+    $scope.newUserSubmit = (form) => { // adds a new user to database
       if (form.$valid) {
         $http({
           method: 'POST',
