@@ -234,14 +234,31 @@ module.exports = {
   },
 
   /*
-   * Input: 
-   * Output: 
-   * Description: Returns a list of all user preferences
+   * Input: String
+   * Output: Array
+   * Description: Returns a list of addresses for a specific user
    */
   getAddresses: (req, res, next) => {
-    console.log(req.query.user);
-    Address.findOne();
-    res.send(['waddup']);
+    let user = req.query.user;
+
+    User.findOne({username: user})
+    .then(user => {
+      if (user) {
+        return user;
+      } else {
+        console.log('No User');
+      }
+    })
+    .then(user => {
+      return Address.find({user: user._id});
+    })
+    .then(addresses => {
+      console.log('Addresses: ', addresses);
+      res.send(addresses);
+    })
+    .catch(error => {
+      console.log('Error getting addresses: ', erorr);
+    })
   },
 
   /*
@@ -250,11 +267,13 @@ module.exports = {
    * Description: 
    */
   saveAddress: (req, res, next) => {
-
+    // new Address({
+    //   user: user._id,
+    //   address: ['hey','sup','yo']
+    // })
+    // .save()
+    // .then((result)=> {
+    //   console.log('SAVED RESULT: ', result);
+    // })
   }
 };
-
-
-
-
-
