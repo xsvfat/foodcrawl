@@ -12,12 +12,12 @@
   </form>
 
   <div id='places'>
-    <span ng-click='check()'>Addresses</span>
+    <span>Addresses</span>
     <div ng-repeat='place in places'>
       <span>{{place.label}}</span>
-      <span>{{place.lineOne}}</span>
-      <span>{{place.lineTWo}}</span>
-      <span>{{place.lineTwo}}</span>
+      <span>{{place.address[0]}}</span>
+      <span>{{place.address[1]}}</span>
+      <span>{{place.address[2]}}</span>
     </div>
   </div>
 

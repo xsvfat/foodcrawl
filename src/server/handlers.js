@@ -241,6 +241,7 @@ module.exports = {
   getAddresses: (req, res, next) => {
     let user = req.query.user;
 
+    //get user id
     User.findOne({username: user})
     .then(user => {
       if (user) {
@@ -249,13 +250,16 @@ module.exports = {
         console.log('No User');
       }
     })
+
+    //search by addresses user id
     .then(user => {
       return Address.find({user: user._id});
     })
+
     .then(addresses => {
-      console.log('Addresses: ', addresses);
       res.send(addresses);
     })
+    
     .catch(error => {
       console.log('Error getting addresses: ', erorr);
     })

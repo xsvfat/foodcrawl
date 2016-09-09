@@ -1,5 +1,5 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', 'Addresses', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, Addresses) {
+app.controller('inputsController', ['$scope', '$http', '$state', '$sce', '$localStorage', 'RestaurantAndRoute', 'Auth', 'Addresses', function($scope, $http, $state, $sce, $localStorage, RestaurantAndRoute, Auth, Addresses) {
 
   if (!Auth.check()) {
     // if a user is not logged in, redirect to login page
@@ -13,6 +13,17 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.map; //store map
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'walking';
+    $scope.places = [];
+
+    //Set any retrieved addresses
+    $scope.getAddresses = () => {
+      Addresses.getAddresses().then(addresses => {
+        $scope.places = addresses.data;
+      });
+    };
+
+    //get addresses when logging in
+    $scope.getAddresses();
 
     $scope.logout = () => {
       Auth.delete();
@@ -63,27 +74,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       RestaurantAndRoute.openInfoWindow($scope.map, restaurant.name);
     };
 
-    $scope.places = [{
-      label: 'hey',
-      lineOne: 'yo',
-      lineTwo: 'dawg',
-      lineThree: 'sup'
-    }, {
-      label: 'hey',
-      lineOne: 'yo',
-      lineTwo: 'dawg',
-      lineThree: 'sup'
-    }, {
-      label: 'hey',
-      lineOne: 'yo',
-      lineTwo: 'dawg',
-      lineThree: 'sup'
-    }];
-
-    $scope.check = () => {
-      console.log('checking');
-      Addresses.getAddresses();
-    };
   }
 
 }]);

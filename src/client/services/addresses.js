@@ -2,24 +2,18 @@ app.factory('Addresses', ['$http', '$localStorage', function($http, $localStorag
   let addresses = [];
 
   return {
+    //Gets an array of addresses
     getAddresses: () => {
-      console.log('Local storage: ', $localStorage.username);
-
-      $http({
+      return $http({
         method: 'GET',
         url: '/addresses',
         params: { 
           user: $localStorage.username
         }
       })
-      .then((addresses) => {
-        console.log('RETURNED ADDRESSES: ', addresses);
-        return addresses;
-      })
-      .catch((error) => {
+      .catch(error => {
         console.log('Error getting user addreses: ', error);
-      })
-
+      });
     },
 
     saveAddress: () => {
