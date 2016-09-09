@@ -111,8 +111,20 @@ module.exports = {
       // specifically get Array of routes.
       var routesArray = JSON.parse(results.body).routes;
 
-      // Call getRestaurants along the returned route.
-      module.exports.getRestaurants(req, res, routesArray);
+
+      User.findOne({
+        username: 'ZolayvarE',
+      }).then(function (response) {
+        
+        // Call getRestaurants along the returned route.
+        module.exports.getRestaurants(req, res, routesArray, response.preferences);
+
+      }).catch(function (error) {
+        
+        // Call getRestaurants along the returned route.
+        module.exports.getRestaurants(req, res, routesArray);
+
+      });
     })
     .catch(err => {
       console.log('Error requesting routes: ', err);
@@ -126,8 +138,8 @@ module.exports = {
    * Description: Takes in the route object returned by Google's API,
    *              and returns an array of restaurant objects from Yelp.
    */
-  getRestaurants: (req, res, routesArray) => {
-
+  getRestaurants: (req, res, routesArray, preferences) => {
+    console.log(preferences)
     // Object to be returned to the client. 
     // Stores route and restaurants in two seperate arrays.
     var responseObject = {
@@ -205,7 +217,7 @@ module.exports = {
         'radius_filter': Math.min((step.distance / 2), 39999),
         'll': `${step.midpoint.lat},${step.midpoint.lng}`,
         // 'category_filter': 'food',
-        'term': 'restaurant'
+        'term': 'restaurant ' + preferences.join(' ')
       };
 
       // Query Yelp's API.
