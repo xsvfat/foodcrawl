@@ -14,6 +14,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'walking';
 
+    $scope.activeUser = true;
+
     $scope.logout = () => {
       Auth.delete();
       $state.go('login');
