@@ -280,6 +280,7 @@ module.exports = {
       return new Address({
         user: user._id,
         //address lines
+        label: address.label,
         address: [address.one, address.two, address.three]
       }).save();
     })

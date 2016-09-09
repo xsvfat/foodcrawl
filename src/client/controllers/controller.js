@@ -21,7 +21,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', '$local
       three: ''
     };
 
-    //Set any retrieved addresses
+    //set any retrieved addresses
     $scope.getAddresses = () => {
       Addresses.getAddresses()
       .then(addresses => {
@@ -32,7 +32,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', '$local
     //get addresses when logging in
     $scope.getAddresses();
 
-    //Add an address, then refresh addresses
+    //add an address, then refresh addresses
     $scope.saveAddress = (address) => {
       if (address.$valid) {
         Addresses.saveAddress($scope.address)
@@ -40,6 +40,12 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', '$local
           $scope.getAddresses();
         })
       }
+    };
+
+    //add address to appropriate field
+    $scope.addAddress = (address) => {
+      let combinedAddress = `${address.address[0]} ${address.address[1]} ${address.address[2]}`;
+      $scope.start === undefined ? $scope.start = combinedAddress : $scope.end = combinedAddress;
     };
 
     $scope.logout = () => {

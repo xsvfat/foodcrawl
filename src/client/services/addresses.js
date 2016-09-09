@@ -1,6 +1,4 @@
 app.factory('Addresses', ['$http', '$localStorage', function($http, $localStorage) {
-  let addresses = [];
-
   return {
     //Gets an array of addresses
     getAddresses: () => {

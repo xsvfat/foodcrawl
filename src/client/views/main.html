@@ -13,7 +13,7 @@
 
   <div id='places'>
     <span>Addresses</span>
-    <div ng-repeat='place in places'>
+    <div ng-repeat='place in places' ng-click='addAddress(place)'>
       <span>{{place.label}}</span>
       <span>{{place.address[0]}}</span>
       <span>{{place.address[1]}}</span>
