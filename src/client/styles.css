@@ -100,20 +100,29 @@ tr th {
 
 .rightSide {
   float: right;
+  text-align: right;
 }
 
-.rightSide h4, .rightSide p {
-  margin: 3px 10px;
-  float: right;
+.rightSide span {
+  font-size: 12px;
 }
+
+.rightSide p {
+  margin: 0px;
+}
+
 .rightSide h4 {
+  margin: 3px 10px;
+  /*float: right;*/
   font-weight: bold;
   font-size: 1.2em;
 }
 
-.header h2 {
+.header h1 {
   margin: 0px 15px;
-  padding: 15px 0px;
+  padding: 25px 0px;
+  font-size: 2.2em;
+  font-weight: bold;
 }
 
 .header {
