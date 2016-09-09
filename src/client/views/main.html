@@ -54,6 +54,31 @@
   </form>
 
   <!-- <button id='logout' ng-click='logout()'>Logout</button> -->
+  
+  <div id='places'>
+    <h4>Addresses</h4>
+    <div ng-repeat='place in places' ng-click='addAddress(place)' class='address'>
+      <span class='addressLabel'>{{place.label}}</span><br>
+      <span class='addressLineOne'>{{place.address[0]}}</span><br>
+      <span class='addressLineTwo'>{{place.address[1]}}</span><br>
+      <span class='addressLineThree'>{{place.address[2]}}</span>
+    </div>
+  </div>
+
+  <form id='addAddress' name='newAddress' ng-submit='saveAddress(newAddress)'>
+    <fieldset>
+      <legend>Add an Address</legend>
+      <h4>Label:</h4>
+      <input name='label' type='text' ng-model='address.label' required><br>
+      <h4>Address:</h4>
+      <input name='lineOne' type='text' ng-model='address.one' required><br>
+      <input name='lineTwo' type='text' ng-model='address.two'><br>
+      <input name='lineThree' type='text' ng-model='address.three' required><br>
+      <input type='submit'>
+    </fieldset>
+  </form>
+
+  <button id='logout' ng-click='logout()'>Logout</button>
   <a ui-sref='options' class='blockDisplay'>Options</a>
 
   <div>

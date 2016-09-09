@@ -20,11 +20,13 @@ app.use('/', express.static(path.join(__dirname, '../client')));
 app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
 
 app.get('/options', handlers.getOptions); // retrieves user prefs
+app.get('/addresses', handlers.getAddresses); //retrieve user addresses
 
 app.post('/maps/submit', handlers.submit);
 app.post('/login', handlers.login);
 app.post('/signup', handlers.signup);
 app.post('/options', handlers.saveOptions); // saves user prefs
+app.post('/addresses', handlers.saveAddress); //save an address
 
 app.listen(8000);
 console.log('Now listening on 127.0.0.1:8000')
