@@ -10,7 +10,7 @@ var userSchema = new mongoose.Schema({
   preferences: [String],
   locations: [String],
   addresses: [{
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Address'
   }]
 });
@@ -30,13 +30,11 @@ var restaurantSchema = new mongoose.Schema({
 
 var addressSchema = new mongoose.Schema({
   user: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
   label: String,
-  lineOne: String,
-  lineTwo: String,
-  lineThree: String
+  address: [String]
 });
 
 var User = mongoose.model('User', userSchema);
