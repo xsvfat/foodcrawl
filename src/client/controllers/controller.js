@@ -17,8 +17,11 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.username;
     $scope.password;
     $scope.invalid = false; // true if username/password is invalid
-    $scope.activeUser = true; // true if a user is logged in
+    $scope.activeUser = false; // true if a user is logged in
     $scope.newUser = false; // true if a new user wants to sign up
+
+    $scope.usernameNew;
+    $scope.passwordNew;
 
     $scope.loginSubmit = (form) => {
       if (form.$valid) {
@@ -39,11 +42,49 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             $scope.activeUser = true;
             $scope.username = '';
             $scope.password = '';
+            $scope.invalid = false;
           } else {
             // show error message if credentials are invalid
             $scope.password = '';
-            $scope.invalid='true';
+            $scope.invalid= true;
           }
+        }).catch(err => {
+          console.log('Error signing in: ', err);
+        })
+      }
+    };
+
+    $scope.showNewUserForm = () => {
+      $scope.newUser = true;
+    };
+
+    $scope.newUserSubmit = (form) => {
+      if (form.$valid) {
+        $http({
+          method: 'POST',
+          url: '/signup',
+          data: {
+            username: $scope.usernameNew,
+            password: $scope.passwordNew
+          }
+        }).then(result => {
+          console.log('Signup result: ', result.data);
+          if (result.data.valid) {
+            // if signup is valid, save user to local storage and redirect to '/main'
+            $localStorage.username = $scope.usernameNew;
+            $scope.user = $scope.usernameNew;
+            $scope.activeUser = true;
+            $scope.usernameNew = '';
+            $scope.passwordNew = '';
+            $scope.invalid = false;
+            $scope.newUser = false; // hides newUser div
+          } else {
+            // if invalid signup, show error message
+            $scope.passwordNew = '';
+            $scope.invalid = true;
+          }
+        }).catch(err => {
+          console.log('Error signing up: ', err);
         })
       }
     }

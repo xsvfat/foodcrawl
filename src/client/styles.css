@@ -121,6 +121,15 @@ tr th {
   font-weight: bold;
   font-size: 1.2em;
 }
+.rightSide h4 span {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 1.0em;
+}
+.rightSide h4 span:hover {
+  cursor: pointer;
+  color: blue;
+}
 
 .rightSide .bold {
   font-weight: bold;
