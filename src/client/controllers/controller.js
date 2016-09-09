@@ -38,6 +38,13 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', '$local
         Addresses.saveAddress($scope.address)
         .then(() => {
           $scope.getAddresses();
+          //clear inputs
+          $scope.address = {
+            label: '',
+            one: '',
+            two: '',
+            three: ''
+          };
         })
       }
     };

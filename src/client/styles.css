@@ -93,3 +93,16 @@ tr th {
 .blockDisplay {
   display: block;
 }
+
+#places, #addAddress {
+  margin: 15px 15px;
+}
+
+.address {
+  display: inline-block;
+  margin: 10px 10px;
+}
+
+.addressLabel {
+  font-weight: bold;
+}
