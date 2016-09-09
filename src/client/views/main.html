@@ -57,12 +57,16 @@
   <a ui-sref='options' class='blockDisplay'>Options</a>
 
   <div>
-    <div ui-view='restaurantList' id='restaurantDiv'>
+    <div class='inline'>
+      <div ui-view='restaurantList' id='restaurantDiv'>
+      </div>
     </div>
+    <div class='inline'>
     <!-- This is now hard coding the map element rather than using a ui-view -->
-    <div id='mapContainer'>
-      <h4>MAP</h4>
-      <div id='map'>
+      <div id='mapContainer'>
+        <h4>MAP</h4>
+        <div id='map'>
+        </div>
       </div>
     </div>
     <!-- <div ui-view='map'>
