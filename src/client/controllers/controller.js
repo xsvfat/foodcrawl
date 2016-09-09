@@ -46,8 +46,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
         })
       }
     }
-    
+
     $scope.logout = () => {
+      console.log('Logged out');
       delete $localStorage.username;
       $scope.user = null;
       $scope.activeUser = false;

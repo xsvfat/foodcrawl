@@ -25,7 +25,7 @@ module.exports = {
     User.findOne({username: username, password: password}).then(user => {
       if (user) {
         // sets the current session to the logged in user
-        req.session.username = username;
+        // req.session.username = username;
         res.send({message: 'Successfully signed in.', valid: true});
       } else {
         res.send({message: 'Invalid username and password.', valid: false});
@@ -42,7 +42,7 @@ module.exports = {
       } else {
         // adds a new user to the database
         new User({username: username, password: password}).save().then(user => {
-          req.session.username = username;
+          // req.session.username = username;
           res.send({message: 'New user added to database', valid: true});
         })
       }
