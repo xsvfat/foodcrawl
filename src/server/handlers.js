@@ -111,8 +111,20 @@ module.exports = {
       // specifically get Array of routes.
       var routesArray = JSON.parse(results.body).routes;
 
-      // Call getRestaurants along the returned route.
-      module.exports.getRestaurants(req, res, routesArray);
+
+      User.findOne({
+        username: req.body.user,
+      }).then(function (response) {
+
+        // Call getRestaurants along the returned route.
+        module.exports.getRestaurants(req, res, routesArray, response.preferences);
+
+      }).catch(function (error) {
+        
+        // Call getRestaurants along the returned route.
+        module.exports.getRestaurants(req, res, routesArray);
+
+      });
     })
     .catch(err => {
       console.log('Error requesting routes: ', err);
@@ -126,8 +138,10 @@ module.exports = {
    * Description: Takes in the route object returned by Google's API,
    *              and returns an array of restaurant objects from Yelp.
    */
-  getRestaurants: (req, res, routesArray) => {
+  getRestaurants: (req, res, routesArray, preferences) => {
+    preferences = preferences || [];
 
+    console.log(preferences.join(' ') + ' restaurants');
     // Object to be returned to the client. 
     // Stores route and restaurants in two seperate arrays.
     var responseObject = {
@@ -197,15 +211,14 @@ module.exports = {
 
     // Makes a unique Yelp query for each step along the given route.
     segmentsArray.forEach(function (step, index) {
-      if (index > 20) { return; }
       // console.log(step);
 
       // Establish parameters for each individual yelp query.
       let searchParameters = {
-        'radius_filter': Math.min((step.distance / 2), 39999),
+        'radius_filter': Math.min((step.distance / 1.7), 39999),
         'll': `${step.midpoint.lat},${step.midpoint.lng}`,
-        // 'category_filter': 'food',
-        'term': 'restaurant'
+        'category_filter': 'restaurants',
+        'term': preferences.join('_') + '_restaurant'
       };
 
       // Query Yelp's API.
@@ -215,10 +228,12 @@ module.exports = {
         .then(function (searchResults) {
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(searchResults.businesses);
-          
+
+          responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
+
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= Math.min(21, segmentsArray.length) ? res.send(responseObject) : null;
+          queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
         }) 
 
         // Error callback
@@ -227,7 +242,7 @@ module.exports = {
 
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= Math.min(21, segmentsArray.length) ? res.send(responseObject) : null;
+          queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
         });
     });
   },
