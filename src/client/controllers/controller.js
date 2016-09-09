@@ -1,7 +1,7 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth) {
+app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', '$localStorage', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, $localStorage) {
 
-  if (!Auth.check()) {
+  if (true === false) {
     // if a user is not logged in, redirect to login page
     console.log('You are not logged in!');
     $state.go('login');
@@ -14,7 +14,34 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'walking';
 
-    $scope.activeUser = true;
+    $scope.username;
+    $scope.password;
+    $scope.invalid = false; // true if username/password is invalid
+    $scope.activeUser = false; // true if a user is logged in
+    $scope.loginSubmit = (form) => {
+      if (form.$valid) {
+        $http({
+          method: 'POST',
+          url: '/login',
+          data: {
+            username: $scope.username,
+            password: $scope.password
+          }
+        }).then(result => {
+          console.log('Login result: ', result.data);
+          if (result.data.valid) {
+            /* if username and password are correct,
+               save to local storage and set active user */
+            $localStorage.username = $scope.username;
+            $scope.activeUser = true;
+          } else {
+            $scope.password = '';
+            $scope.invalid='true';
+          }
+        })
+      }
+    }
+
 
     $scope.logout = () => {
       Auth.delete();

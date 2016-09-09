@@ -6,20 +6,20 @@
     </div>
 
 <!-- Show login option for users who want to login -->
-    <div class='inline rightSide' ng-show='activeUser'>
+    <div class='inline rightSide' ng-hide='activeUser'>
       <div>
         <h4>Log in</h4>
       </div>
       <div>
-        <form>
-          <span>Username: </span><input required/><br>
-          <span>Password: </span><input required/><br>
-          <input type='submit' />
+        <form name='loginForm' ng-submit='loginSubmit(loginForm)'>
+          <span>Username: </span><input ng-model='username' required/><br>
+          <span>Password: </span><input ng-model='password' type='password' required/><br>
+          <span class='invalid' ng-show='invalid'>Invalid username and password!</span><input type='submit' />
         </form>
       </div>
     </div>
 
-    <div class='inline rightSide' ng-hide='activeUser'>
+    <div class='inline rightSide' ng-show='activeUser'>
       <button>Log out</button>
     </div>
 
