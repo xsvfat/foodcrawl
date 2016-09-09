@@ -1,5 +1,5 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', '$localStorage', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, $localStorage) {
+app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, $localStorage, Addresses) {
 
   if (true === false) { // bypass the conditional statement; remove later
 
@@ -14,6 +14,47 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.map; //store map
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'walking';
+    $scope.places = [];
+    $scope.address = {
+      label: '',
+      one: '',
+      two: '',
+      three: ''
+    };
+
+    //set any retrieved addresses
+    $scope.getAddresses = () => {
+      Addresses.getAddresses()
+      .then(addresses => {
+        $scope.places = addresses.data;
+      });
+    };
+
+    //get addresses when logging in
+    $scope.getAddresses();
+
+    //add an address, then refresh addresses
+    $scope.saveAddress = (address) => {
+      if (address.$valid) {
+        Addresses.saveAddress($scope.address)
+        .then(() => {
+          $scope.getAddresses();
+          //clear inputs
+          $scope.address = {
+            label: '',
+            one: '',
+            two: '',
+            three: ''
+          };
+        })
+      }
+    };
+
+    //add address to appropriate field
+    $scope.addAddress = (address) => {
+      let combinedAddress = `${address.address[0]} ${address.address[1]} ${address.address[2]}`;
+      $scope.start === undefined ? $scope.start = combinedAddress : $scope.end = combinedAddress;
+    };
 
     $scope.username;
     $scope.password;
@@ -163,6 +204,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.showInfoWindow = (restaurant) => {
       RestaurantAndRoute.openInfoWindow($scope.map, restaurant.name);
     };
+
   }
 
 }]);

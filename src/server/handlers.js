@@ -7,6 +7,7 @@ var Yelp = require('yelp');
 var session = require('express-session');
 var _ = require('lodash');
 var User = require('./dbconfig/schema.js').User;
+var Address = require('./dbconfig/schema.js').Address;
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -246,9 +247,63 @@ module.exports = {
         });
     });
   },
+
+  /**
+   * Input: String
+   * Output: Array
+   * Description: Returns a list of addresses for a specific user
+   */
+  getAddresses: (req, res, next) => {
+    let user = req.query.user;
+
+    //get user id
+    User.findOne({username: user})
+    .then(user => {
+      if (user) {
+        return user;
+      } else {
+        console.log('No User');
+      }
+    })
+
+    //search by addresses user id
+    .then(user => {
+      return Address.find({user: user._id});
+    })
+
+    .then(addresses => {
+      res.send(addresses);
+    })
+
+    .catch(error => {
+      console.log('Error getting addresses: ', error);
+    })
+  },
+
+  /**
+   * Input: Object
+   * Output: Undefined
+   * Description: Saves a new address
+   */
+  saveAddress: (req, res, next) => {
+    let address = req.body;
+
+    //Get user id by username
+    User.findOne({username: address.user})
+    .then(user => {
+      //create new address
+      return new Address({
+        user: user._id,
+        //address lines
+        label: address.label,
+        address: [address.one, address.two, address.three]
+      }).save();
+    })
+    .then(() => {
+      res.send();
+    })
+    .catch(error => {
+      console.log('Error saving address: ', error);
+    })
+  }
 };
-
-
-
-
-

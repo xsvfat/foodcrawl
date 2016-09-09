@@ -99,6 +99,7 @@ tr th {
   display: block;
 }
 
+<<<<<<< HEAD
 .inline {
   display: inline-block;
 }
@@ -156,4 +157,17 @@ tr th {
 
 .header button {
   margin: 90px 8px 0px 0px;
+}
+
+#places, #addAddress {
+  margin: 15px 15px;
+}
+
+.address {
+  display: inline-block;
+  margin: 10px 10px;
+}
+
+.addressLabel {
+  font-weight: bold;
 }
