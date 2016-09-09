@@ -70,6 +70,7 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       }).then(data => {
 
         // filter out any restaurants farther than 60m
+        /*** This isn't filtering by distance anymore ***/
         restaurants = data.data.restaurants.filter(restaurant => {
           return restaurant.distance;
         })
