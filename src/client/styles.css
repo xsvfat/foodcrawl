@@ -199,3 +199,19 @@ td {
 .addressLabel {
   font-weight: bold;
 }
+
+.showDiv {
+  height: 400px;
+  -webkit-transition: all 1s ease;
+}
+.hideDiv {
+  height: 0px;
+  -webkit-transition: all 1s ease;
+}
+
+.hoverClick:hover {
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+  color: #ED6A5A;
+}

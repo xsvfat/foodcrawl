@@ -155,6 +155,18 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       $scope.newUser = false;
     }
 
+    $scope.showOptions = false;
+    $scope.toggleOptions = () => {
+      $scope.showOptions = !$scope.showOptions;
+    }
+
+    // $scope.classOptions = 'hideDiv'
+    // $scope.toggleOptions = () => {
+    //   console.log('options');
+    //   console.log($scope.classOptions);
+    //   $scope.classOptions = $scope.classOptions === 'hideDiv' ? 'showDiv' : 'hideDiv';
+    // }
+
 
     // $scope.logout = () => {
     //   Auth.delete();

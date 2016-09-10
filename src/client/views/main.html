@@ -85,7 +85,11 @@
     </fieldset>
   </form> -->
 
-  <a ui-sref='options' class='blockDisplay'>Options</a>
+  <!-- <a ui-sref='options' class='blockDisplay'>Options</a> -->
+  <span class='hoverClick' ng-click='toggleOptions()'>Options</span>
+  <div id='optionsContainer' ng-show='showOptions'>
+    <div ui-view='options'></div>
+  </div>
 
 
 <!-- - - - -Restaurant list and map- - - - -->
