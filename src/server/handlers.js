@@ -31,7 +31,7 @@ module.exports = {
         bcrypt.compare(password, user.password, function (error, result) {
           if (error) {
             console.log(error);
-            res.send({message: 'Error logging in.', valid: false});
+            res.send({message: 'Error signing in.', valid: false});
           } else if (result) {
             res.send({message: 'Successfully signed in.', valid: true});
           } else {
