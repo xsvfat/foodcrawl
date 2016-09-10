@@ -170,6 +170,14 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
       openInfoWindows.push(infoWindows[markerIndex]);
       //open info window
       infoWindows[markerIndex].open(map, markers[markerIndex]);
+    },
+
+    //Clean old data
+    clearStoredRestaurants: () => {
+      restaurants = [];
+      markers = [];
+      infoWindows = [];
+      openInfoWindows = [];
     }
   }
 }])
