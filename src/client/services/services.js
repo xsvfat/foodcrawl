@@ -1,4 +1,4 @@
-app.factory('RestaurantAndRoute', ['$http', function($http) {
+app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $localStorage) {
 
   var restaurants = [];
   var markers = [];
@@ -66,6 +66,8 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
           start: origin,
           end: destination,
           mode: mode,
+          user: $localStorage.username,
+
         }
       }).then(data => {
 

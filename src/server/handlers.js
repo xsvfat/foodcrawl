@@ -83,7 +83,7 @@ module.exports = {
       } else {
         res.send({message: 'Preferences updated.', valid: true});
       }
-    })
+    });
   },
 
   getOptions: (req, res, next) => {
@@ -93,7 +93,7 @@ module.exports = {
       res.send(user.preferences);
     }).catch(err => {
       res.send('Error retrieving preferences.');
-    })
+    });
   },
 
 
@@ -104,7 +104,7 @@ module.exports = {
    *              containing an array of routes in promise form.
    */
   getRoutes: function (origin, destination, mode) {
-    console.log(mode);
+
     // Concatenate query parameters into HTTP request friendly string.
     let queryString = qs.stringify({
       origin: origin,
@@ -131,7 +131,6 @@ module.exports = {
       // Parse nested object returned by Google's API to
       // specifically get Array of routes.
       var routesArray = JSON.parse(results.body).routes;
-
 
       User.findOne({
         username: req.body.user,
@@ -162,7 +161,7 @@ module.exports = {
   getRestaurants: (req, res, routesArray, preferences) => {
     preferences = preferences || [];
 
-    console.log(preferences.join(' ') + ' restaurants');
+    console.log('Querying Yelp with the following search term: \n"' + preferences.join(' ') + ' restaurants"');
     // Object to be returned to the client. 
     // Stores route and restaurants in two seperate arrays.
     var responseObject = {
@@ -239,7 +238,7 @@ module.exports = {
         'radius_filter': Math.min((step.distance / 1.7), 39999),
         'll': `${step.midpoint.lat},${step.midpoint.lng}`,
         'category_filter': 'restaurants',
-        'term': preferences.join('_') + '_restaurant'
+        'term': preferences.join('_') + '_restaurants'
       };
 
       // Query Yelp's API.
@@ -283,26 +282,23 @@ module.exports = {
 
     //get user id
     User.findOne({username: user})
-    .then(user => {
-      if (user) {
-        return user;
-      } else {
-        console.log('No User');
-      }
-    })
 
     //search by addresses user id
     .then(user => {
-      return Address.find({user: user._id});
-    })
-
-    .then(addresses => {
-      res.send(addresses);
+      if (user) {
+        Address.find({user: user._id})
+          .then(addresses => {
+            res.send(addresses);
+          });
+      } else {
+        res.send([]);
+      }
     })
 
     .catch(error => {
       console.log('Error getting addresses: ', error);
-    })
+      res.send([]);
+    });
   },
 
   /**
@@ -329,6 +325,6 @@ module.exports = {
     })
     .catch(error => {
       console.log('Error saving address: ', error);
-    })
+    });
   }
 };
