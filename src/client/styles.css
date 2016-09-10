@@ -108,7 +108,7 @@ td {
   font-weight: bold;
 }
 
-#tags {
+#tags, #addressesContainer {
   margin: 0px;
   margin-bottom: 4px;
   border: 1px solid black;
@@ -192,18 +192,47 @@ td {
 .header button {
   margin: 90px 8px 0px 0px;
 }
-
+/*
 #places, #addAddress {
   margin: 15px 15px;
+}
+*/
+
+#places h4 {
+  margin: 0px;
 }
 
 .address {
   display: inline-block;
-  margin: 10px 10px;
+  margin-left: 15px;
+  width: 175px;
+  border-radius: 5px;
+}
+
+.address:hover {
+  cursor: pointer;
+  color: #ED6A5A;
 }
 
 .addressLabel {
   font-weight: bold;
+  border-bottom: 1px solid black;  
+}
+
+.addressLocation {
+  font-size: 0.75em;
+}
+
+#addAddress h4 {
+  margin: 0px 0px 0px 20px;
+}
+
+#addAddress input {
+  margin-right: 20px;
+}
+
+#addAddress input:last-child {
+  margin-left: 15px;
 }
 
 .showDiv {
