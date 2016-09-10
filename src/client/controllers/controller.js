@@ -213,6 +213,11 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end, $scope.mode);
           }
           initMap();
+
+          //clear start and end inputs
+          $scope.start = undefined;
+          $scope.end = undefined;
+          
         }).catch(err => {
           console.log('Error submitting: ', err);
         })
