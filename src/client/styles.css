@@ -1,7 +1,9 @@
 #restaurantTable {
   border: 2px solid black;
   min-width: 200px;
-  margin: 10px;
+  margin: none;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-size: 0.6em;
 }
 .restaurant, .rating, .addressTable {
   border-top: 1px solid black;
@@ -13,7 +15,7 @@
 }
 
 #restaurantDiv {
-  max-height: 420px;
+  max-height: 500px;
   overflow-y: scroll;
   display: inline-block;
 }
@@ -22,9 +24,14 @@
   text-align: right;
 }
 
+#mapContainer {
+  width: 500px;
+  height: 500px;
+}
+
 #map {
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
 }
 
 #routeSearch {
@@ -33,6 +40,8 @@
 
 tr th {
   padding: 3px 10px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 #loginDiv h1, #signupDiv h1 {
