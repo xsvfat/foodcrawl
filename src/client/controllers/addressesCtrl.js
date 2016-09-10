@@ -1,4 +1,4 @@
-app.controller('addressesController', ['$scope', 'Addresses', function($scope, Addresses) {
+app.controller('addressesController', ['$scope', 'Addresses', '$rootScope', function($scope, Addresses, $rootScope) {
 
   $scope.places = []; // list of user's saved addresses
 
@@ -35,7 +35,7 @@ app.controller('addressesController', ['$scope', 'Addresses', function($scope, A
 
   //add address to appropriate field
   $scope.addAddress = (address) => {
-    $scope.start === undefined ? $scope.start = address.location : $scope.end = address.location;
+    $rootScope.start === undefined ? $rootScope.start = address.location : $rootScope.end = address.location;
   };
 
 }]);
