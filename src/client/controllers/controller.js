@@ -99,6 +99,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             $scope.username = '';
             $scope.password = '';
             $scope.invalid = false;
+            $scope.newUser = false;
+            $state.reload();
           } else {
             // show error message if credentials are invalid
             $scope.password = '';
@@ -136,6 +138,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             $scope.passwordNew = '';
             $scope.invalid = false;
             $scope.newUser = false; // hides newUser div
+            $state.reload();
           } else {
             // if invalid signup, show error message
             $scope.passwordNew = '';
@@ -153,7 +156,26 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       $scope.user = null;
       $scope.activeUser = false;
       $scope.newUser = false;
+      $state.reload();
     }
+
+    $scope.showOptions = false;
+    $scope.invalidOptions = false;
+    $scope.toggleOptions = () => {
+      if ($localStorage.username) {
+        $scope.showOptions = !$scope.showOptions;
+        $scope.invalidOptions = false;
+      } else {
+        $scope.invalidOptions = true;
+      }
+    }
+
+    // $scope.classOptions = 'hideDiv'
+    // $scope.toggleOptions = () => {
+    //   console.log('options');
+    //   console.log($scope.classOptions);
+    //   $scope.classOptions = $scope.classOptions === 'hideDiv' ? 'showDiv' : 'hideDiv';
+    // }
 
 
     // $scope.logout = () => {
@@ -163,9 +185,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
     // POST users' start and end locations to server
     $scope.submit = function(form) {
-      //clear out old data
-      RestaurantAndRoute.clearStoredRestaurants();
-      
+
       // to refresh states from main.map, need to redirect to main first
       $state.go('main');
 
