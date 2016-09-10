@@ -1,10 +1,12 @@
-<div>
-  <h1>Preferences</h1>
-  <hr></hr>
+<div id='optionsView'>
+  <!-- <h1>Preferences</h1> -->
+  <!-- <hr></hr> -->
+
   <div id='tags'>
+    <h4>Filters: </h4>
     <a class='pref' ng-repeat='tag in tags' ng-click='deleteTag(tag)'>{{tag}}</a>
   </div>
-  <hr></hr>
+  <!-- <hr></hr> -->
   <form ng-submit='submitTag()'>
     <input type='text' ng-model='prefs' required/>
     <input type='submit' />

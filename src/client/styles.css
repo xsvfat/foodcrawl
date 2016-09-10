@@ -1,6 +1,7 @@
 html, body {
   background-color: #E6EBE0;
   height: 100%;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
 #restaurantTable {
@@ -103,12 +104,15 @@ td {
 
 .pref:hover, a:hover {
   cursor: pointer;
-  background-color: #d39797;
+  background-color: #ED6A5A;
   font-weight: bold;
 }
 
 #tags {
-  margin: 15px 0px;
+  margin: 0px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 4px;
 }
 
 #savePref {
@@ -214,4 +218,8 @@ td {
   font-weight: bold;
   cursor: pointer;
   color: #ED6A5A;
+}
+
+#tags h4 {
+  margin: 0px 0px 0px 5px;
 }
