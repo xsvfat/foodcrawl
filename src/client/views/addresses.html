@@ -1,0 +1,26 @@
+<div id='addressesView'>
+
+<!-- - - - -List of user's saved addresses- - - - -->
+
+  <div id='places'>
+    <h4>Saved Addresses</h4>
+    <div ng-repeat='place in places' ng-click='addAddress(place)' class='address'>
+      <span class='addressLabel'>{{place.label}}</span><br>
+      <span class='addressLocation'>{{place.location}}</span>
+    </div>
+  </div>
+
+<!-- - - - -Form for user inputting addresses- - - - -->
+
+  <form id='addAddress' name='newAddress' ng-submit='saveAddress(newAddress)'>
+    <fieldset>
+      <legend>Add a new Address</legend>
+      <h4 class='inline'>Label:</h4>
+      <input class='inline' name='label' type='text' ng-model='address.label' required>
+      <h4 class='inline'>Address:</h4>
+      <input class='inline' name='location' type='text' ng-model='address.location' required>
+      <input type='submit'>
+    </fieldset>
+  </form>
+
+</div>

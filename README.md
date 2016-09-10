@@ -11,7 +11,8 @@ npm install
 ## Running the Server
 
 mongod  
-node src/server/server.js  
+npm start
+at 127.0.0.1:8000
 
 ## Testing
 
