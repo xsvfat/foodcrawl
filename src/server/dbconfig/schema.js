@@ -34,7 +34,7 @@ var addressSchema = new mongoose.Schema({
     ref: 'User'
   },
   label: String,
-  address: [String]
+  location: String
 });
 
 var User = mongoose.model('User', userSchema);

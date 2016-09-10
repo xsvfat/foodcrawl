@@ -17,9 +17,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.places = [];
     $scope.address = {
       label: '',
-      one: '',
-      two: '',
-      three: ''
+      location: '',
     };
 
     //set any retrieved addresses
@@ -42,9 +40,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
           //clear inputs
           $scope.address = {
             label: '',
-            one: '',
-            two: '',
-            three: ''
+            location: ''
           };
         })
       }
@@ -52,8 +48,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
     //add address to appropriate field
     $scope.addAddress = (address) => {
-      let combinedAddress = `${address.address[0]} ${address.address[1]} ${address.address[2]}`;
-      $scope.start === undefined ? $scope.start = combinedAddress : $scope.end = combinedAddress;
+      $scope.start === undefined ? $scope.start = address.location : $scope.end = address.location;
     };
 
     $scope.username;
