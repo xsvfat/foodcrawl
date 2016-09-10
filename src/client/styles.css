@@ -220,7 +220,7 @@ td {
 }
 .rightSide h4 span:hover {
   cursor: pointer;
-  color: blue;
+  color: #fff;
 }
 
 .rightSide .bold {
@@ -308,10 +308,16 @@ td {
 
 /*** Button Styles ***/
 .btn {
+	color: #fff;
   border-radius: 5px;
   display: inline-block;
   margin: 0;
 	border: 2px solid #fff;
   padding: 10px 30px;
 	background-color: transparent;
+}
+
+.btn:hover {
+	color: #5CA4A9;
+	background-color: #fff;
 }

@@ -4,8 +4,8 @@
     <a class='pref' ng-repeat='tag in tags' ng-click='deleteTag(tag)'>{{tag}}</a>
     <form ng-submit='submitTag()'>
       <input type='text' ng-model='prefs' required/>
-      <input type='submit' />
-      <button type='button' id='savePref' ng-click='save()'>Save and return</button>
+      <input type='submit' class='btn'/>
+      <button type='button' id='savePref' ng-click='save()' class='btn'>Save and return</button>
     </form>
   </div>
 </div>

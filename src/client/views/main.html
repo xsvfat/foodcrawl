@@ -15,7 +15,7 @@
         <form name='loginForm' ng-submit='loginSubmit(loginForm)'>
           <span>Username: </span><input ng-model='username' required/><br>
           <span>Password: </span><input ng-model='password' type='password' required/><br>
-          <span class='invalid' ng-show='invalid'>Invalid username and password!</span><input type='submit' value='Log in'/>
+          <span class='invalid' ng-show='invalid'>Invalid username and password!</span><input type='submit' value='Log in' class='btn'/>
         </form>
       </div>
     </div>
@@ -23,7 +23,7 @@
 <!-- Show logout option for logged in users -->
     <div class='inline rightSide' ng-show='activeUser && !newUser'>
       Logged in as <span class='bold'>{{user}}</span>
-      <button ng-click='logout()'>Log out</button>
+      <button ng-click='logout()' class='btn'>Log out</button>
     </div>
 
 <!-- Show sign-up for creating new account -->
