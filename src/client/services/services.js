@@ -94,7 +94,6 @@ app.factory('RestaurantAndRoute', ['$http', function($http) {
      */
     addMarkers: (map) => {
       restaurants.forEach((place) => {
-        if (!place.location.coordinate) { return; }
         let lat = place.location.coordinate.latitude;
         let lng = place.location.coordinate.longitude;
 

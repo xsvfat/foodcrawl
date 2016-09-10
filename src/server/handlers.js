@@ -227,8 +227,13 @@ module.exports = {
 
         // Sucess callback
         .then(function (searchResults) {
+
+          var validBusinesses = searchResults.businesses.filter(function (item) {
+            return !!item.location.coordinate;
+          })
+          
           // Add the returned businessees to the restauraunts array.
-          responseObject.restaurants = responseObject.restaurants.concat(searchResults.businesses);
+          responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
 
           responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
 
