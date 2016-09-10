@@ -15,6 +15,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       'options@main': {
         templateUrl: './views/options.html',
         controller: 'optionsController'
+      },
+      'addresses@main': {
+        templateUrl: './views/addresses.html',
+        controller: 'addressesController'
       }
     }
   })
