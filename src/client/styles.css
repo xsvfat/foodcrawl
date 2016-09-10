@@ -214,6 +214,10 @@ td {
   -webkit-transition: all 1s ease;
 }
 
+.small {
+  font-size: 0.8em;
+}
+
 .hoverClick:hover {
   text-decoration: underline;
   font-weight: bold;

@@ -156,8 +156,14 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     }
 
     $scope.showOptions = false;
+    $scope.invalidOptions = false;
     $scope.toggleOptions = () => {
-      $scope.showOptions = !$scope.showOptions;
+      if ($localStorage.username) {
+        $scope.showOptions = !$scope.showOptions;
+        $scope.invalidOptions = false;
+      } else {
+        $scope.invalidOptions = true;
+      }
     }
 
     // $scope.classOptions = 'hideDiv'
