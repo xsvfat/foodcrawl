@@ -89,17 +89,17 @@
 
 
 <!-- - - - -Restaurant list and map- - - - -->
-  <div>
-    <div class='inline'>
-      <div ui-view='restaurantList' id='restaurantDiv'>
+  <div id='restaurantAndMap'>
+    <div class='inline' id='restaurantDiv'>
+      <div ui-view='restaurantList'>
       </div>
     </div>
-    <div class='inline'>
-      <div id='mapContainer'>
+    <div class='inline' id='mapContainer'>
+      <!-- <div> -->
         <!-- <h4>MAP</h4> -->
         <div id='map'>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
   </div>
 
