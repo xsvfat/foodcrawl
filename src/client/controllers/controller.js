@@ -99,6 +99,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             $scope.username = '';
             $scope.password = '';
             $scope.invalid = false;
+            $state.reload();
           } else {
             // show error message if credentials are invalid
             $scope.password = '';
@@ -136,6 +137,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             $scope.passwordNew = '';
             $scope.invalid = false;
             $scope.newUser = false; // hides newUser div
+            $state.reload();
           } else {
             // if invalid signup, show error message
             $scope.passwordNew = '';
@@ -153,6 +155,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       $scope.user = null;
       $scope.activeUser = false;
       $scope.newUser = false;
+      $state.reload();
     }
 
     $scope.showOptions = false;
