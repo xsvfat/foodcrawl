@@ -115,6 +115,7 @@ td {
   border-radius: 5px;
   padding: 4px;
   background-color: #9BC1BC;
+  padding-left: 15px;
 }
 
 #savePref {
@@ -192,11 +193,6 @@ td {
 .header button {
   margin: 90px 8px 0px 0px;
 }
-/*
-#places, #addAddress {
-  margin: 15px 15px;
-}
-*/
 
 #places h4 {
   margin: 0px;
