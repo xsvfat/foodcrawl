@@ -44,6 +44,7 @@ td {
 #restaurantDiv {
   max-height: 500px;
   overflow-y: scroll;
+  min-width: 280px;
   float: left;
   display: inline-block;
 }
