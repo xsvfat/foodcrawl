@@ -83,7 +83,7 @@ module.exports = {
       } else {
         res.send({message: 'Preferences updated.', valid: true});
       }
-    })
+    });
   },
 
   getOptions: (req, res, next) => {
@@ -93,7 +93,7 @@ module.exports = {
       res.send(user.preferences);
     }).catch(err => {
       res.send('Error retrieving preferences.');
-    })
+    });
   },
 
 
@@ -104,7 +104,7 @@ module.exports = {
    *              containing an array of routes in promise form.
    */
   getRoutes: function (origin, destination, mode) {
-    console.log(mode);
+
     // Concatenate query parameters into HTTP request friendly string.
     let queryString = qs.stringify({
       origin: origin,
@@ -131,7 +131,6 @@ module.exports = {
       // Parse nested object returned by Google's API to
       // specifically get Array of routes.
       var routesArray = JSON.parse(results.body).routes;
-
 
       User.findOne({
         username: req.body.user,
@@ -292,7 +291,6 @@ module.exports = {
             res.send(addresses);
           });
       } else {
-        console.log('No User');
         res.send([]);
       }
     })
@@ -327,6 +325,6 @@ module.exports = {
     })
     .catch(error => {
       console.log('Error saving address: ', error);
-    })
+    });
   }
 };
