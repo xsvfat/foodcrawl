@@ -54,7 +54,7 @@
       <option value='driving'>Driving</option>
       <option value='bicycling'>Bicycling</option>
     </select>
-    <input type='submit'/>
+    <input type='submit' class='btn'/>
   </form>
 
 <!-- - - - -ADDRESSES- - - - -->
@@ -64,6 +64,18 @@
     <div ui-view='addresses'></div>
   </div>
 
+<!-- - - - -Form for user inputting addresses- - - - -->
+
+  <form id='addAddress' name='newAddress' ng-submit='saveAddress(newAddress)'>
+    <fieldset>
+      <legend>Add an Address</legend>
+      <h4>Label:</h4>
+      <input name='label' type='text' ng-model='address.label' required><br>
+      <h4>Address:</h4>
+      <input name='location' type='text' ng-model='address.location' required><br>
+      <input type='submit' class='btn'>
+    </fieldset>
+  </form>
 
 <!-- - - - -OPTIONS- - - - -->
   <span class='hoverClick inline' ng-click='toggleOptions()'>Options </span>
