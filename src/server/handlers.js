@@ -161,7 +161,7 @@ module.exports = {
   getRestaurants: (req, res, routesArray, preferences) => {
     preferences = preferences || [];
 
-    console.log(preferences.join(' ') + ' restaurants');
+    console.log('Querying Yelp with the following search term: \n"' + preferences.join(' ') + ' restaurants"');
     // Object to be returned to the client. 
     // Stores route and restaurants in two seperate arrays.
     var responseObject = {
@@ -238,7 +238,7 @@ module.exports = {
         'radius_filter': Math.min((step.distance / 1.7), 39999),
         'll': `${step.midpoint.lat},${step.midpoint.lng}`,
         'category_filter': 'restaurants',
-        'term': preferences.join('_') + '_restaurant'
+        'term': preferences.join('_') + '_restaurants'
       };
 
       // Query Yelp's API.
