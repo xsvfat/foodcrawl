@@ -180,6 +180,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
     // POST users' start and end locations to server
     $scope.submit = function(form) {
+      //clear old data
+      RestaurantAndRoute.clearStoredRestaurants();
 
       // to refresh states from main.map, need to redirect to main first
       $state.go('main');
@@ -211,6 +213,11 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end, $scope.mode);
           }
           initMap();
+
+          //clear start and end inputs
+          $scope.start = undefined;
+          $scope.end = undefined;
+          
         }).catch(err => {
           console.log('Error submitting: ', err);
         })
