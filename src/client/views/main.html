@@ -58,6 +58,8 @@
   </form>
 
 
+  <div>
+
 <!-- - - - -List of user's saved addresses- - - - -->
 
   <div id='places'>
@@ -81,7 +83,8 @@
     </fieldset>
   </form>
 
-  <!-- <a ui-sref='options' class='blockDisplay'>Options</a> -->
+  </div>
+
   <span class='hoverClick inline' ng-click='toggleOptions()'>Options </span> <span class='inline invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
   <div id='optionsContainer' ng-show='showOptions'>
     <div ui-view='options'></div>
