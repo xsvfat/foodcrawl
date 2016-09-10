@@ -114,6 +114,7 @@ td {
   border: 1px solid black;
   border-radius: 5px;
   padding: 4px;
+  background-color: #9BC1BC;
 }
 
 #savePref {

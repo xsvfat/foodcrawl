@@ -99,6 +99,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             $scope.username = '';
             $scope.password = '';
             $scope.invalid = false;
+            $scope.newUser = false;
             $state.reload();
           } else {
             // show error message if credentials are invalid
