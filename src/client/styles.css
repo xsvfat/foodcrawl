@@ -1,3 +1,8 @@
+html, body {
+  background-color: #E6EBE0;
+  height: 100%;
+}
+
 #restaurantTable {
   border: 2px solid black;
   min-width: 200px;
@@ -21,7 +26,7 @@ td {
 }
 
 .restaurantRow:hover {
-  background-color: orange;
+  background-color: #ED6A5A;
   cursor: pointer;
 }
 
@@ -30,6 +35,7 @@ td {
 }
 
 #restaurantAndMap {
+  height: 100%;
   width: 100%;
   display: flex;
 }
@@ -170,8 +176,8 @@ td {
 }
 
 .header {
-  background-color: #e3e3e3;
-  border-left: 15px solid #bababa;
+  background-color: #9BC1BC;
+  border-left: 15px solid #5CA4A9;
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
