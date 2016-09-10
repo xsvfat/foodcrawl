@@ -14,42 +14,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.map; //store map
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'walking';
-    $scope.places = [];
-    $scope.address = {
-      label: '',
-      location: '',
-    };
-
-    //set any retrieved addresses
-    $scope.getAddresses = () => {
-      Addresses.getAddresses()
-      .then(addresses => {
-        $scope.places = addresses.data;
-      });
-    };
-
-    //get addresses when logging in
-    $scope.getAddresses();
-
-    //add an address, then refresh addresses
-    $scope.saveAddress = (address) => {
-      if (address.$valid) {
-        Addresses.saveAddress($scope.address)
-        .then(() => {
-          $scope.getAddresses();
-          //clear inputs
-          $scope.address = {
-            label: '',
-            location: ''
-          };
-        })
-      }
-    };
-
-    //add address to appropriate field
-    $scope.addAddress = (address) => {
-      $scope.start === undefined ? $scope.start = address.location : $scope.end = address.location;
-    };
 
     $scope.username;
     $scope.password;
@@ -164,7 +128,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
         $scope.invalidOptions = true;
       }
     }
-    
+
     // POST users' start and end locations to server
     $scope.submit = function(form) {
 

@@ -31,16 +31,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           // restaurants from the server
           $scope.restaurants = RestaurantAndRoute.getRestaurants();
         }
-      },
-      'map': {
-        templateUrl: './views/map.html',
-
-        // controller: function($scope, RestaurantAndRoute) {
-        //   //clear existing markers
-        //   RestaurantAndRoute.removeMarkers();
-        //   //add restaurant markers
-        //   RestaurantAndRoute.addMarkers(map);
-        // }
       }
     }
   })
