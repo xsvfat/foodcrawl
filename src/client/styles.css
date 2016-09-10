@@ -104,7 +104,7 @@ td {
 
 .pref:hover, a:hover {
   cursor: pointer;
-  background-color: #ED6A5A;
+  color: #ED6A5A;
   font-weight: bold;
 }
 
