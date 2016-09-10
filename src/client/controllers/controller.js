@@ -122,10 +122,21 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.invalidOptions = false;
     $scope.toggleOptions = () => {
       if ($localStorage.username) {
-        $scope.showOptions = !$scope.showOptions;
+        $scope.showOptions = !$scope.showOptions; // toggles options view
         $scope.invalidOptions = false;
       } else {
         $scope.invalidOptions = true;
+      }
+    }
+
+    $scope.showAddresses = false;
+    $scope.invalidAddresses = false;
+    $scope.toggleAddresses = () => {
+      if ($localStorage.username) {
+        $scope.showAddresses = !$scope.showAddresses; // toggles addresses view
+        $scope.invalidAddresses = false;
+      } else {
+        $scope.invalidAddresses = true;
       }
     }
 
