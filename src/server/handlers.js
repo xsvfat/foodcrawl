@@ -28,17 +28,27 @@ module.exports = {
       if (user) {
         // sets the current session to the logged in user
         // req.session.username = username;
+
+        // Checks the hashed password in the database against the password
+        // attached to the request body.
         bcrypt.compare(password, user.password, function (error, result) {
+          
           if (error) {
+            // Conditional to catch any errors the bcrypt module throws.
             console.log(error);
             res.send({message: 'Error signing in.', valid: false});
+
           } else if (result) {
+            // Conditional where the hashed and unhashed passwords match.
             res.send({message: 'Successfully signed in.', valid: true});
+
           } else {
+            // Conditional where the hashed and unhashed passwords don't match.
             res.send({message: 'Invalid password.', valid: false});
           }
         });
       } else {
+        // Conditional for when the username is not found in the database.
         res.send({message: 'Invalid username.', valid: false});
       }
     });
