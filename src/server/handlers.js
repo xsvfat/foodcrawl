@@ -283,26 +283,24 @@ module.exports = {
 
     //get user id
     User.findOne({username: user})
-    .then(user => {
-      if (user) {
-        return user;
-      } else {
-        console.log('No User');
-      }
-    })
 
     //search by addresses user id
     .then(user => {
-      return Address.find({user: user._id});
-    })
-
-    .then(addresses => {
-      res.send(addresses);
+      if (user) {
+        Address.find({user: user._id})
+          .then(addresses => {
+            res.send(addresses);
+          });
+      } else {
+        console.log('No User');
+        res.send([]);
+      }
     })
 
     .catch(error => {
       console.log('Error getting addresses: ', error);
-    })
+      res.send([]);
+    });
   },
 
   /**
