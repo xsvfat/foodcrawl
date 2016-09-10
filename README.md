@@ -19,7 +19,7 @@ npm test
 
 ## API Reference
 
-https://www.yelp.com/developers/documentation/v2/overview
+https://www.yelp.com/developers/documentation/v2/overview  
 https://developers.google.com/maps/
 
 ## Contributors
