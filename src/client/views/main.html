@@ -1,5 +1,6 @@
 <div ng-controller='inputsController'>
 
+<!-- - - - -HEADER- - - - -->
   <div class='header'>
     <div class='inline'>
       <h1>FoodFood</h1>
@@ -41,21 +42,25 @@
 
   </div>
   <hr></hr>
+<!-- - - - - -END OF HEADER- - - - -  -->
 
+
+<!-- - - - -Start and End for user input- - - - -->
   <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
     Start: <input name='start' type='text' ng-model='start' required/>
     End: <input name='end' type='text' ng-model='end' required/>
-    <input type='submit'/>
     <select ng-model='mode'>
       <option value='walking'>Walking</option>
       <option value='driving'>Driving</option>
       <option value='bicycling'>Bicycling</option>
     </select>
+    <input type='submit'/>
   </form>
 
-  <!-- <button id='logout' ng-click='logout()'>Logout</button> -->
-  
-  <div id='places'>
+
+<!-- - - - -List of user's saved addresses- - - - -->
+
+<!--   <div id='places'>
     <h4>Addresses</h4>
     <div ng-repeat='place in places' ng-click='addAddress(place)' class='address'>
       <span class='addressLabel'>{{place.label}}</span><br>
@@ -63,9 +68,11 @@
       <span class='addressLineTwo'>{{place.address[1]}}</span><br>
       <span class='addressLineThree'>{{place.address[2]}}</span>
     </div>
-  </div>
+  </div> -->
 
-  <form id='addAddress' name='newAddress' ng-submit='saveAddress(newAddress)'>
+<!-- - - - -Form for user inputting addresses- - - - -->
+
+<!--   <form id='addAddress' name='newAddress' ng-submit='saveAddress(newAddress)'>
     <fieldset>
       <legend>Add an Address</legend>
       <h4>Label:</h4>
@@ -76,24 +83,24 @@
       <input name='lineThree' type='text' ng-model='address.three' required><br>
       <input type='submit'>
     </fieldset>
-  </form>
+  </form> -->
 
-  <button id='logout' ng-click='logout()'>Logout</button>
   <a ui-sref='options' class='blockDisplay'>Options</a>
 
-  <div>
-    <div ui-view='restaurantList' id='restaurantDiv'>
-    </div>
-    <!-- This is now hard coding the map element rather than using a ui-view -->
-    <div id='mapContainer'>
-      <h4>MAP</h4>
-      <div id='map'>
+
+<!-- - - - -Restaurant list and map- - - - -->
+  <div id='restaurantAndMap'>
+    <div class='inline' id='restaurantDiv'>
+      <div ui-view='restaurantList'>
       </div>
     </div>
-    <!-- <div ui-view='map'>
-    </div> -->
+    <div class='inline' id='mapContainer'>
+      <!-- <div> -->
+        <!-- <h4>MAP</h4> -->
+        <div id='map'>
+        </div>
+      <!-- </div> -->
+    </div>
   </div>
 
-  <div ng-bind-html='directions'>
-  </div>
 </div>

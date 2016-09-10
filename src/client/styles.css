@@ -1,33 +1,67 @@
+html, body {
+  background-color: #E6EBE0;
+  height: 100%;
+}
+
 #restaurantTable {
   border: 2px solid black;
   min-width: 200px;
-  margin: 10px;
-}
-.restaurant, .rating, .address {
-  border-top: 1px solid black;
-}
-
-#restaurantDiv {
-  max-height: 420px;
-  overflow-y: scroll;
-  display: inline-block;
-}
-
-.address {
-  text-align: right;
-}
-
-#map {
-  width: 400px;
-  height: 400px;
-}
-
-#routeSearch {
-  margin-bottom: 10px;
+  margin: none;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-size: 0.7em;
+  background-color: #F4F1BB;
 }
 
 tr th {
   padding: 3px 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+td {
+  max-width: 160px;
+}
+
+.restaurant, .rating, .addressTable {
+  border-top: 1px solid black;
+}
+
+.restaurantRow:hover {
+  background-color: #ED6A5A;
+  cursor: pointer;
+}
+
+.addressTable {
+  text-align: right;
+}
+
+#restaurantAndMap {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+#restaurantDiv {
+  max-height: 500px;
+  overflow-y: scroll;
+  min-width: 280px;
+  float: left;
+  display: inline-block;
+}
+
+#mapContainer {
+  flex-basis: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+#routeSearch {
+  margin-bottom: 10px;
 }
 
 #loginDiv h1, #signupDiv h1 {
@@ -94,7 +128,6 @@ tr th {
   display: block;
 }
 
-<<<<<<< HEAD
 .inline {
   display: inline-block;
 }
@@ -145,8 +178,8 @@ tr th {
 }
 
 .header {
-  background-color: #e3e3e3;
-  border-left: 15px solid #bababa;
+  background-color: #9BC1BC;
+  border-left: 15px solid #5CA4A9;
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 

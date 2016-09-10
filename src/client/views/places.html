@@ -1,14 +1,14 @@
 <div>
-  <table id='restaurantTable'>
+  <table id='restaurantTable' ng-show='restaurants.length'>
     <tr>
       <th align='center'>Restaurants</th>
       <th align='center'>Rating</th>
       <th align='center'>Address</th>
     </tr>
-    <tr ng-repeat='restaurant in restaurants' ng-click='showInfoWindow(restaurant)'>
+    <tr ng-repeat='restaurant in restaurants' ng-click='showInfoWindow(restaurant)' class='restaurantRow'>
       <td class='restaurant'>{{restaurant.name}}</td>
       <td class='rating' align='center'>{{restaurant.rating}}</td>
-      <td class='address' align='center'>{{restaurant.location.address[0]}}
+      <td class='addressTable' align='center'>{{restaurant.location.address[0]}}
     </tr>
   </table>
 </div>
