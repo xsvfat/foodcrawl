@@ -164,20 +164,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
         $scope.invalidOptions = true;
       }
     }
-
-    // $scope.classOptions = 'hideDiv'
-    // $scope.toggleOptions = () => {
-    //   console.log('options');
-    //   console.log($scope.classOptions);
-    //   $scope.classOptions = $scope.classOptions === 'hideDiv' ? 'showDiv' : 'hideDiv';
-    // }
-
-
-    // $scope.logout = () => {
-    //   Auth.delete();
-    //   $state.go('login');
-    // }
-
+    
     // POST users' start and end locations to server
     $scope.submit = function(form) {
 
