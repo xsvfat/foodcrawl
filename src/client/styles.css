@@ -50,7 +50,7 @@ table {
 /************************ End of Reset **************************/
 
 html, body {
-  background-color: #E6EBE0;
+  background-color: #5CA4A9;
   height: 100%;
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
@@ -237,7 +237,7 @@ td {
 
 .header {
   background-color: #9BC1BC;
-  border-left: 15px solid #5CA4A9;
+  border-left: 15px solid #E6EBE0;
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
