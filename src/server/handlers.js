@@ -8,6 +8,7 @@ var session = require('express-session');
 var _ = require('lodash');
 var User = require('./dbconfig/schema.js').User;
 var Address = require('./dbconfig/schema.js').Address;
+var bcrypt = require('bcrypt');
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -21,22 +22,41 @@ var yelp = new Yelp({
 module.exports = {
   login: (req, res, next) => {
     var username = req.body.username;
-    var password = req.body.password; // need to hash later
+    var password = req.body.password;
 
-    User.findOne({username: username, password: password}).then(user => {
+    User.findOne({username: username}).then(user => {
       if (user) {
         // sets the current session to the logged in user
         // req.session.username = username;
-        res.send({message: 'Successfully signed in.', valid: true});
+
+        // Checks the hashed password in the database against the password
+        // attached to the request body.
+        bcrypt.compare(password, user.password, function (error, result) {
+          
+          if (error) {
+            // Conditional to catch any errors the bcrypt module throws.
+            console.log(error);
+            res.send({message: 'Error signing in.', valid: false});
+
+          } else if (result) {
+            // Conditional where the hashed and unhashed passwords match.
+            res.send({message: 'Successfully signed in.', valid: true});
+
+          } else {
+            // Conditional where the hashed and unhashed passwords don't match.
+            res.send({message: 'Invalid password.', valid: false});
+          }
+        });
       } else {
-        res.send({message: 'Invalid username and password.', valid: false});
+        // Conditional for when the username is not found in the database.
+        res.send({message: 'Invalid username.', valid: false});
       }
-    })
+    });
   },
 
   signup: (req, res, next) => {
     var username = req.body.username;
-    var password = req.body.password; // need to hash later
+    var password = bcrypt.hashSync(req.body.password, 5);
     User.find({username: username}).then(users => {
       if (users.length) {
         res.send({message: 'That username already exists.', valid: false});
@@ -227,8 +247,13 @@ module.exports = {
 
         // Sucess callback
         .then(function (searchResults) {
+
+          var validBusinesses = searchResults.businesses.filter(function (item) {
+            return !!item.location.coordinate;
+          })
+          
           // Add the returned businessees to the restauraunts array.
-          responseObject.restaurants = responseObject.restaurants.concat(searchResults.businesses);
+          responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
 
           responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
 
