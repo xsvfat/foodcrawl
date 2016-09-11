@@ -1,11 +1,10 @@
 <div id='optionsView'>
   <div id='tags'>
-    <h4>Filters: </h4>
     <a class='pref' ng-repeat='tag in tags' ng-click='deleteTag(tag)'>{{tag}}</a>
     <form ng-submit='submitTag()'>
-      <input type='text' ng-model='prefs' required/>
-      <input type='submit' class='btn'/>
-      <button type='button' id='savePref' ng-click='save()' class='btn'>Save and return</button>
+      <input class='textInput' type='text' ng-model='prefs' required/>
+      <input type='submit' class='btn' value='Add'/>
+      <button type='button' id='savePref' ng-click='save()' class='btn'>Save</button>
     </form>
   </div>
 </div>
