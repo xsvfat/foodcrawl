@@ -57,7 +57,6 @@ html, body {
 }
 
 #restaurantTable {
-  border: 2px solid black;
   min-width: 100%;
   margin: none;
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
@@ -72,13 +71,31 @@ tr th {
 }
 
 td {
+
+  line-height: 50px;
   max-width: 160px;
-  font-size: 20px;
+  font-size: 18px;
   font-family: 'Open Sans';
 }
 
 .restaurant, .rating, .addressTable {
-  border-top: 1px solid black;
+  border-top: 1px solid gray;
+}
+
+.restaurant {
+  width: 30%;
+  text-align: center;
+}
+
+.rating {
+  width: 15%;
+  text-align: center;
+  color: #0075C4;
+}
+
+.addressTable {
+  width: 55%;
+  text-align: center;
 }
 
 .restaurantRow:hover {
@@ -87,11 +104,9 @@ td {
   cursor: pointer;
 }
 
-.addressTable {
-  text-align: right;
-}
-
 #restaurantAndMap {
+  margin-top: 2px;
+  border: 1px solid #0075C4;
   height: 800px;
   width: 100%;
   display: flex;
@@ -101,7 +116,6 @@ td {
   height: 100%;
   overflow-y: scroll;
   min-width: 40%;
-  /*float: left;*/
   display: inline-block;
 }
 
