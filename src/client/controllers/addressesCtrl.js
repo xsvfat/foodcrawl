@@ -35,7 +35,7 @@ app.controller('addressesController', ['$scope', 'Addresses', '$rootScope', func
 
   //add address to appropriate field
   $scope.addAddress = (address) => {
-    $rootScope.start === undefined || '' ? $rootScope.start = address.location : $rootScope.end = address.location;
+    $rootScope.start === '' || $rootScope.start === undefined ? $rootScope.start = address.location : $rootScope.end = address.location;
   };
 
 }]);
