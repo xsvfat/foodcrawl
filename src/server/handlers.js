@@ -235,7 +235,7 @@ module.exports = {
       // console.log(step);
       // Establish parameters for each individual yelp query.
       searchParameters = {
-        'radius_filter': Math.min((step.distance / 1), 39999),
+        'radius_filter': Math.min(Math.max(step.distance, 100), 39999),
         'll': `${step.midpoint.lat},${step.midpoint.lng}`,
         'accuracy': 100,
         'category_filter': 'restaurants',
@@ -265,7 +265,7 @@ module.exports = {
 
               // Compare the distrance from the business agains the upper limit,
               // and filter accordingly.
-              return totalDistance < step.distance / 2;
+              return totalDistance < Math.max(step.distance / 2, 100);
             }
           });
           
