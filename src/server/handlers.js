@@ -161,7 +161,6 @@ module.exports = {
   getRestaurants: (req, res, routesArray, preferences) => {
     preferences = preferences || [];
 
-    console.log('Querying Yelp with the following search term: \n"' + preferences.join(' ') + ' restaurants"');
     // Object to be returned to the client. 
     // Stores route and restaurants in two seperate arrays.
     var responseObject = {
@@ -185,7 +184,7 @@ module.exports = {
     // Calculates the length of the segments produced by cutting a given route into 10ths.
     var averageSegmentLength = totalRouteDistance / 10;
 
-    // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
+  // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
     var start, end;
     var distanceFromTarget = averageSegmentLength / 2;
     
@@ -201,8 +200,8 @@ module.exports = {
 
         // Calculate the midpoint of the given segment using MATH!
         var midpoint = {
-          lat: start.lat + ((end.lat - start.lat) / (steps[i].distance.value / distanceFromTarget)),
-          lng: start.lng + ((end.lng - start.lng) / (steps[i].distance.value / distanceFromTarget)),
+          lat: start.lat + ((end.lat - start.lat) * (distanceFromTarget / steps[i].distance.value)),
+          lng: start.lng + ((end.lng - start.lng) * (distanceFromTarget / steps[i].distance.value)),
         };
         
         // Generate the appropriate segment object and add it to the storage array.
@@ -212,7 +211,7 @@ module.exports = {
         });
 
         // Chop off the beginning of a given step that has already been evaluated.
-        start = midpoint;
+        steps[i].start_location = midpoint;
         steps[i].distance.value -= distanceFromTarget;
         distanceFromTarget = averageSegmentLength;
         i--;
@@ -231,7 +230,7 @@ module.exports = {
 
     // Makes a unique Yelp query for each step along the given route.
     segmentsArray.forEach(function (step, index) {
-      // console.log(step);
+      console.log(step.midpoint);
 
       // Establish parameters for each individual yelp query.
       let searchParameters = {
