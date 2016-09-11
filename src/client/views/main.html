@@ -3,7 +3,7 @@
 <!-- - - - -HEADER- - - - -->
   <div class='header'>
     <div class='inline'>
-      <h1>FoodFood</h1>
+      <h1>foodcrawl</h1>
     </div>
 
 <!-- Show login option for users who want to login -->
@@ -13,8 +13,8 @@
       </div>
       <div>
         <form name='loginForm' ng-submit='loginSubmit(loginForm)'>
-          <span>Username: </span><input ng-model='username' required/><br>
-          <span>Password: </span><input ng-model='password' type='password' required/><br>
+          <span>Username:</span><input class='textInput' ng-model='username' required/><br>
+          <span>Password:</span><input class='textInput' ng-model='password' type='password' required/><br>
           <span class='invalid' ng-show='invalid'>Invalid username and password!</span><input type='submit' value='Log in' class='btn'/>
         </form>
       </div>
@@ -22,7 +22,7 @@
 
 <!-- Show logout option for logged in users -->
     <div class='inline rightSide' ng-show='activeUser && !newUser'>
-      Logged in as <span class='bold'>{{user}}</span>
+      <span class='bold'>{{user}}</span>
       <button ng-click='logout()' class='btn'>Log out</button>
     </div>
 
@@ -33,22 +33,21 @@
       </div>
       <div>
         <form name='newUserForm' ng-submit='newUserSubmit(newUserForm)'>
-          <span>Username: </span><input ng-model='usernameNew' required/><br>
-          <span>Password: </span><input ng-model='passwordNew' type='password' required/><br>
+          <span>Username: </span><input class='textInput' ng-model='usernameNew' required/><br>
+          <span>Password: </span><input class='textInput' ng-model='passwordNew' type='password' required/><br>
           <span class='invalid' ng-show='invalid'>That username already exists!</span><input type='submit' value='Sign up' class='btn'/>
         </form>
       </div>
     </div>
 
   </div>
-  <hr></hr>
 <!-- - - - - -END OF HEADER- - - - -  -->
 
 
 <!-- - - - -Start and End for user input- - - - -->
   <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
-    Start: <input name='start' type='text' ng-model='start' required/>
-    End: <input name='end' type='text' ng-model='end' required/>
+    <span class='startEnd'>Start: </span><input class='textInput' name='start' type='text' ng-model='start' required placeholder='944 Market Street'/>
+    <span class='startEnd'>End: </span><input class='textInput' name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street'/>
     <select ng-model='mode'>
       <option value='walking'>Walking</option>
       <option value='driving'>Driving</option>

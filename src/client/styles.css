@@ -3,7 +3,7 @@
    License: none (public domain)
 */
 
-/*html, body, div, span, applet, object, iframe,
+html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -24,7 +24,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-/*article, aside, details, figcaption, figure,
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -45,24 +45,24 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-}*/
+} 
 
 /************************ End of Reset **************************/
 
 html, body {
-	color: #E6EBE0;
-  background-color: #5CA4A9;
+	color: black;
+  background-color: white;
   height: 100%;
-  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-family: 'Open Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
 #restaurantTable {
   border: 2px solid black;
-  min-width: 200px;
+  min-width: 100%;
   margin: none;
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 0.7em;
-  background-color: #F4F1BB;
+  background-color: white;
 }
 
 tr th {
@@ -73,6 +73,8 @@ tr th {
 
 td {
   max-width: 160px;
+  font-size: 20px;
+  font-family: 'Open Sans';
 }
 
 .restaurant, .rating, .addressTable {
@@ -80,7 +82,8 @@ td {
 }
 
 .restaurantRow:hover {
-  background-color: #ED6A5A;
+  background-color: #0075C4;
+  color: white;
   cursor: pointer;
 }
 
@@ -89,22 +92,22 @@ td {
 }
 
 #restaurantAndMap {
-  height: 100%;
+  height: 800px;
   width: 100%;
   display: flex;
 }
 
 #restaurantDiv {
-  max-height: 500px;
+  height: 100%;
   overflow-y: scroll;
-  min-width: 280px;
-  float: left;
+  min-width: 40%;
+  /*float: left;*/
   display: inline-block;
 }
 
 #mapContainer {
+  height: 100%;
   flex-basis: 100%;
-  height: 500px;
   overflow: hidden;
 }
 
@@ -114,7 +117,7 @@ td {
 }
 
 #routeSearch {
-  margin-bottom: 10px;
+  margin: 10px 0 10px 10px;
 }
 
 #loginDiv h1, #signupDiv h1 {
@@ -156,17 +159,18 @@ td {
 
 .pref:hover, a:hover {
   cursor: pointer;
-  color: #ED6A5A;
+  color: #0075C4;
   font-weight: bold;
 }
 
 #tags, #addressesContainer {
   margin: 0px;
   margin-bottom: 4px;
-  border: 1px solid black;
-  border-radius: 5px;
+  border: 1px solid #0075C4;
+  border-radius: 7px;
   padding: 4px;
-  background-color: #9BC1BC;
+  background-color: #0075C4;
+  color: white;
   padding-left: 15px;
 }
 
@@ -192,6 +196,8 @@ td {
 }
 
 .rightSide {
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  margin-top: 10px;
   float: right;
   text-align: right;
 }
@@ -230,20 +236,43 @@ td {
 }
 
 .header h1 {
+  color: white;
+  font-weight: 300;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
   margin: 0px 15px;
   padding: 10px 0px;
+  padding-top: 20px;
   font-size: 3.8em;
-  font-weight: bold;
 }
 
 .header {
-  background-color: #9BC1BC;
-  border-left: 15px solid #E6EBE0;
-  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  color: black;
+  background-color: #0075C4;
+  /*border-left: 15px solid #E6EBE0;*/
+  font-family: 'Modak', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
 .header button {
   margin: 90px 8px 0px 0px;
+}
+
+.startEnd {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 5px;
+  color: #0075C4;
+}
+
+select {
+  background-color: white;
+  color: #0075C4;
+  border: 2px #0075C4 solid;
+  border-radius: 7px;
+  font-weight: bold;
+}
+
+option {
+
 }
 
 #places h4 {
@@ -254,12 +283,12 @@ td {
   display: inline-block;
   margin-left: 15px;
   width: 175px;
-  border-radius: 5px;
+  border-radius: 7px;
 }
 
 .address:hover {
   cursor: pointer;
-  color: #ED6A5A;
+  color: #0075C4;
 }
 
 .addressLabel {
@@ -300,25 +329,34 @@ td {
   text-decoration: underline;
   font-weight: bold;
   cursor: pointer;
-  color: #ED6A5A;
+  color: #0075C4;
 }
 
 #tags h4 {
   margin: 0px 0px 0px 5px;
 }
 
+.textInput {
+  border-width: 2px;
+  border-radius: 7px;
+  border-color: #0075C4;
+  padding-left: 5px;
+}
+
 /*** Button Styles ***/
 .btn {
-	color: #fff;
-  border-radius: 5px;
+  height: 20px;
+  width: 80px;
+  color: #0075C4;
+  font-weight: bold;
+  padding-bottom: 15px;
+  border-radius: 7px;
   display: inline-block;
-  margin: 0;
-	border: 2px solid #fff;
-  padding: 10px 30px;
-	background-color: transparent;
+  border: 2px solid #0075C4;
+  background-color: white;
 }
 
 .btn:hover {
-	color: #5CA4A9;
-	background-color: #fff;
+  color: white;
+  background-color: #0075C4;
 }
