@@ -247,13 +247,29 @@ module.exports = {
         // Sucess callback
         .then(function (searchResults) {
 
+          // Filter out businesses returned by yelp that are in weird locations.
           var validBusinesses = searchResults.businesses.filter(function (item) {
-            return !!item.location.coordinate;
-          })
+
+            if (!item.location.coordinate) {
+              // If the business doesn't have a location property, filter it out.
+              return false;
+
+            } else {
+
+              // Calculate the how far away the business is.
+              var latDifference = step.midpoint.lat - item.location.coordinate.latitude;
+              var lngDifference = step.midpoint.lng - item.location.coordinate.longitude;
+              var totalDegreeDifference = Math.sqrt(Math.pow(latDifference, 2) + Math.pow(lngDifference, 2));
+              var totalDistance = totalDegreeDifference / 0.000008998719243599958;
+
+              // Compare the distrance from the business agains the upper limit,
+              // and filter accordingly.
+              return totalDistance < step.distance / 2;
+            }
+          });
           
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
-
           responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
 
           // Send a response to the client if all requisite queries have been made.
