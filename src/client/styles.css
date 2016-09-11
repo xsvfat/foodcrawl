@@ -325,11 +325,20 @@ option {
   font-size: 0.8em;
 }
 
+.hoverClick {
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #0075C4;
+}
+
 .hoverClick:hover {
   text-decoration: underline;
-  font-weight: bold;
   cursor: pointer;
-  color: #0075C4;
+  color: black;
 }
 
 #tags h4 {
@@ -341,6 +350,19 @@ option {
   border-radius: 7px;
   border-color: #0075C4;
   padding-left: 5px;
+}
+
+#optionsBar {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+#addresses {
+  width: 66%;
+}
+
+#filters {
+  width: 33%;
 }
 
 /*** Button Styles ***/
@@ -359,4 +381,5 @@ option {
 .btn:hover {
   color: white;
   background-color: #0075C4;
+  border: 1px black solid;
 }

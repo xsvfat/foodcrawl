@@ -56,33 +56,23 @@
     <input type='submit' class='btn'/>
   </form>
 
-<!-- - - - -ADDRESSES- - - - -->
-  <span class='hoverClick inline' ng-click='toggleAddresses()'>Addresses</span>
-  <span class='inline invalid small' ng-show='invalidAddresses'>Log in to save addresses!</span><br>
-  <div id='addressesContainer' ng-show='showAddresses'>
-    <div ui-view='addresses'></div>
+  <div id='optionsBar'>
+    <span class='hoverClick inline' ng-click='toggleOptions()'>Filters </span>
+    <span class='hoverClick inline' ng-click='toggleAddresses()'>Addresses</span>
+    
+  <!-- - - - -Filters- - - - -->
+    <span id='filter' class='inline invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
+    <div id='optionsContainer' ng-show='showOptions'>
+      <div ui-view='options'></div>
+    </div>
+  <!-- - - - -ADDRESSES- - - - -->
+    <span id='addresses' class='inline invalid small' ng-show='invalidAddresses'>Log in to save addresses!</span>
+    <div id='addressesContainer' ng-show='showAddresses'>
+      <div ui-view='addresses'></div>
+    </div>
+
+
   </div>
-
-<!-- - - - -Form for user inputting addresses- - - - -->
-
-<!--   <form id='addAddress' name='newAddress' ng-submit='saveAddress(newAddress)'>
-    <fieldset>
-      <legend>Add an Address</legend>
-      <h4>Label:</h4>
-      <input name='label' type='text' ng-model='address.label' required><br>
-      <h4>Address:</h4>
-      <input name='location' type='text' ng-model='address.location' required><br>
-      <input type='submit' class='btn'>
-    </fieldset>
-  </form> -->
-
-<!-- - - - -OPTIONS- - - - -->
-  <span class='hoverClick inline' ng-click='toggleOptions()'>Options </span>
-  <span class='inline invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
-  <div id='optionsContainer' ng-show='showOptions'>
-    <div ui-view='options'></div>
-  </div>
-
 
 <!-- - - - -Restaurant list and map- - - - -->
   <div id='restaurantAndMap'>
