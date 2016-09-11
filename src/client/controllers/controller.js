@@ -191,6 +191,14 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       RestaurantAndRoute.openInfoWindow($scope.map, restaurant.name);
     };
 
+    $scope.stars = (rating) => {
+      let numOfstars = Math.floor(rating);
+      let result = '';
+      for (let i=0; i<numOfstars; i++) {
+        result += '★';
+      }
+      return result;
+    }
   }
 
 }]);
