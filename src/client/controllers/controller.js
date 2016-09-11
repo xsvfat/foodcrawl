@@ -9,8 +9,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
   } else {
     $scope.user; // the logged in user
-    $scope.start; // start location input
-    $scope.end; // end location input
+    $scope.start = ''; // start location input
+    $scope.end = ''; // end location input
     $scope.map; //store map
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'driving';
@@ -163,7 +163,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
           function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
               zoom: 14
-            })
+            });
             $scope.map = map;
             // Associate the route with our current map
             directionsDisplay.setMap(map);
@@ -182,7 +182,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
           
         }).catch(err => {
           console.log('Error submitting: ', err);
-        })
+        });
       }
     };
 
