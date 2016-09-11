@@ -1,5 +1,5 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$rootScope', '$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($rootScope, $scope, $http, $state, $sce, RestaurantAndRoute, Auth, $localStorage, Addresses) {
+app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, $localStorage, Addresses) {
 
   if (true === false) { // bypass the conditional statement; remove later
 
@@ -9,8 +9,8 @@ app.controller('inputsController', ['$rootScope', '$scope', '$http', '$state', '
 
   } else {
     $scope.user; // the logged in user
-    $rootScope.start; // start location input
-    $rootScope.end; // end location input
+    $scope.start = ''; // start location input
+    $scope.end = ''; // end location input
     $scope.map; //store map
     $scope.directions = ''; // directions from start to end
     $scope.mode = 'driving';
@@ -149,7 +149,7 @@ app.controller('inputsController', ['$rootScope', '$scope', '$http', '$state', '
       $state.go('main');
 
       if (form.$valid) {
-        RestaurantAndRoute.fetchRestaurants($rootScope.start, $rootScope.end, $scope.mode).then(restaurants => {
+        RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end, $scope.mode).then(restaurants => {
           $state.go('main.map');
 
           // update list of restaurants in the factory
@@ -163,7 +163,7 @@ app.controller('inputsController', ['$rootScope', '$scope', '$http', '$state', '
           function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
               zoom: 14
-            })
+            });
             $scope.map = map;
             // Associate the route with our current map
             directionsDisplay.setMap(map);
@@ -172,17 +172,17 @@ app.controller('inputsController', ['$rootScope', '$scope', '$http', '$state', '
             //add restaurant markers
             RestaurantAndRoute.addMarkers(map);
             // set the current route
-            RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $rootScope.start, $rootScope.end, $scope.mode);
+            RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end, $scope.mode);
           }
           initMap();
 
           //clear start and end inputs
-          $rootScope.start = undefined;
-          $rootScope.end = undefined;
+          $scope.start = undefined;
+          $scope.end = undefined;
           
         }).catch(err => {
           console.log('Error submitting: ', err);
-        })
+        });
       }
     };
 
