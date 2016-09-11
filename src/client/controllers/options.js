@@ -45,8 +45,7 @@ app.controller('optionsController', ['$http', '$scope', '$localStorage', 'Auth',
         if (results.data.valid) {
           console.log('Preferences saved.');
 
-          // redirect the user back to /main/map
-          // $state.go('main.map');
+          $scope.submit(); // refreshes the list of restaurants with the filters applied
 
         } else {
           console.log('Something went wrong', results.data.message);
