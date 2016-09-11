@@ -227,27 +227,29 @@ module.exports = {
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
+    var validBusinesses;
+    var searchParameters;
 
     // Makes a unique Yelp query for each step along the given route.
     segmentsArray.forEach(function (step, index) {
-      console.log(step.midpoint);
-
+      // console.log(step);
       // Establish parameters for each individual yelp query.
-      let searchParameters = {
-        'radius_filter': Math.min((step.distance / 1.7), 39999),
+      searchParameters = {
+        'radius_filter': Math.min((step.distance / 1), 39999),
         'll': `${step.midpoint.lat},${step.midpoint.lng}`,
+        'accuracy': 100,
         'category_filter': 'restaurants',
         'term': preferences.join('_') + '_restaurants'
       };
 
       // Query Yelp's API.
       yelp.search(searchParameters)
-
+        
         // Sucess callback
         .then(function (searchResults) {
 
           // Filter out businesses returned by yelp that are in weird locations.
-          var validBusinesses = searchResults.businesses.filter(function (item) {
+          validBusinesses = searchResults.businesses.filter(function (item) {
 
             if (!item.location.coordinate) {
               // If the business doesn't have a location property, filter it out.
