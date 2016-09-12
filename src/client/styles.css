@@ -370,13 +370,17 @@ option {
   display: inline-block;
   margin-left: 10px;
 }
-
+/*
 #addresses {
   width: 66%;
 }
 
 #filters {
   width: 33%;
+}*/
+
+#addresses, #filter {
+  display: block;
 }
 
 /*** Button Styles ***/

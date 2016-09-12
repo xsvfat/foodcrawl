@@ -59,14 +59,14 @@
   <div id='optionsBar'>
     <span class='hoverClick inline' ng-click='toggleOptions()'>Filters </span>
     <span class='hoverClick inline' ng-click='toggleAddresses()'>Addresses</span>
+    <span id='filter' class='invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
+    <span id='addresses' class='invalid small' ng-show='invalidAddresses'>Log in to save addresses!</span>
     
   <!-- - - - -Filters- - - - -->
-    <span id='filter' class='inline invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
     <div id='optionsContainer' ng-show='showOptions'>
       <div ui-view='options'></div>
     </div>
   <!-- - - - -ADDRESSES- - - - -->
-    <span id='addresses' class='inline invalid small' ng-show='invalidAddresses'>Log in to save addresses!</span>
     <div id='addressesContainer' ng-show='showAddresses'>
       <div ui-view='addresses'></div>
     </div>
