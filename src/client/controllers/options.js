@@ -11,7 +11,7 @@ app.controller('optionsController', ['$http', '$scope', '$localStorage', 'Auth',
       user: $localStorage.username
     }
   }).then(result => {
-    // push the preferences to the list
+    // populate the preferences to the list
     $scope.tags = result.data;
   }).catch(err => {
     console.log('Error retrieving preferences: ', err);
@@ -22,13 +22,15 @@ app.controller('optionsController', ['$http', '$scope', '$localStorage', 'Auth',
       $scope.tags.push($scope.prefs.toLowerCase());
     }
     $scope.prefs = '';
+    save();
   }
 
   $scope.deleteTag = (tag) => {
     $scope.tags.splice($scope.tags.indexOf(tag), 1);
+    save();
   }
 
-  $scope.save = () => {
+  var save = () => {
 
     // save the collection of preferences to database
     $http({
@@ -51,4 +53,5 @@ app.controller('optionsController', ['$http', '$scope', '$localStorage', 'Auth',
       console.log('Error saving prefs: ', err);
     })
   }
+  
 }])
