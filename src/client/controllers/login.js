@@ -16,9 +16,15 @@ app.controller('loginController', ['$http', '$scope', '$state', '$localStorage',
         console.log('Login result: ', result.data);
         if (result.data.valid) {
           /* if username and password are correct,
-             save to local storage and redirect to '/main' */
+             save to local storage and set active user */
           $localStorage.username = $scope.username;
-          $state.go('main');
+          $scope.$parent.user = $scope.username;
+          $scope.$parent.activeUser = true;
+          $scope.username = '';
+          $scope.password = '';
+          $scope.invalid = false;
+          $scope.$parent.newUser = false;
+          $state.reload();
         } else {
           $scope.password = '';
           $scope.invalid = true;
@@ -28,4 +34,11 @@ app.controller('loginController', ['$http', '$scope', '$state', '$localStorage',
       })
     }
   }
+
+  $scope.showNewUserForm = () => {
+    // displays the sign-up form
+    $scope.$parent.newUser = true;
+    $scope.$parent.activeUser = false;
+  };
+  console.log($scope.$parent);
 }])
