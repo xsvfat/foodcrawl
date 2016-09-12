@@ -1,5 +1,5 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, $sce, RestaurantAndRoute, Auth, $localStorage, Addresses) {
+app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, Auth, $localStorage, Addresses) {
 
   if (true === false) { // bypass the conditional statement; remove later
 
