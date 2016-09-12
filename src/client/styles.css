@@ -65,21 +65,19 @@ html, body {
 }
 
 tr th {
-  padding: 3px 10px;
+  padding: 5px 10px;
   font-size: 16px;
   font-weight: bold;
 }
 
 td {
-  line-height: 25px;
+  line-height: 15px;
+  vertical-align: middle;
+  padding: 4px 2px;
   max-width: 160px;
-<<<<<<< 89faa4331f5f2a878d406dc735027a99c71429b7
   font-size: 15px;
   font-family: 'Open Sans';
-=======
-  font-size: 18px;
   font-family: 'Open Sans', 'Lucida Sans Unicode';
->>>>>>> Styles for infoWindow
 }
 
 .restaurant, .rating, .addressTable {
@@ -401,7 +399,7 @@ option {
 .btn:hover {
   color: white;
   background-color: #0075C4;
-  border: 1px black solid;
+  border: 2px black solid;
   cursor: pointer;
 }
 
