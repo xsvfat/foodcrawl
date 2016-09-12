@@ -12,6 +12,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         templateUrl: './views/main.html',
         controller: 'inputsController'
       },
+      'login@main': {
+        templateUrl: './views/login.html',
+        controller: 'loginController'
+      },
       'options@main': {
         templateUrl: './views/options.html',
         controller: 'optionsController'

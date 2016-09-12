@@ -18,8 +18,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.map; // store map
     $scope.mode = 'driving';
 
-    $scope.username;
-    $scope.password;
+    // $scope.username;
+    // $scope.password;
+
     $scope.activeUser; // true if a user is logged in
     $scope.newUser = false; // true if a new user wants to sign up
     $scope.invalid = false; // true if username/password is invalid
@@ -40,45 +41,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       $scope.newUser = false;
       $scope.activeUser = false;
     }
-
-    $scope.loginSubmit = (form) => {
-      if (form.$valid) {
-        $http({
-          method: 'POST',
-          url: '/login',
-          data: {
-            username: $scope.username,
-            password: $scope.password
-          }
-        }).then(result => {
-          console.log('Login result: ', result.data);
-          if (result.data.valid) {
-            /* if username and password are correct,
-               save to local storage and set active user */
-            $localStorage.username = $scope.username;
-            $scope.user = $scope.username;
-            $scope.activeUser = true;
-            $scope.username = '';
-            $scope.password = '';
-            $scope.invalid = false;
-            $scope.newUser = false;
-            $state.reload();
-          } else {
-            // show error message if credentials are invalid
-            $scope.password = '';
-            $scope.invalid= true;
-          }
-        }).catch(err => {
-          console.log('Error signing in: ', err);
-        })
-      }
-    };
-
-    $scope.showNewUserForm = () => {
-      // displays the sign-up form
-      $scope.newUser = true;
-      $scope.activeUser = false;
-    };
 
     $scope.newUserSubmit = (form) => { // adds a new user to database
       if (form.$valid) {
