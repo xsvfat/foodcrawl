@@ -21,9 +21,9 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
 
         </div>
         <div>
-          <img class="restaurantImg" src="${place.image_url}" height="75" width="75">
+          <img class="restaurantImg" src="${place.image_url}" height="95" width="95">
           <p class="infoLocation">
-            <img class="ratingImg" src="${place.rating_img_url}">
+            <img class="ratingImg" src="${place.rating_img_url}"><br>
             ${place.display_phone || ''}<br>
             ${place.location.display_address[0]}<br>
             ${place.location.display_address[1]}<br>

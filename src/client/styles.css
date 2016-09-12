@@ -421,6 +421,7 @@ option {
 }
 
 .infoWindow .infoLocation {
+	line-height: 1.3em;
 	display: inline-block;
 	vertical-align: bottom;
 	padding-bottom: 5px;
