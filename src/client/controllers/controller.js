@@ -8,7 +8,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     $state.go('login');
 
   } else {
-    $scope.user; // the logged in user
     $scope.start = ''; // start location input
     $scope.end = ''; // end location input
     $scope.lastSearch = { // the most recent search input
@@ -21,18 +20,16 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     $scope.activeUser; // true if a user is logged in
     $scope.newUser = false; // true if a new user wants to sign up
 
+    // toggles active user depending on the presence of a logged in user
     if ($localStorage.username) {
-      $scope.user = $localStorage.username;
       $scope.activeUser = true;
     } else {
-      $scope.user = null;
       $scope.activeUser = false;
     }
 
     $scope.logout = () => {
       console.log('Logged out');
       delete $localStorage.username;
-      $scope.user = null;
       $scope.activeUser = false;
       $scope.newUser = false;
       $state.reload();
