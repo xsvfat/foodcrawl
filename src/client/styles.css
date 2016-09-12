@@ -93,11 +93,7 @@ td {
   color: #0075C4;
 }
 
-.rating:hover {
-  color: white;
-}
-
-.restaurantRow:hover ~ .rating {
+.restaurantRow:hover  .rating {
   color: white;
 }
 
