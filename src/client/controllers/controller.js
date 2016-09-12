@@ -11,8 +11,11 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.user; // the logged in user
     $scope.start = ''; // start location input
     $scope.end = ''; // end location input
-    $scope.map; //store map
-    $scope.directions = ''; // directions from start to end
+    $scope.lastSearch = { // the most recent search input
+      start: '',
+      end: ''
+    }
+    $scope.map; // store map
     $scope.mode = 'driving';
 
     $scope.username;
@@ -165,11 +168,15 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       //clear old data
       RestaurantAndRoute.clearStoredRestaurants();
 
+      // start and end inputs get saved into lastSearch
+      $scope.lastSearch.start = $scope.start ? $scope.start : $scope.lastSearch.start;
+      $scope.lastSearch.end = $scope.end ? $scope.end : $scope.lastSearch.end;
+
       // to refresh states from main.map, need to redirect to main first
       $state.go('main');
 
       if (true) {
-        RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end, $scope.mode).then(restaurants => {
+        RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode).then(restaurants => {
           $state.go('main.map');
 
           // update list of restaurants in the factory
@@ -192,13 +199,13 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
             //add restaurant markers
             RestaurantAndRoute.addMarkers(map);
             // set the current route
-            RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.start, $scope.end, $scope.mode);
+            RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.lastSearch.start, $scope.lastSearch.end, $scope.mode);
           }
           initMap();
 
-          // //clear start and end inputs
-          // $scope.start = undefined;
-          // $scope.end = undefined;
+          //clear start and end inputs
+          $scope.start = undefined;
+          $scope.end = undefined;
           
         }).catch(err => {
           console.log('Error submitting: ', err);
