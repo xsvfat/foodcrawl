@@ -39,7 +39,10 @@
     <input type='submit' class='btn'/>
   </form>
 
+
+<!-- - - - -Filters and Addresses OPTIONS BAR- - - - -->
   <div id='optionsBar'>
+
     <span class='hoverClick inline' ng-mouseenter='displayOptions()'>Filters </span>
     <span class='hoverClick inline' ng-mouseenter='displayAddresses()'>Addresses</span>
     <span id='filter' class='invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
@@ -54,7 +57,6 @@
       <div ui-view='addresses'></div>
     </div>
 
-
   </div>
 
 <!-- - - - -Restaurant list and map- - - - -->
@@ -64,11 +66,8 @@
       </div>
     </div>
     <div class='inline' id='mapContainer'>
-      <!-- <div> -->
-        <!-- <h4>MAP</h4> -->
         <div id='map'>
         </div>
-      <!-- </div> -->
     </div>
   </div>
 

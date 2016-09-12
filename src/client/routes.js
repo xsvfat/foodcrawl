@@ -1,4 +1,4 @@
-var app = angular.module('foodfood', ['ui.router', 'ngSanitize', 'ngStorage']);
+var app = angular.module('foodfood', ['ui.router', 'ngStorage']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
