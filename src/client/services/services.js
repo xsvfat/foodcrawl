@@ -16,17 +16,25 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
     //info window html
     let displayHTML = `
       <div class="infoWindow">
-        <h2 class="infoName">${place.name}</h2>
-        <img class="ratingImg" src="${place.rating_img_url_small}">
-        <p class="infoLocation">
-          ${place.location.display_address[0]}<br>
-          ${place.location.display_address[1]}<br>
-          ${place.location.display_address[2]}<br>
-          ${place.display_phone}
-        </p>
-        <p class="infoDescription">
-          ${categories.join(', ')}
-        </p>
+        <div>
+          <h2 class="infoName">${place.name}</h2>
+
+        </div>
+        <div>
+          <img class="restaurantImg" src="${place.image_url}" height="95" width="95">
+          <p class="infoLocation">
+            <img class="ratingImg" src="${place.rating_img_url}"><br>
+            ${place.display_phone || ''}<br>
+            ${place.location.display_address[0]}<br>
+            ${place.location.display_address[1]}<br>
+            ${place.location.display_address[2] || ''}
+          </p>
+        </div>
+        <div>
+          <p class="infoDescription">
+            ${categories.join(', ')}
+          </p>
+        </div>
       </div>`;
 
     //create info window

@@ -45,7 +45,7 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-} 
+}
 
 /************************ End of Reset **************************/
 
@@ -59,7 +59,7 @@ html, body {
 #restaurantTable {
   min-width: 100%;
   margin: none;
-  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-family: 'Open Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 0.7em;
   background-color: white;
 }
@@ -73,8 +73,13 @@ tr th {
 td {
   line-height: 25px;
   max-width: 160px;
+<<<<<<< 89faa4331f5f2a878d406dc735027a99c71429b7
   font-size: 15px;
   font-family: 'Open Sans';
+=======
+  font-size: 18px;
+  font-family: 'Open Sans', 'Lucida Sans Unicode';
+>>>>>>> Styles for infoWindow
 }
 
 .restaurant, .rating, .addressTable {
@@ -142,7 +147,7 @@ td {
   padding: 15px 12px;
   margin: 0px;
   border-left: 15px solid #bababa;
-  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-family: 'Open Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-weight: bold;
 }
 
@@ -164,7 +169,7 @@ td {
 }
 
 .pref {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Open Sans', 'Lucida Sans Unicode';
   display: inline-block;
   margin: 5px;
   margin-right: 15px;
@@ -219,7 +224,7 @@ td {
 }
 
 .rightSide {
-  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-family: 'Open Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   margin-top: 5px;
   float: right;
   text-align: right;
@@ -398,4 +403,30 @@ option {
   background-color: #0075C4;
   border: 1px black solid;
   cursor: pointer;
+}
+
+/*** Info Window ***/
+.infoWindow {
+	font-size: 14px;
+}
+
+.infoWindow .infoName {
+	font-weight: bold;
+	font-size: 18px;
+}
+.infoWindow .restaurantImg {
+	display: inline-block;
+	padding: 10px 10px 5px 0;
+
+}
+
+.infoWindow .infoLocation {
+	line-height: 1.3em;
+	display: inline-block;
+	vertical-align: bottom;
+	padding-bottom: 5px;
+}
+
+.infoWindow .infoDescription {
+	padding-top: 10px;
 }
