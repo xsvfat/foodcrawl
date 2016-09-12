@@ -6,16 +6,18 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   $scope.lastSearch = { // the most recent search input
     start: '',
     end: ''
-  }
+  };
   $scope.map; // store map
   $scope.mode = 'driving';
 
+  $scope.user;
   $scope.activeUser; // true if a user is logged in
   $scope.newUser = false; // true if a new user wants to sign up
 
   // toggles active user depending on the presence of a logged in user
   if ($localStorage.username) {
     $scope.activeUser = true;
+    $scope.user = $localStorage.username;
   } else {
     $scope.activeUser = false;
   }
@@ -25,6 +27,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     delete $localStorage.username;
     $scope.activeUser = false;
     $scope.newUser = false;
+    $scope.user = null;
     $state.reload();
   };
 
