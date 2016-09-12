@@ -292,11 +292,6 @@ option {
 
 }
 
-#places h4 {
-  margin: 0px 0px 8px 0px;
-  border-bottom: 1px solid white;
-}
-
 .address {
   display: inline-block;
   margin: 4px 0px 4px 15px;
@@ -316,12 +311,6 @@ option {
 
 .addressLocation {
   font-size: 0.75em;
-}
-
-#addAddress legend {
-  margin: 8px 0px;
-  padding-top: 8px;
-  border-bottom: 1px solid white;
 }
 
 #addAddress fieldset {
@@ -384,14 +373,6 @@ option {
   display: inline-block;
   margin-left: 10px;
 }
-/*
-#addresses {
-  width: 66%;
-}
-
-#filters {
-  width: 33%;
-}*/
 
 #addresses, #filter {
   display: block;
