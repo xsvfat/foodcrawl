@@ -192,8 +192,8 @@ td {
 
 #addressesContainer, #optionsView {
   position: absolute;
-  top: 24%;
-  left: 10px;
+  top: 164px;
+  left: 8px;
   z-index:100;
 }
 
