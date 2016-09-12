@@ -9,7 +9,7 @@
     <tr ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class='restaurantRow'>
       <td class='restaurant'>{{restaurant.name}}</td>
       <td class='rating'>{{stars(restaurant.rating)}}</td>
-      <td>{{restaurant.review_count}}</td>
+      <td class='reviewCount rating'>{{restaurant.review_count}}</td>
       <td class='addressTable'>{{restaurant.location.address[0]}}
     </tr>
   </table>

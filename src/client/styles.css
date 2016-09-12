@@ -99,6 +99,12 @@ td {
   color: #0075C4;
 }
 
+.reviewCount {
+  width: 15%;
+  text-align: center;
+  color: #000000;
+}
+
 .restaurantRow:hover  .rating {
   color: white;
 }
