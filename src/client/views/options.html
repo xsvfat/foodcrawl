@@ -1,4 +1,4 @@
-<div id='optionsView'>
+<div id='optionsView' ng-mouseenter='displayOptions()' ng-mouseleave='hideOptions()'>
   <div id='tags'>
     <a class='pref' ng-repeat='tag in tags track by $index' ng-click='deleteTag(tag)'>{{tag}}</a>
     <form ng-submit='submitTag()'>

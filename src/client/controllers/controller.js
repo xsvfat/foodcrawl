@@ -105,9 +105,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
           }
         }).catch(err => {
           console.log('Error signing up: ', err);
-        })
+        });
       }
-    }
+    };
 
     $scope.logout = () => {
       console.log('Logged out');
@@ -116,24 +116,44 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       $scope.activeUser = false;
       $scope.newUser = false;
       $state.reload();
-    }
+    };
 
     $scope.showOptions = false;
     $scope.invalidOptions = false;
-    $scope.toggleOptions = () => {
+    $scope.displayOptions = () => {
       if ($localStorage.username) {
-        $scope.showOptions = !$scope.showOptions; // toggles options view
+        $scope.hideAddresses();
+        $scope.showOptions = true; // toggles options view
         $scope.invalidOptions = false;
       } else {
         $scope.invalidOptions = true;
       }
-    }
+    };
+
+    $scope.hideOptions = () => {
+      if ($localStorage.username) {
+        $scope.showOptions = false; // toggles options view
+        $scope.invalidOptions = false;
+      } else {
+        $scope.invalidOptions = true;
+      }
+    };
 
     $scope.showAddresses = false;
     $scope.invalidAddresses = false;
-    $scope.toggleAddresses = () => {
+    $scope.displayAddresses = () => {
       if ($localStorage.username) {
-        $scope.showAddresses = !$scope.showAddresses; // toggles addresses view
+        $scope.hideOptions();
+        $scope.showAddresses = true; // toggles addresses view
+        $scope.invalidAddresses = false;
+      } else {
+        $scope.invalidAddresses = true;
+      }
+    };
+
+    $scope.hideAddresses = () => {
+      if ($localStorage.username) {
+        $scope.showAddresses = false; // toggles addresses view
         $scope.invalidAddresses = false;
       } else {
         $scope.invalidAddresses = true;
