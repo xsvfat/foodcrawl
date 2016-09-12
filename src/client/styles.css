@@ -214,35 +214,31 @@ td {
 
 .rightSide {
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-  margin-top: 10px;
+  margin-top: 5px;
   float: right;
   text-align: right;
+  font-size: 1.0em;
 }
 
-.rightSide span {
-  font-size: 12px;
+.rightSide form {
+  margin-top: 5px;
 }
 
 .rightSide input {
   margin-right: 6px;
 }
 
-.rightSide p {
-  margin: 0px;
+.rightSide div {
+  font-weight: bold;
 }
 
-.rightSide h4 {
-  margin: 3px 10px;
-  /*float: right;*/
-  font-weight: bold;
-  font-size: 1.2em;
-}
-.rightSide h4 span {
+.loginRedirectText {
+  margin-right: 10px;
   text-decoration: underline;
   font-weight: bold;
-  font-size: 1.0em;
 }
-.rightSide h4 span:hover {
+
+.loginRedirectText:hover {
   cursor: pointer;
   color: #fff;
 }
