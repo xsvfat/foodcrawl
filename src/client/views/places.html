@@ -2,7 +2,7 @@
   <table id='restaurantTable' ng-show='restaurants.length'>
     <tr>
       <th align='center' ng-click='setSortTerm("name")'>Restaurants</th>
-      <th align='center' ng-click='setSortTerm("-rating")'>Rating</th>
+      <th align='center' ng-click='setSortTerm("rating")'>Rating</th>
       <th align='center'>Address</th>
     </tr>
     <tr ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class='restaurantRow'>
