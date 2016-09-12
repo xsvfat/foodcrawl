@@ -190,6 +190,13 @@ td {
   padding-left: 15px;
 }
 
+#addressesContainer {
+  position: absolute;
+  top: 25%;
+  left: 10px;
+  z-index:100;
+}
+
 #savePref {
   float: right;
 }
