@@ -1,4 +1,4 @@
-Food on the Way
+foodcrawl
 =====================
 A web app which which displays a number of restaurants along the route to a destination.  
 Users can save addresses for later use and filter the displayed restaurants.  
