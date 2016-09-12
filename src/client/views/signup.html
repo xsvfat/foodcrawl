@@ -1,11 +1,10 @@
-<div id='signupDiv' ng-controller='signupController'>
-  <h1>Sign up</h1>
-  <hr></hr>
-  <form name='signupForm' ng-submit='signupSubmit(signupForm)'>
-    Username:<input type='text' ng-model='username' required/><br>
-    Password:<input type='password' ng-model='password' required/><br>
-    <input type='submit' />
+<div>
+  <div>Have an account? <span class='loginRedirectText' ng-click='showLoginForm()'>Log in</span></div>
+</div>
+<div>
+  <form name='newUserForm' ng-submit='newUserSubmit(newUserForm)'>
+    <span>Username </span><input class='textInput' ng-model='usernameNew' required/><br>
+    <span>Password </span><input class='textInput' ng-model='passwordNew' type='password' required/><br>
+    <span class='invalid' ng-show='invalid'>That username already exists!</span><input type='submit' value='Sign up' class='btn'/>
   </form>
-  <p class='invalid' ng-show='invalid'>That username already exists!</p>
-  <a ui-sref='login'>Have an account? Log in</a>
 </div>

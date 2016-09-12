@@ -2,6 +2,7 @@
 
 <!-- - - - -HEADER- - - - -->
   <div class='header'>
+  
     <div class='inline'>
       <h1>foodcrawl</h1>
     </div>
@@ -19,16 +20,7 @@
 
 <!-- Show sign-up for creating new account -->
     <div class='inline rightSide' ng-show='newUser'>
-      <div>
-        <div>Have an account? <span class='loginRedirectText' ng-click='showLoginForm()'>Log in</span></div>
-      </div>
-      <div>
-        <form name='newUserForm' ng-submit='newUserSubmit(newUserForm)'>
-          <span>Username </span><input class='textInput' ng-model='usernameNew' required/><br>
-          <span>Password </span><input class='textInput' ng-model='passwordNew' type='password' required/><br>
-          <span class='invalid' ng-show='invalid'>That username already exists!</span><input type='submit' value='Sign up' class='btn'/>
-        </form>
-      </div>
+      <div ui-view='signup'></div>
     </div>
 
   </div>
