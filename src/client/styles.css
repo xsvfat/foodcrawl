@@ -171,13 +171,12 @@ td {
   margin-right: 15px;
   padding-right: 5px;
   padding-left: 3px;
-  border-left: 1px solid black;
   width: 125px;
 }
 
 .pref:hover, a:hover {
   cursor: pointer;
-  color: #0075C4;
+  color: black;
   font-weight: bold;
 }
 
@@ -293,13 +292,9 @@ option {
 
 }
 
-#places h4 {
-  margin: 0px;
-}
-
 .address {
   display: inline-block;
-  margin-left: 15px;
+  margin: 4px 0px 4px 15px;
   width: 175px;
   border-radius: 7px;
 }
@@ -311,11 +306,15 @@ option {
 
 .addressLabel {
   font-weight: bold;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
 }
 
 .addressLocation {
   font-size: 0.75em;
+}
+
+#addAddress fieldset {
+  margin-top: 6px;
 }
 
 #addAddress h4 {
@@ -374,14 +373,6 @@ option {
   display: inline-block;
   margin-left: 10px;
 }
-/*
-#addresses {
-  width: 66%;
-}
-
-#filters {
-  width: 33%;
-}*/
 
 #addresses, #filter {
   display: block;
