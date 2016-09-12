@@ -122,6 +122,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.invalidOptions = false;
     $scope.displayOptions = () => {
       if ($localStorage.username) {
+        $scope.hideAddresses();
         $scope.showOptions = true; // toggles options view
         $scope.invalidOptions = false;
       } else {
@@ -142,6 +143,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.invalidAddresses = false;
     $scope.displayAddresses = () => {
       if ($localStorage.username) {
+        $scope.hideOptions();
         $scope.showAddresses = true; // toggles addresses view
         $scope.invalidAddresses = false;
       } else {
