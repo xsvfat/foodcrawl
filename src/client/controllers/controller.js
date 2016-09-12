@@ -20,10 +20,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
 
     $scope.activeUser; // true if a user is logged in
     $scope.newUser = false; // true if a new user wants to sign up
-    $scope.invalid = false; // true if username/password is invalid
-
-    $scope.usernameNew;
-    $scope.passwordNew;
 
     if ($localStorage.username) {
       $scope.user = $localStorage.username;
@@ -32,44 +28,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       $scope.user = null;
       $scope.activeUser = false;
     }
-
-    $scope.showLoginForm = () => {
-      // displays the login form
-      $scope.newUser = false;
-      $scope.activeUser = false;
-    }
-
-    $scope.newUserSubmit = (form) => { // adds a new user to database
-      if (form.$valid) {
-        $http({
-          method: 'POST',
-          url: '/signup',
-          data: {
-            username: $scope.usernameNew,
-            password: $scope.passwordNew
-          }
-        }).then(result => {
-          console.log('Signup result: ', result.data);
-          if (result.data.valid) {
-            // if signup is valid, save user to local storage and redirect to '/main'
-            $localStorage.username = $scope.usernameNew;
-            $scope.user = $scope.usernameNew;
-            $scope.activeUser = true;
-            $scope.usernameNew = '';
-            $scope.passwordNew = '';
-            $scope.invalid = false;
-            $scope.newUser = false; // hides newUser div
-            $state.reload();
-          } else {
-            // if invalid signup, show error message
-            $scope.passwordNew = '';
-            $scope.invalid = true;
-          }
-        }).catch(err => {
-          console.log('Error signing up: ', err);
-        });
-      }
-    };
 
     $scope.logout = () => {
       console.log('Logged out');

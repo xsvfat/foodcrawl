@@ -1,7 +1,10 @@
 app.controller('loginController', ['$http', '$scope', '$state', '$localStorage', function($http, $scope, $state, $localStorage) {
+
   $scope.username;
   $scope.password;
-  $scope.invalid = false;
+
+  $scope.invalid = false; // true if username/password is invalid
+  
   $scope.loginSubmit = (form) => {
     if (form.$valid) {
       $http({
@@ -26,6 +29,7 @@ app.controller('loginController', ['$http', '$scope', '$state', '$localStorage',
           $scope.$parent.newUser = false;
           $state.reload();
         } else {
+          // if invalid login, show error message
           $scope.password = '';
           $scope.invalid = true;
         }
@@ -40,5 +44,4 @@ app.controller('loginController', ['$http', '$scope', '$state', '$localStorage',
     $scope.$parent.newUser = true;
     $scope.$parent.activeUser = false;
   };
-  console.log($scope.$parent);
 }])
