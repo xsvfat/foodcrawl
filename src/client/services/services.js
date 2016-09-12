@@ -17,12 +17,12 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
     let displayHTML = `
       <div class="infoWindow">
         <h2 class="infoName">${place.name}</h2>
-        <img class="ratingImg" src="${place.rating_img_url_small}">
+        <img class="ratingImg" src="${place.rating_img_url}">
         <p class="infoLocation">
+          ${place.display_phone || ''}<br>
           ${place.location.display_address[0]}<br>
           ${place.location.display_address[1]}<br>
-          ${place.location.display_address[2]}<br>
-          ${place.display_phone}
+          ${place.location.display_address[2] || ''}<br>
         </p>
         <p class="infoDescription">
           ${categories.join(', ')}
