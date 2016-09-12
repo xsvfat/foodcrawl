@@ -190,9 +190,9 @@ td {
   padding-left: 15px;
 }
 
-#addressesContainer {
+#addressesContainer, #optionsView {
   position: absolute;
-  top: 25%;
+  top: 24%;
   left: 10px;
   z-index:100;
 }
