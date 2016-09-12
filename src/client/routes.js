@@ -29,6 +29,22 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         templateUrl: './views/places.html',
         controller: function($scope, RestaurantAndRoute, Auth, Addresses) {
           // restaurants from the server
+          $scope.sortTerm = '-review_count';
+          $scope.setSortTerm = function (input) {
+            if ($scope.sortTerm[0] === '-') {
+              if ($scope.sortTerm.slice(1) === input) {
+                $scope.sortTerm = input;
+              } else {
+                $scope.sortTerm = input; 
+              }
+            } else {
+              if ($scope.sortTerm === input) {
+                $scope.sortTerm = '-' + input;
+              } else {
+                $scope.sortTerm = input;
+              }
+            }
+          };
           $scope.restaurants = RestaurantAndRoute.getRestaurants();
         }
       }
