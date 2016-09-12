@@ -18,9 +18,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
     $scope.map; // store map
     $scope.mode = 'driving';
 
-    // $scope.username;
-    // $scope.password;
-
     $scope.activeUser; // true if a user is logged in
     $scope.newUser = false; // true if a new user wants to sign up
     $scope.invalid = false; // true if username/password is invalid
