@@ -93,6 +93,14 @@ td {
   color: #0075C4;
 }
 
+.rating:hover {
+  color: white;
+}
+
+.restaurantRow:hover ~ .rating {
+  color: white;
+}
+
 .addressTable {
   width: 55%;
   text-align: center;
@@ -302,7 +310,7 @@ option {
 
 .address:hover {
   cursor: pointer;
-  color: #0075C4;
+  color: black;
 }
 
 .addressLabel {
