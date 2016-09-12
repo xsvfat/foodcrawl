@@ -70,6 +70,10 @@ tr th {
   font-weight: bold;
 }
 
+tr th:first-child {
+  padding: 5px 20px;
+}
+
 td {
   line-height: 15px;
   vertical-align: middle;
