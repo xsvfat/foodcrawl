@@ -6,7 +6,7 @@ describe('Services', function() {
 
   describe('RestaurantAndRoute factory', function() {
     var $httpBackend, RestaurantAndRoute;
-    
+
     // inject the necessary dependencies
     beforeEach(inject(function (_$httpBackend_, _RestaurantAndRoute_) {
       $httpBackend = _$httpBackend_;
@@ -17,6 +17,15 @@ describe('Services', function() {
     it('should exist', function() {
       expect(RestaurantAndRoute).to.exist;
     });
+
+    it('should have a method `fetchRestaurants`', function() {
+      expect(RestaurantAndRoute.fetchRestaurants).to.be.a('function');
+    });
+
+    it('should have a method `getRestaurants`', function() {
+      expect(RestaurantAndRoute.getRestaurants).to.be.a('function');
+    });
+
 
     it('should have a method `addMarkers`', function() {
       expect(RestaurantAndRoute.addMarkers).to.be.a('function');
