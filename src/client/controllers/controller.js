@@ -148,7 +148,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
       // to refresh states from main.map, need to redirect to main first
       $state.go('main');
 
-      if (form.$valid) {
+      if (true) {
         RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end, $scope.mode).then(restaurants => {
           $state.go('main.map');
 
@@ -176,9 +176,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', '$sce', 'Restau
           }
           initMap();
 
-          //clear start and end inputs
-          $scope.start = undefined;
-          $scope.end = undefined;
+          // //clear start and end inputs
+          // $scope.start = undefined;
+          // $scope.end = undefined;
           
         }).catch(err => {
           console.log('Error submitting: ', err);

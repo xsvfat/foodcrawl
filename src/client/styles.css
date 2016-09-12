@@ -396,4 +396,5 @@ option {
   color: white;
   background-color: #0075C4;
   border: 1px black solid;
+  cursor: pointer;
 }
