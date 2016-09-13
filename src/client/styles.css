@@ -382,6 +382,7 @@ option {
   border-radius: 7px;
   border-color: #0075C4;
   padding-left: 5px;
+  width: 300px;
 }
 
 #optionsBar {
