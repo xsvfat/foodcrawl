@@ -11,36 +11,38 @@
 
 
 <!-- - - - -Start and End for user input- - - - -->
-  <div class="row">
-  <form id='routeSearch' name='routeForm' class="col s12" ng-submit='submit(routeForm)'>
-    <div class="row">
-    <div ng-click="requestCurrentLocation()">Use Current Location</div>
-      <div class="input-field col s12 m4">
-        <input name='start' type='text' ng-model='start' required placeholder='944 Market Street' ng-autocomplete>
-        <label for="start">Start</label>
-      </div>
-      <div class="input-field col s12 m4">
-        <input name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street' ng-autocomplete>
-        <label for="end">End</label>
-      </div>
-        <div class="input-field col s12 m3">
-          <select ng-model='mode'>
-            <option value="walking">Walking</option>
-            <option value="driving" selected>Driving</option>
-            <option value="bicycling">Bicycling</option>
-          </select>
-          <label>Mode</label>
+  <div class="section">
+    <form id='routeSearch' name='routeForm' class="row" ng-submit='submit(routeForm)'>
+      <div class="row">
+        <div class="input-field col s12 m4">
+          <input name='start' type='text' ng-model='start' required placeholder='944 Market Street' ng-autocomplete>
+          <label for="start">Start</label>
         </div>
-        <div class="input-field col s12 m1">
-          <button class="btn waves-effect waves-light col s12" type="submit" name="action">
-            <i class="material-icons">send</i>
-          </button>
+        <div class="input-field col s12 m4">
+          <input name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street' ng-autocomplete>
+          <label for="end">End</label>
         </div>
-    </div>
-    <div class="row">
-    </div>
-  </form>
+          <div class="input-field col s12 m3">
+            <select ng-model='mode'>
+              <option value="walking">Walking</option>
+              <option value="driving" selected>Driving</option>
+              <option value="bicycling">Bicycling</option>
+            </select>
+            <label>Mode</label>
+          </div>
+          <div class="input-field col s12 m1">
+            <button class="btn waves-effect waves-light col s12" type="submit" name="action">
+              <i class="material-icons">send</i>
+            </button>
+          </div>
+      </div>
+      <div class="row">
+      </div>
+    </form>
+    
+
   </div>
+  <div ng-click="requestCurrentLocation()">Use Current Location</div>
   <div id='map'>
   </div>
 
