@@ -1,11 +1,19 @@
-<div ng-controller='inputsController'>
+<nav>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">foodcrawl</a>
+    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="#">Log In</a></li>
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+      <li><a href="#">Log In</a></li>
+    </ul>
+  </div>
+</nav>
 
+<div ng-controller='inputsController' class="container">
 <!-- - - - -HEADER- - - - -->
   <div class='header'>
-  
-    <div class='inline'>
-      <h1>foodcrawl</h1>
-    </div>
 
 <!-- Show login option for users who want to login -->
     <div class='inline rightSide' ng-hide='activeUser || newUser'>
@@ -28,16 +36,40 @@
 
 
 <!-- - - - -Start and End for user input- - - - -->
-  <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
-    <span class='startEnd'>Start </span><input class='textInput' name='start' type='text' ng-model='start' required placeholder='944 Market Street'/>
-    <span class='startEnd'>End </span><input class='textInput' name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street'/>
-    <select ng-model='mode'>
-      <option value='walking'>Walking</option>
-      <option value='driving'>Driving</option>
-      <option value='bicycling'>Bicycling</option>
-    </select>
-    <input type='submit' class='btn'/>
+  <div class="row">
+  <form id='routeSearch' name='routeForm' class="col s12" ng-submit='submit(routeForm)'>
+    <div class="row">
+    <div ng-click="requestCurrentLocation()">Use Current Location</div>
+      <div class="input-field col s12 m6">
+        <input name='start' type='text' ng-model='start' required placeholder='944 Market Street' ng-autocomplete>
+        <label for="start">Start</label>
+      </div>
+      <div class="input-field col s12 m6">
+        <input name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street' ng-autocomplete>
+        <label for="end">End</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12 m6">
+        <select ng-model='mode'>
+          <option value="walking">Walking</option>
+          <option value="driving" selected>Driving</option>
+          <option value="bicycling">Bicycling</option>
+        </select>
+        <label>Mode</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
   </form>
+  </div>
+  <div id='map'>
+  </div>
 
 
 <!-- - - - -Filters and Addresses OPTIONS BAR- - - - -->
@@ -47,7 +79,7 @@
     <span class='hoverClick inline' ng-mouseenter='displayAddresses()'>Addresses</span>
     <span id='filter' class='invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
     <span id='addresses' class='invalid small' ng-show='invalidAddresses'>Log in to save addresses!</span>
-    
+
   <!-- - - - -Filters- - - - -->
     <div id='optionsContainer' ng-show='showOptions'>
       <div ui-view='options'></div>
@@ -65,10 +97,8 @@
       <div ui-view='restaurantList'>
       </div>
     </div>
-    <div class='inline' id='mapContainer'>
-        <div id='map'>
-        </div>
-    </div>
   </div>
+    <div id='mapContainer'>
+    </div>
 
 </div>

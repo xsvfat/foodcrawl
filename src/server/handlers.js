@@ -33,7 +33,7 @@ module.exports = {
         // Checks the hashed password in the database against the password
         // attached to the request body.
         bcrypt.compare(password, user.password, function (error, result) {
-          
+
           if (error) {
             // Conditional to catch any errors the bcrypt module throws.
             console.log(error);
@@ -76,8 +76,8 @@ module.exports = {
     var username = req.body.username;
     var prefs = req.body.userPrefs;
     User.findOneAndUpdate({username: username},
-                          {$set: {preferences: prefs}}, 
-                          {new: true}, 
+                          {$set: {preferences: prefs}},
+                          {new: true},
                           (err, result) => {
       if (err) {
         res.send({message: 'Error updating preferences.', valid: false});
@@ -99,7 +99,7 @@ module.exports = {
 
 
   /*
-   * Input: (String, String, Function) 
+   * Input: (String, String, Function)
    * Output: Promise
    * Description: Given a starting and ending address, gives an object
    *              containing an array of routes in promise form.
@@ -119,7 +119,7 @@ module.exports = {
       url: `${gmapsURL}?${queryString}`,
       method: 'GET'
     }; 
-    console.log('QUERYSTRING= ', queryString);
+
 
     // Make request to Google Directions API.
     return request(options);
@@ -142,7 +142,7 @@ module.exports = {
         module.exports.getRestaurants(req, res, routesArray, response.preferences);
 
       }).catch(function (error) {
-        
+
         // Call getRestaurants along the returned route.
         module.exports.getRestaurants(req, res, routesArray);
 
@@ -163,7 +163,7 @@ module.exports = {
   getRestaurants: (req, res, routesArray, preferences) => {
     preferences = preferences || [];
 
-    // Object to be returned to the client. 
+    // Object to be returned to the client.
     // Stores route and restaurants in two seperate arrays.
     var responseObject = {
       route: routesArray,
@@ -183,19 +183,21 @@ module.exports = {
       steps = steps.concat(leg.steps);
     });
 
+
+
     // Calculates the length of the segments produced by cutting a given route into 10ths.
     var averageSegmentLength = totalRouteDistance / 10;
 
     // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
     var start, end;
     var distanceFromTarget = averageSegmentLength / 2;
-    
+
     // Iterate over each step along a route.
     for (var i = 0; i < steps.length; i++) {
 
       // Check if a segment's target midpoint lies along a given step.
       if (steps[i].distance.value >= distanceFromTarget) {
-        
+
         // Grab the step's start and stop coordinates.
         start = steps[i].start_location;
         end = steps[i].end_location;
@@ -205,7 +207,7 @@ module.exports = {
           lat: start.lat + ((end.lat - start.lat) * (distanceFromTarget / steps[i].distance.value)),
           lng: start.lng + ((end.lng - start.lng) * (distanceFromTarget / steps[i].distance.value)),
         };
-        
+
         // Generate the appropriate segment object and add it to the storage array.
         segmentsArray.push({
           distance: averageSegmentLength,
@@ -315,7 +317,7 @@ module.exports = {
 
       // Query Yelp's API.
       yelp.search(searchParameters)
-        
+
         // Sucess callback
         .then(function (searchResults) {
 
@@ -339,7 +341,7 @@ module.exports = {
               return totalDistance < Math.max(step.distance / 2, 100);
             }
           });
-          
+
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
           responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
@@ -347,7 +349,7 @@ module.exports = {
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
           queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
-        }) 
+        })
 
         // Error callback
         .catch(function (error) {
