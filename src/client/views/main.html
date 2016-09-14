@@ -1,36 +1,11 @@
-<nav>
-  <div class="nav-wrapper">
-    <a href="#!" class="brand-logo">foodcrawl</a>
-    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-    <ul class="right hide-on-med-and-down">
-      <li><a href="#">Log In</a></li>
-    </ul>
-    <ul class="side-nav" id="mobile-demo">
-      <li><a href="#">Log In</a></li>
-    </ul>
-  </div>
-</nav>
-
 <div ng-controller='inputsController' class="container">
 <!-- - - - -HEADER- - - - -->
   <div class='header'>
-
-<!-- Show login option for users who want to login -->
-    <div class='inline rightSide' ng-hide='activeUser || newUser'>
-      <div ui-view='login'></div>
-    </div>
-
 <!-- Show logout option for logged in users -->
     <div class='inline rightSide' ng-show='activeUser && !newUser'>
       <span class='bold'>{{user}}</span>
       <button ng-click='logout()' class='btn'>Log out</button>
     </div>
-
-<!-- Show sign-up for creating new account -->
-    <div class='inline rightSide' ng-show='newUser'>
-      <div ui-view='signup'></div>
-    </div>
-
   </div>
 <!-- - - - - -END OF HEADER- - - - -  -->
 
@@ -40,31 +15,29 @@
   <form id='routeSearch' name='routeForm' class="col s12" ng-submit='submit(routeForm)'>
     <div class="row">
     <div ng-click="requestCurrentLocation()">Use Current Location</div>
-      <div class="input-field col s12 m6">
+      <div class="input-field col s12 m4">
         <input name='start' type='text' ng-model='start' required placeholder='944 Market Street' ng-autocomplete>
         <label for="start">Start</label>
       </div>
-      <div class="input-field col s12 m6">
+      <div class="input-field col s12 m4">
         <input name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street' ng-autocomplete>
         <label for="end">End</label>
       </div>
+        <div class="input-field col s12 m3">
+          <select ng-model='mode'>
+            <option value="walking">Walking</option>
+            <option value="driving" selected>Driving</option>
+            <option value="bicycling">Bicycling</option>
+          </select>
+          <label>Mode</label>
+        </div>
+        <div class="input-field col s12 m1">
+          <button class="btn waves-effect waves-light col s12" type="submit" name="action">
+            <i class="material-icons">send</i>
+          </button>
+        </div>
     </div>
     <div class="row">
-      <div class="input-field col s12 m6">
-        <select ng-model='mode'>
-          <option value="walking">Walking</option>
-          <option value="driving" selected>Driving</option>
-          <option value="bicycling">Bicycling</option>
-        </select>
-        <label>Mode</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s6">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-          <i class="material-icons right">send</i>
-        </button>
-      </div>
     </div>
   </form>
   </div>
