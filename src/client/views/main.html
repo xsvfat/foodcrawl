@@ -39,6 +39,7 @@
   <div class="row">
   <form id='routeSearch' name='routeForm' class="col s12" ng-submit='submit(routeForm)'>
     <div class="row">
+    <div ng-click="requestCurrentLocation()">Use Current Location</div>
       <div class="input-field col s12 m6">
         <input name='start' type='text' ng-model='start' required placeholder='944 Market Street' ng-autocomplete>
         <label for="start">Start</label>
@@ -78,7 +79,7 @@
     <span class='hoverClick inline' ng-mouseenter='displayAddresses()'>Addresses</span>
     <span id='filter' class='invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
     <span id='addresses' class='invalid small' ng-show='invalidAddresses'>Log in to save addresses!</span>
-    
+
   <!-- - - - -Filters- - - - -->
     <div id='optionsContainer' ng-show='showOptions'>
       <div ui-view='options'></div>
