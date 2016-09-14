@@ -2,7 +2,7 @@
 
 <!-- - - - -HEADER- - - - -->
   <div class='header'>
-  
+
     <div class='inline'>
       <h1>foodcrawl</h1>
     </div>
@@ -29,8 +29,9 @@
 
 <!-- - - - -Start and End for user input- - - - -->
   <form id='routeSearch' name='routeForm' ng-submit='submit(routeForm)'>
-    <span class='startEnd'>Start </span><input class='textInput' name='start' type='text' ng-model='start' required placeholder='944 Market Street' ng-autocomplete />
-    <span class='startEnd'>End </span><input class='textInput' name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street' ng-autocomplete />
+    <div ng-click="requestCurrentLocation()">Use Current Location</div>
+    <span class='startEnd'>Start </span><input class='textInput' name='start' type='text' ng-model='start' required placeholder='Enter Starting Location' ng-autocomplete />
+    <span class='startEnd'>End </span><input class='textInput' name='end' type='text' ng-model='end' required placeholder='Enter Ending Location' ng-autocomplete />
     <select ng-model='mode'>
       <option value='walking'>Walking</option>
       <option value='driving'>Driving</option>
@@ -47,7 +48,7 @@
     <span class='hoverClick inline' ng-mouseenter='displayAddresses()'>Addresses</span>
     <span id='filter' class='invalid small' ng-show='invalidOptions'>Log in to customize filters!</span>
     <span id='addresses' class='invalid small' ng-show='invalidAddresses'>Log in to save addresses!</span>
-    
+
   <!-- - - - -Filters- - - - -->
     <div id='optionsContainer' ng-show='showOptions'>
       <div ui-view='options'></div>

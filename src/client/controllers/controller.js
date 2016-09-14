@@ -73,6 +73,45 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     }
   }
 
+  $scope.requestCurrentLocation = () => {
+
+    if (navigator.geolocation) {
+      console.log('Geolocation is supported!');
+      var startPos;
+      var geoOptions = {
+         timeout: 10 * 1000
+      }
+
+      var geoSuccess = function(position) {
+        startPos = position;
+        var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startPos.coords.latitude + "," + startPos.coords.longitude + "&key=AIzaSyDmA8w7Cs4Tg8I8ER-OzpPe210JWkZBGkA"
+
+        $http({
+          method: 'GET',
+          url: url,
+        }).then( queryResult => {
+          console.log(queryResult)
+          $scope.start = queryResult.data.results[0].formatted_address
+        })
+        // document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+        // document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+      };
+      var geoError = function(error) {
+        console.log('Error occurred. Error code: ' + error.code);
+        // error.code can be:
+        //   0: unknown error
+        //   1: permission denied
+        //   2: position unavailable (error response from location provider)
+        //   3: timed out
+      };
+
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+    }
+    else {
+      console.log('Geolocation is not supported for this Browser/OS version yet.');
+    }
+  }
+
   // POST users' start and end locations to server
   $scope.submit = function(form) {
     //clear old data
@@ -116,7 +155,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
         //clear start and end inputs
         $scope.start = undefined;
         $scope.end = undefined;
-        
+
       }).catch(err => {
         console.log('Error submitting: ', err);
       });
