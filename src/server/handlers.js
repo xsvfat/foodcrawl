@@ -9,6 +9,8 @@ var _ = require('lodash');
 var User = require('./dbconfig/schema.js').User;
 var Address = require('./dbconfig/schema.js').Address;
 var bcrypt = require('bcrypt');
+var stripe = require("stripe")("sk_test_xg4PkTku227mE5Pub1jJvIj5");
+
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -18,6 +20,7 @@ var yelp = new Yelp({
   'token': keys.yelpToken,
   'token_secret': keys.yelpTokenSecret
 });
+
 
 module.exports = {
   login: (req, res, next) => {
@@ -125,6 +128,7 @@ module.exports = {
 
   // Takes form data from submit
   // Outputs routes or addresses for the map
+
   submit: function(req, res, next) {
     module.exports.getRoutes(req.body.start, req.body.end, req.body.mode)
     .then(results => {
@@ -152,13 +156,32 @@ module.exports = {
     });
   },
 
+  chargeCard: (req,res) => {
+    var token = req.body.stripeToken; // Using Express
+
+    var charge = stripe.charges.create({
+      amount: 1000, // Amount in cents
+      currency: "usd",
+      source: token,
+      description: "Example charge"
+    }, function(err, charge) {
+      if (err && err.type === 'StripeCardError') {
+        console.log("Error charging card")
+        res.status(400)
+      } else {
+        console.log("Charge succesfull")
+        res.status(201).send("Charge succesfull")
+      }
+    });
+  },
+
   /*
    * Input: Array
    * Output: Promise
    * Description: Takes in the route object returned by Google's API,
    *              and returns an array of restaurant objects from Yelp.
    */
-  getRestaurants: (req, res, routesArray, preferences) => {
+  getRestaurants: (req, res, routesArray, preferences, token) => {
     preferences = preferences || [];
 
     // Object to be returned to the client.
@@ -180,6 +203,11 @@ module.exports = {
       totalRouteDistance += leg.distance.value;
       steps = steps.concat(leg.steps);
     });
+    //"Number below represents 500 miles"
+    if (totalRouteDistance > 804672 && !token){
+      res.status(301).send("We require payment")
+    } else {
+    console.log("Ensure it doesn't reach this far")
 
 
 
@@ -289,6 +317,7 @@ module.exports = {
           queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
         });
     });
+   }
   },
 
   /**

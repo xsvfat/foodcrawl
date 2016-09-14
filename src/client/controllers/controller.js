@@ -1,6 +1,6 @@
 // controller for start & end inputs
 app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, Auth, $localStorage, Addresses) {
-  
+
   Materialize.updateTextFields(); // solves input field placeholder overlapping issue
   $('select').material_select(); // solves select issues
   $(".button-collapse").sideNav({
@@ -130,8 +130,14 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     // to refresh states from main.map, need to redirect to main first
     $state.go('main');
 
-    if (true) {
-      RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode).then(restaurants => {
+
+    RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode)
+      .then(restaurants => {
+        if (restaurants === "Payment Required"){
+          console.log("Payment Required")
+          //break;
+        }
+
         $state.go('main.map');
 
         // update list of restaurants in the factory
@@ -161,11 +167,10 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
         //clear start and end inputs
         $scope.start = undefined;
         $scope.end = undefined;
-
       }).catch(err => {
         console.log('Error submitting: ', err);
       });
-    }
+
   };
 
   //Shows the appropriate restaurant info window on the map when clicked in the list

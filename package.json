@@ -38,6 +38,7 @@
     "ngstorage": "^0.3.11",
     "path": "^0.12.7",
     "request": "^2.74.0",
+    "stripe": "^4.10.0",
     "supertest": "^2.0.0",
     "ui-router": "^1.0.0-alpha.3",
     "yelp": "^1.0.1"

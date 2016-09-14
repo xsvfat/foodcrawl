@@ -57,6 +57,29 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
     openInfoWindows = [];
   };
 
+  let handler = StripeCheckout.configure({
+    key: 'pk_test_Xz3V8MOTjqbGd0eH8JGUDVkN',
+    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    locale: 'auto',
+    token: function(token) {
+      return $http({
+        method: 'POST',
+        url: '/chargeCard',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          stripeToken: token
+        }
+      }).then(data => {
+        console.log(data,"data")
+      }).catch(err => {
+        console.log(err,"error")
+      })
+    }
+  });
+
+
   return {
 
     fetchRestaurants: function(origin, destination, mode) {
@@ -75,10 +98,8 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
           end: destination,
           mode: mode,
           user: $localStorage.username,
-
         }
       }).then(data => {
-
         // filter out any restaurants farther than 60m
         /*** This isn't filtering by distance anymore ***/
         restaurants = data.data.restaurants.filter(restaurant => {
@@ -90,6 +111,16 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
 
       }).catch(err => {
         console.log('Error fetching restaurants: ', err);
+
+        if (err.status === 301){
+          console.log("we reached here")
+          handler.open({
+              name: 'Demo Site',
+              description: '2 widgets',
+              amount: 2000
+            })
+          return "Payment Required"
+        }
       })
     },
 
