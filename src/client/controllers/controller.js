@@ -78,22 +78,21 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
     if (navigator.geolocation) {
       console.log('Geolocation is supported!');
-      var startPos;
-      var geoOptions = {
-         timeout: 10 * 1000
-      }
 
       var geoSuccess = function(position) {
-        startPos = position;
-        var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startPos.coords.latitude + "," + startPos.coords.longitude + "&key=AIzaSyDmA8w7Cs4Tg8I8ER-OzpPe210JWkZBGkA"
+        var coords = position.coords.latitude.toString() + " " + position.coords.longitude.toString();
+        $scope.start = coords;
+        $scope.$digest();
+        //console.log($scope.start);
+        // var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startPos.coords.latitude + "," + startPos.coords.longitude + "&key=AIzaSyDmA8w7Cs4Tg8I8ER-OzpPe210JWkZBGkA"
 
-        $http({
-          method: 'GET',
-          url: url,
-        }).then( queryResult => {
-          console.log(queryResult)
-          $scope.start = queryResult.data.results[0].formatted_address
-        })
+        // $http({
+        //   method: 'GET',
+        //   url: url,
+        // }).then( queryResult => {
+        //   console.log(queryResult)
+        //   $scope.start = queryResult.data.results[0].formatted_address
+        // })
         // document.getElementById('startLat').innerHTML = startPos.coords.latitude;
         // document.getElementById('startLon').innerHTML = startPos.coords.longitude;
       };
@@ -106,7 +105,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
         //   3: timed out
       };
 
-      navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
     }
     else {
       console.log('Geolocation is not supported for this Browser/OS version yet.');

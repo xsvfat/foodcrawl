@@ -1,11 +1,11 @@
 <div class="container">
 <!-- Show login option for users who want to login -->
-    <div class='inline rightSide' ng-hide='activeUser || newUser'>
+    <div class='col s12 m4' ng-hide='activeUser || newUser'>
       <div ui-view='login'></div>
     </div>
 
 <!-- Show sign-up for creating new account -->
-    <div class='inline rightSide' ng-show='newUser'>
+    <div class='col s12 m4' ng-show='newUser'>
       <div ui-view='signup'></div>
     </div>
 </div>

@@ -13,37 +13,41 @@
 <!-- - - - -Start and End for user input- - - - -->
   <div class="section">
     <form id='routeSearch' name='routeForm' class="row" ng-submit='submit(routeForm)'>
-      <div class="row">
-        <div class="input-field col s12 m4">
-          <input name='start' type='text' ng-model='start' required placeholder='944 Market Street' ng-autocomplete>
-          <label for="start">Start</label>
-        </div>
-        <div class="input-field col s12 m4">
-          <input name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street' ng-autocomplete>
-          <label for="end">End</label>
-        </div>
-          <div class="input-field col s12 m3">
-            <select ng-model='mode'>
-              <option value="walking">Walking</option>
-              <option value="driving" selected>Driving</option>
-              <option value="bicycling">Bicycling</option>
-            </select>
-            <label>Mode</label>
-          </div>
-          <div class="input-field col s12 m1">
-            <button class="btn waves-effect waves-light col s12" type="submit" name="action">
-              <i class="material-icons">send</i>
-            </button>
-          </div>
+      <div class="input-field col s12 m5 l4">
+        <i class="material-icons prefix" ng-click="requestCurrentLocation()">navigation</i>
+        <input name='start' type='text' ng-model='start' required placeholder='944 Market Street' ng-autocomplete>
+        <label for="start">Start</label>
       </div>
-      <div class="row">
+      <div class="input-field col s12 m5 l4">
+        <input name='end' type='text' ng-model='end' required placeholder='510 Stevenson Street' ng-autocomplete>
+        <label for="end">End</label>
+      </div>
+      <div class="input-field col s12 m2 l3">
+        <select ng-model='mode'>
+          <option value="walking">Walking</option>
+          <option value="driving" selected>Driving</option>
+          <option value="bicycling">Bicycling</option>
+        </select>
+        <label>Mode</label>
+      </div>
+      <div class="input-field col s12 m4 l1 offset-m4">
+        <button class="btn waves-effect waves-light col s12" type="submit" name="action">
+          <i class="material-icons">send</i>
+        </button>
       </div>
     </form>
-    
-
   </div>
-  <div ng-click="requestCurrentLocation()">Use Current Location</div>
-  <div id='map'>
+
+<!-- - - - -Restaurant list and map- - - - -->
+  <div class="row section">
+    <div class="col s12 l6" id='restaurantDiv'>
+      <div ui-view='restaurantList'>
+      </div>
+    </div>
+    <div class="col s12 l6">
+      <div id='map'>
+      </div>
+    </div>
   </div>
 
 
@@ -66,12 +70,7 @@
 
   </div>
 
-<!-- - - - -Restaurant list and map- - - - -->
   <div id='restaurantAndMap'>
-    <div class='inline' id='restaurantDiv'>
-      <div ui-view='restaurantList'>
-      </div>
-    </div>
   </div>
     <div id='mapContainer'>
     </div>
