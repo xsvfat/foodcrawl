@@ -1,6 +1,7 @@
 // controller for start & end inputs
 app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, Auth, $localStorage, Addresses) {
-
+  Materialize.updateTextFields(); // solves input field placeholder overlapping issue
+  $('select').material_select(); // solves select issues
   $scope.start = ''; // start location input
   $scope.end = ''; // end location input
   $scope.lastSearch = { // the most recent search input
