@@ -9,6 +9,7 @@ var _ = require('lodash');
 var User = require('./dbconfig/schema.js').User;
 var Address = require('./dbconfig/schema.js').Address;
 var bcrypt = require('bcrypt');
+var https = require('https');
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -118,7 +119,8 @@ module.exports = {
       url: `${gmapsURL}?${queryString}`,
       method: 'GET'
     }; 
- 
+    console.log('QUERYSTRING= ', queryString);
+
     // Make request to Google Directions API.
     return request(options);
   },
@@ -184,7 +186,7 @@ module.exports = {
     // Calculates the length of the segments produced by cutting a given route into 10ths.
     var averageSegmentLength = totalRouteDistance / 10;
 
-  // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
+    // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
     var start, end;
     var distanceFromTarget = averageSegmentLength / 2;
     
@@ -223,6 +225,75 @@ module.exports = {
         distanceFromTarget -= steps[i].distance.value;
       }
     }
+    // need to construct: segmentsArray, an array of {distance: num, midpoint: {lat: lng}} objects. Build this out of 
+    // the steps array. 
+
+
+/*========= START OF VB EDITS ========*/
+    var populationCenters = [];
+    var granularity = 10;
+
+    segmentsArray.forEach((step, index) => {
+      
+      for (var i = 0; i < 1; i++) {
+
+        var locationOne = segmentsArray[i].midpoint;
+        var locationTwo = segmentsArray[i + 1].midpoint;
+        var intervals = { latInterval: Math.abs(locationOne.lat - locationTwo.lat) / granularity, 
+                          lngInterval: Math.abs(locationOne.lng - locationTwo.lng) / granularity, 
+                          distInterval: segmentsArray[i].distance / granularity };
+        
+        var maxPopulation = 0;
+        var newLocation = locationOne;
+        var newTarget = locationOne;
+        var newDistance = 0;
+        var targetDistance;
+
+        for (var j = 0; j < 1; j++){
+
+          newLocation = {lat: newLocation.lat + intervals.latInterval, 
+                         lng: newLocation.lng + intervals.lngInterval };
+          newDistance += intervals.distInterval;
+
+          // Find population at this new Location. If it's the larget population within this leg, store it 
+          // as the target population. 
+          var options = {
+            hostname: 'mapfruition-demoinquiry.p.mashape.com',
+            path: '/inquirebypolygon',
+            method: 'POST', 
+            headers: {'X-Mashape-Key': 'vNhhGifz20msh11Zbr5NI5Uw7h0Op1SdE6mjsn50s2iLQJ9f8a',
+                      'Content-Type': 'application/json', 
+                      'Accept': 'application/json' }, 
+            data: '{"variables":"stotpop,smedage,spopchpct","polygon":{"coordinates":[[[-97.8241448144638,30.358458814463805],[-97.8241448144638,30.190871185536192],[-97.6565571855362,30.190871185536192],[-97.6565571855362,30.358458814463805],[-97.8241448144638,30.358458814463805]]],"type":"Polygon"}}'
+          };
+
+          var req = https.request(options, (res) => {
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+
+            res.on('data', (data) => {
+              console.log("DATA IS: ", data)
+            });
+          });
+
+          req.end();
+
+          req.on('error', (e) => {
+            console.error(e);
+          });
+
+
+          // if (population > maxPopulation) {
+          //   newTarget = newLocation;
+          //   targetDistance = newDistance;
+          // }
+        }
+        populationCenters.push({ distance: targetDistance, 
+                                 midpoint: newTarget}); 
+
+      }
+    });
+/* ============= END OF VB EDITS =============== */
 
 
     // Keeps track of the number of Yelp queries we've made.
@@ -230,7 +301,7 @@ module.exports = {
     var validBusinesses;
     var searchParameters;
 
-    // Makes a unique Yelp query for each step along the given route.
+    //Makes a unique Yelp query for each step along the given route.
     segmentsArray.forEach(function (step, index) {
       // console.log(step);
       // Establish parameters for each individual yelp query.
