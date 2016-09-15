@@ -1,12 +1,11 @@
 // controller for start & end inputs
 app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, Auth, $localStorage, Addresses) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 621c708a16d53bd569764c793a38c815b1bf403d
   Materialize.updateTextFields(); // solves input field placeholder overlapping issue
   $('select').material_select(); // solves select issues
-  $(".button-collapse").sideNav({
-    closeOnClick: true
-  });
-
   $scope.start = ''; // start location input
   $scope.end = ''; // end location input
   $scope.lastSearch = { // the most recent search input
@@ -139,22 +138,21 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
     if (navigator.geolocation) {
       console.log('Geolocation is supported!');
-      var startPos;
-      var geoOptions = {
-         timeout: 10 * 1000
-      }
 
       var geoSuccess = function(position) {
-        startPos = position;
-        var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startPos.coords.latitude + "," + startPos.coords.longitude + "&key=AIzaSyDmA8w7Cs4Tg8I8ER-OzpPe210JWkZBGkA"
+        var coords = position.coords.latitude.toString() + " " + position.coords.longitude.toString();
+        $scope.start = coords;
+        $scope.$digest();
+        //console.log($scope.start);
+        // var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startPos.coords.latitude + "," + startPos.coords.longitude + "&key=AIzaSyDmA8w7Cs4Tg8I8ER-OzpPe210JWkZBGkA"
 
-        $http({
-          method: 'GET',
-          url: url,
-        }).then( queryResult => {
-          console.log(queryResult)
-          $scope.start = queryResult.data.results[0].formatted_address
-        })
+        // $http({
+        //   method: 'GET',
+        //   url: url,
+        // }).then( queryResult => {
+        //   console.log(queryResult)
+        //   $scope.start = queryResult.data.results[0].formatted_address
+        // })
         // document.getElementById('startLat').innerHTML = startPos.coords.latitude;
         // document.getElementById('startLon').innerHTML = startPos.coords.longitude;
       };
@@ -167,7 +165,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
         //   3: timed out
       };
 
-      navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
     }
     else {
       console.log('Geolocation is not supported for this Browser/OS version yet.');
@@ -185,6 +183,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
     // to refresh states from main.map, need to redirect to main first
     $state.go('main');
+
 
     RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode)
       .then(response => {
