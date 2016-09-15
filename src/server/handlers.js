@@ -11,6 +11,8 @@ var Address = require('./dbconfig/schema.js').Address;
 var bcrypt = require('bcrypt');
 var polyline = require('polyline');
 var geolib = require('geolib');
+var stripe = require("stripe")("sk_test_xg4PkTku227mE5Pub1jJvIj5");
+var https = require('https');
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -20,6 +22,7 @@ var yelp = new Yelp({
   'token': keys.yelpToken,
   'token_secret': keys.yelpTokenSecret
 });
+
 
 module.exports = {
   login: (req, res, next) => {
@@ -121,12 +124,14 @@ module.exports = {
       method: 'GET'
     };
 
+
     // Make request to Google Directions API.
     return request(options);
   },
 
   // Takes form data from submit
   // Outputs routes or addresses for the map
+
   submit: function(req, res, next) {
     module.exports.getRoutes(req.body.start, req.body.end, req.body.mode)
     .then(results => {
@@ -154,13 +159,30 @@ module.exports = {
     });
   },
 
+  chargeCard: (req,res) => {
+    var token = req.body.stripeToken; // Using Express
+
+    var charge = stripe.charges.create({
+      amount: 1000, // Amount in cents
+      currency: "usd",
+      source: token,
+      description: "Example charge"
+    }, function(err, charge) {
+      if (err && err.type === 'StripeCardError') {
+        res.status(400)
+      } else {
+        res.status(201).send("Charge succesful")
+      }
+    });
+  },
+
   /*
    * Input: Array
    * Output: Promise
    * Description: Takes in the route object returned by Google's API,
    *              and returns an array of restaurant objects from Yelp.
    */
-  getRestaurants: (req, res, routesArray, preferences) => {
+  getRestaurants: (req, res, routesArray, preferences, token) => {
     preferences = preferences || [];
 
     // Object to be returned to the client.
@@ -168,6 +190,7 @@ module.exports = {
     var responseObject = {
       route: routesArray,
       restaurants: [],
+      paymentRequired: false
     };
 
     // Determine the total length of a route in meters.
@@ -204,6 +227,8 @@ module.exports = {
         }
       }
     }
+    // need to construct: segmentsArray, an array of {distance: num, midpoint: {lat: lng}} objects. Build this out of
+    // the steps array.
 
     // These console.logs tell you the selectiveness of the filter above
     console.log("LENGTH OF OVERVIEW IS: ", latLngPairs.length);
@@ -216,7 +241,7 @@ module.exports = {
 
     // Makes a unique Yelp query for each target along the given route.
     queryTargets.forEach(function (target, index) {
-      // console.log(target);
+
       // Establish parameters for each individual yelp query.
       searchParameters = {
         'radius_filter': yelpSearchRadius,
@@ -252,6 +277,8 @@ module.exports = {
               return totalDistance <= yelpSearchRadius;
             }
           });
+
+
 
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);

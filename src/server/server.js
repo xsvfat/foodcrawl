@@ -27,6 +27,9 @@ app.post('/login', handlers.login);
 app.post('/signup', handlers.signup);
 app.post('/options', handlers.saveOptions); // saves user prefs
 app.post('/addresses', handlers.saveAddress); //save an address
+app.post('/chargeCard', handlers.chargeCard)
 
 app.listen(8000);
 console.log('Now listening on 127.0.0.1:8000')
+
+
