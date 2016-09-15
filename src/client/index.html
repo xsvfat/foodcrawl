@@ -9,6 +9,30 @@
   
   <link href="https://fonts.googleapis.com/css?family=Modak" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper">
+      <div class="container">
+        <a href="#!" class="brand-logo">foodcrawl</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#" ui-sref="auth">Log In</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="#" ui-sref="auth">Log In</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div ui-view>
+  </div>
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- Materialize Javascript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy59si896-sFy6G4Fs2vFifk2dBwRIhkY&libraries=places&sensor=false"></script>
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
@@ -20,19 +44,17 @@
   <script src="services/addresses.js"></script>
   <script src="controllers/login.js"></script>
   <script src="controllers/signup.js"></script>
+  <script src="controllers/auth.js"></script>
   <script src="controllers/addressesCtrl.js"></script>
   <script src="controllers/options.js"></script>
   <script src="controllers/controller.js"></script>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-</head>
-<body>
-
-  <div ui-view>
-  </div>
-  <!-- jQuery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <!-- Materialize Javascript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.js"></script>
+  <script type="text/javascript">
+    $(window).load(function() {
+      
+      $(".button-collapse").sideNav({
+        closeOnClick: true
+      });
+    })
+  </script>
 </body>
 </html>
