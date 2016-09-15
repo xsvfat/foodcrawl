@@ -3,12 +3,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
   Materialize.updateTextFields(); // solves input field placeholder overlapping issue
   $('select').material_select(); // solves select issues
-  $scope.start = ''; // start location input
-  $scope.end = ''; // end location input
-  $scope.lastSearch = { // the most recent search input
-    start: '',
-    end: ''
-  };
+
+  $scope.stopsList = [{}, {}];
+
   $scope.map; // store map
   $scope.mode = 'driving';
 
@@ -39,11 +36,10 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     }
   });
 
-  var renderMap = () => {
+  let renderMap = () => {
     $state.go('main.map');
 
     // update list of restaurants in the factory
-   // console.log('restaurants: ', restaurants);
 
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -62,14 +58,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
       //add restaurant markers
       RestaurantAndRoute.addMarkers(map);
       // set the current route
-      RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.lastSearch.start, $scope.lastSearch.end, $scope.mode);
+      RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.stopsList[0].name, $scope.stopsList[$scope.stopsList.length-1].name, $scope.mode, $scope.stopsList);
     }
     initMap();
-
-    //clear start and end inputs
-    $scope.start = undefined;
-    $scope.end = undefined;
-
   }
 
   // toggles active user depending on the presence of a logged in user
@@ -78,6 +69,13 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     $scope.user = $localStorage.username;
   } else {
     $scope.activeUser = false;
+  }
+
+  $scope.addNewStop = function(){
+    //var newItemNo = $scope.stopsList.length+1;
+    //$scope.stopsList.push({'id':'choice'+newItemNo});
+    $scope.stopsList.push({})
+    console.log($scope.stopsList)
   }
 
   $scope.logout = () => {
@@ -138,7 +136,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
       var geoSuccess = function(position) {
         var coords = position.coords.latitude.toString() + " " + position.coords.longitude.toString();
-        $scope.start = coords;
+        $scope.stopsList[0].name = coords;
         $scope.$digest();
         //console.log($scope.start);
         // var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startPos.coords.latitude + "," + startPos.coords.longitude + "&key=AIzaSyDmA8w7Cs4Tg8I8ER-OzpPe210JWkZBGkA"
@@ -174,15 +172,26 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     //clear old data
     RestaurantAndRoute.clearStoredRestaurants();
 
-    // start and end inputs get saved into lastSearch
-    $scope.lastSearch.start = $scope.start ? $scope.start : $scope.lastSearch.start;
-    $scope.lastSearch.end = $scope.end ? $scope.end : $scope.lastSearch.end;
-
     // to refresh states from main.map, need to redirect to main first
     $state.go('main');
 
 
-    RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode)
+    // RestaurantAndRoute.fetchRestaurants($scope.start, $scope.end, $scope.mode)
+    //   .then(response => {
+    //     console.log(response,"This is the response")
+    //     if (response === "Payment Required"){
+    //       handler.open({
+    //           name: 'Demo Site',
+    //           description: '2 widgets',
+    //           amount: 2000
+    //         })
+    //     } else {
+    //       renderMap()
+    //     }
+    //   }).catch(err => {
+    //     console.log('Error submitting: ', err);
+    //   });
+    RestaurantAndRoute.fetchRestaurants($scope.stopsList, $scope.mode)
       .then(response => {
         console.log(response,"This is the response")
         if (response === "Payment Required"){
@@ -197,6 +206,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
       }).catch(err => {
         console.log('Error submitting: ', err);
       });
+
 
   };
 

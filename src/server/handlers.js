@@ -108,12 +108,14 @@ module.exports = {
    * Description: Given a starting and ending address, gives an object
    *              containing an array of routes in promise form.
    */
-  getRoutes: function (origin, destination, mode) {
-
+  getRoutes: function (origin, destination, mode, stops) {
+    console.log(stops,"These are stops");
     // Concatenate query parameters into HTTP request friendly string.
     let queryString = qs.stringify({
       origin: origin,
       destination: destination,
+      waypoints: stops,
+      optimizeWaypoints: true,
       key: keys.googleMaps,
       mode: mode,
     });
@@ -133,11 +135,12 @@ module.exports = {
   // Outputs routes or addresses for the map
 
   submit: function(req, res, next) {
-    module.exports.getRoutes(req.body.start, req.body.end, req.body.mode)
+    module.exports.getRoutes(req.body.start, req.body.end, req.body.mode, req.body.stops)
     .then(results => {
       // Parse nested object returned by Google's API to
       // specifically get Array of routes.
       var routesArray = JSON.parse(results.body).routes;
+      console.log(results.body)
 
       User.findOne({
         username: req.body.user,
@@ -199,9 +202,17 @@ module.exports = {
       totalRouteDistance += leg.distance.value;
     });
 
-    // // Use a different radius for longer routes. 
+
+    //"Number below represents 500 miles"
+    if (totalRouteDistance > 804672){
+      console.log("does it reach here?")
+        responseObject.paymentRequired = true;
+    }
+
+
+    // // Use a different radius for longer routes.
     var yelpSearchRadius = totalRouteDistance > 150000 ? 3000 :
-                              totalRouteDistance > 8750 ? totalRouteDistance / 50 : 175;    
+                              totalRouteDistance > 8750 ? totalRouteDistance / 50 : 175;
 
     // Use these. They are auto-distributed with a bias towards population centers.
     var latLngPairs = polyline.decode(routesArray[0].overview_polyline.points);
@@ -211,15 +222,15 @@ module.exports = {
     var currentPoint = latLngPairs[0];
     var queryTargets = [];
 
-    // Loop through the lat lng pairs that make up the total root and select points that 
+    // Loop through the lat lng pairs that make up the total root and select points that
     // will provide yelp queries that are spread out evenly along the route, without multiple
-    // queries falling within overlapping search radii, since these produce redundant results. 
+    // queries falling within overlapping search radii, since these produce redundant results.
     for ( var i = 1; i < latLngPairs.length; i++ ){
       if ( geolib.getDistance(currentPoint, latLngPairs[i]) >= minSeparationForQueries ){
         queryTargets.push(latLngPairs[i]);
         currentPoint = latLngPairs[i];
 
-        // Only the first query needs to be set to the half radius. Once this has started, move the 
+        // Only the first query needs to be set to the half radius. Once this has started, move the
         // separation to a yelpSearchDiameter.
         if ( shouldUseHalfDistance ) {
           minSeparationForQueries = yelpSearchRadius;
@@ -233,7 +244,7 @@ module.exports = {
     // These console.logs tell you the selectiveness of the filter above
     console.log("LENGTH OF OVERVIEW IS: ", latLngPairs.length);
     console.log("LENGTH OF FILTERED OVERVIEW IS: ", queryTargets.length);
-  
+
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
     var validBusinesses;

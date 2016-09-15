@@ -60,9 +60,16 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
 
   return {
 
-    fetchRestaurants: function(origin, destination, mode) {
+    fetchRestaurants: function(stopsList, mode) {
       // clear out the array for the new batch of restaurants
       restaurants = [];
+
+      var waypts = [];
+
+      for (var i = 1; i < stopsList.length-1; i++) {
+          waypts.push(stopsList[i].name);
+      }
+
 
       // request the restaurants from the server
       return $http({
@@ -72,9 +79,10 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
           'Content-Type': 'application/json'
         },
         data: {
-          start: origin,
-          end: destination,
+          start: stopsList[0].name,
+          end: stopsList[stopsList.length-1].name,
           mode: mode,
+          stops: waypts,
           user: $localStorage.username,
         }
       }).then(data => {
@@ -149,10 +157,21 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
       Output: null
       Description: Renders a route to the map with the given start and end points.
     */
-    calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end, mode) => {
+    calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end, mode, stops) => {
+      var waypts = [];
+
+      for (var i = 1; i < stops.length-1; i++) {
+          waypts.push({
+            location: stops[i].name,
+            stopover: true
+          });
+      }
+
+
       directionsService.route({
         origin: start,
         destination: end,
+        waypoints: waypts,
         travelMode: mode.toUpperCase(),
       }, function(response, status) {
         if (status === 'OK') {

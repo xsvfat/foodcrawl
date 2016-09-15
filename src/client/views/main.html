@@ -38,6 +38,27 @@
     </form>
   </div>
 
+
+
+  <div class="section">
+    <form id='routeSearch' name='routeForm' class="row" ng-submit='submit(routeForm)'>
+
+
+      <div ng-repeat="stop in stopsList">
+          <label ng-if="$first">Start</label>
+          <label ng-if="$last">End</label>
+          <input name="" type='text' ng-model='stop.name' required placeholder='Enter Location' ng-autocomplete>
+      </div>
+      <button ng-click="addNewStop()">Add additional stops</button>
+
+      <div class="input-field col s12 m4 l1 offset-m4">
+        <button class="btn waves-effect waves-light col s12" type="submit" name="action">
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+    </form>
+  </div>
+
 <!-- - - - -Restaurant list and map- - - - -->
   <div class="row section">
     <div class="col s12 l6" id='restaurantDiv'>
