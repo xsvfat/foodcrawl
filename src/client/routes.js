@@ -1,4 +1,4 @@
-var app = angular.module('foodfood', ['ui.router', 'ngStorage', 'ngAutocomplete']);
+var app = angular.module('foodfood', ['ui.router', 'ngStorage', 'ngAutocomplete', 'ui.materialize']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
