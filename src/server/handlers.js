@@ -166,11 +166,9 @@ module.exports = {
       description: "Example charge"
     }, function(err, charge) {
       if (err && err.type === 'StripeCardError') {
-        console.log("Error charging card")
         res.status(400)
       } else {
-        console.log("Charge succesfull")
-        res.status(201).send("Charge succesfull")
+        res.status(201).send("Charge succesful")
       }
     });
   },
@@ -189,6 +187,7 @@ module.exports = {
     var responseObject = {
       route: routesArray,
       restaurants: [],
+      paymentRequired: false
     };
 
     // Stores the segments along a route for querying Yelp.
@@ -203,11 +202,12 @@ module.exports = {
       totalRouteDistance += leg.distance.value;
       steps = steps.concat(leg.steps);
     });
+
     //"Number below represents 500 miles"
-    if (totalRouteDistance > 804672 && !token){
-      res.status(301).send("We require payment")
-    } else {
-    console.log("Ensure it doesn't reach this far")
+    if (totalRouteDistance > 804672){
+      console.log("does it reach here?")
+        responseObject.paymentRequired = true;
+    }
 
 
 
@@ -299,6 +299,8 @@ module.exports = {
             }
           });
 
+
+
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
           responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
@@ -317,7 +319,6 @@ module.exports = {
           queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
         });
     });
-   }
   },
 
   /**

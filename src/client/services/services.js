@@ -57,28 +57,6 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
     openInfoWindows = [];
   };
 
-  let handler = StripeCheckout.configure({
-    key: 'pk_test_Xz3V8MOTjqbGd0eH8JGUDVkN',
-    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-    locale: 'auto',
-    token: function(token) {
-      return $http({
-        method: 'POST',
-        url: '/chargeCard',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          stripeToken: token
-        }
-      }).then(data => {
-        console.log(data,"data")
-      }).catch(err => {
-        console.log(err,"error")
-      })
-    }
-  });
-
 
   return {
 
@@ -105,22 +83,17 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
         restaurants = data.data.restaurants.filter(restaurant => {
           return restaurant.distance;
         })
+        console.log(data.data)
+        if (data.data.paymentRequired === true){
+          return "Payment Required"
+        } else {
+          // resolve restaurants for promise chaining
+          return restaurants;
+        }
 
-        // resolve restaurants for promise chaining
-        return restaurants;
 
       }).catch(err => {
         console.log('Error fetching restaurants: ', err);
-
-        if (err.status === 301){
-          console.log("we reached here")
-          handler.open({
-              name: 'Demo Site',
-              description: '2 widgets',
-              amount: 2000
-            })
-          return "Payment Required"
-        }
       })
     },
 
