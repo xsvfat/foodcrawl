@@ -125,7 +125,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     $state.go('main');
 
     if (true) {
-      RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode).then(restaurants => {
+      RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode)
+      .then(restaurants => {
         $state.go('main.map');
 
         // update list of restaurants in the factory
@@ -153,8 +154,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
         initMap();
 
         //clear start and end inputs
-        $scope.start = undefined;
-        $scope.end = undefined;
+        // $scope.start = undefined;
+        // $scope.end = undefined;
 
       }).catch(err => {
         console.log('Error submitting: ', err);
