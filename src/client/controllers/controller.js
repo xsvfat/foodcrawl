@@ -1,16 +1,17 @@
 // controller for start & end inputs
 app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, Auth, $localStorage, Addresses) {
 
-  Materialize.updateTextFields(); // solves input field placeholder overlapping issue
-  $('select').material_select(); // solves select issues
-  $scope.start = ''; // start location input
-  $scope.end = ''; // end location input
   $scope.lastSearch = { // the most recent search input
     start: '',
     end: ''
   };
   $scope.map; // store map
-  $scope.mode = 'driving';
+
+  $scope.data = {
+    mode: 'driving',
+    start: '',
+    end: ''
+  }
 
   $scope.user;
   $scope.activeUser; // true if a user is logged in
@@ -62,13 +63,13 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
       //add restaurant markers
       RestaurantAndRoute.addMarkers(map);
       // set the current route
-      RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.lastSearch.start, $scope.lastSearch.end, $scope.mode);
+      RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.lastSearch.start, $scope.lastSearch.end, $scope.data.mode);
     }
     initMap();
 
     //clear start and end inputs
-    $scope.start = undefined;
-    $scope.end = undefined;
+    // $scope.data.start = undefined;
+    // $scope.data.end = undefined;
 
   }
 
@@ -138,9 +139,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
       var geoSuccess = function(position) {
         var coords = position.coords.latitude.toString() + " " + position.coords.longitude.toString();
-        $scope.start = coords;
+        $scope.data.start = coords;
         $scope.$digest();
-        //console.log($scope.start);
+        //console.log($scope.data.start);
         // var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + startPos.coords.latitude + "," + startPos.coords.longitude + "&key=AIzaSyDmA8w7Cs4Tg8I8ER-OzpPe210JWkZBGkA"
 
         // $http({
@@ -148,7 +149,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
         //   url: url,
         // }).then( queryResult => {
         //   console.log(queryResult)
-        //   $scope.start = queryResult.data.results[0].formatted_address
+        //   $scope.data.start = queryResult.data.results[0].formatted_address
         // })
         // document.getElementById('startLat').innerHTML = startPos.coords.latitude;
         // document.getElementById('startLon').innerHTML = startPos.coords.longitude;
@@ -175,14 +176,16 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     RestaurantAndRoute.clearStoredRestaurants();
 
     // start and end inputs get saved into lastSearch
-    $scope.lastSearch.start = $scope.start ? $scope.start : $scope.lastSearch.start;
-    $scope.lastSearch.end = $scope.end ? $scope.end : $scope.lastSearch.end;
+    $scope.lastSearch.start = $scope.data.start ? $scope.data.start : $scope.lastSearch.start;
+    $scope.lastSearch.end = $scope.data.end ? $scope.data.end : $scope.lastSearch.end;
+
+    console.log($scope.lastSearch);
 
     // to refresh states from main.map, need to redirect to main first
     $state.go('main');
 
 
-    RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode)
+    RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.data.mode)
       .then(response => {
         console.log(response,"This is the response")
         if (response === "Payment Required"){
