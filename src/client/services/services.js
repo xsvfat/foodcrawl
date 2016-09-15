@@ -57,6 +57,7 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
     openInfoWindows = [];
   };
 
+
   return {
 
     fetchRestaurants: function(origin, destination, mode) {
@@ -75,18 +76,21 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
           end: destination,
           mode: mode,
           user: $localStorage.username,
-
         }
       }).then(data => {
-
         // filter out any restaurants farther than 60m
         /*** This isn't filtering by distance anymore ***/
         restaurants = data.data.restaurants.filter(restaurant => {
           return restaurant.distance;
         })
+        console.log(data.data)
+        if (data.data.paymentRequired === true){
+          return "Payment Required"
+        } else {
+          // resolve restaurants for promise chaining
+          return restaurants;
+        }
 
-        // resolve restaurants for promise chaining
-        return restaurants;
 
       }).catch(err => {
         console.log('Error fetching restaurants: ', err);

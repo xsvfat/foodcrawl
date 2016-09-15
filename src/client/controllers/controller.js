@@ -1,5 +1,9 @@
 // controller for start & end inputs
 app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, Auth, $localStorage, Addresses) {
+<<<<<<< HEAD
+
+=======
+>>>>>>> 621c708a16d53bd569764c793a38c815b1bf403d
   Materialize.updateTextFields(); // solves input field placeholder overlapping issue
   $('select').material_select(); // solves select issues
   $scope.start = ''; // start location input
@@ -14,6 +18,62 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   $scope.user;
   $scope.activeUser; // true if a user is logged in
   $scope.newUser = false; // true if a new user wants to sign up
+
+  let handler = StripeCheckout.configure({
+    key: 'pk_test_Xz3V8MOTjqbGd0eH8JGUDVkN',
+    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    locale: 'auto',
+    token: function(token) {
+      return $http({
+        method: 'POST',
+        url: '/chargeCard',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          stripeToken: token
+        }
+      }).then(data => {
+        console.log(data,"data")
+        renderMap()
+      }).catch(err => {
+        console.log(err,"error")
+      })
+    }
+  });
+
+  var renderMap = () => {
+    $state.go('main.map');
+
+    // update list of restaurants in the factory
+   // console.log('restaurants: ', restaurants);
+
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map;
+
+    // create a map with restaurant markers and rendered route
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14
+      });
+      $scope.map = map;
+      // Associate the route with our current map
+      directionsDisplay.setMap(map);
+      //clear existing markers
+      RestaurantAndRoute.removeMarkers();
+      //add restaurant markers
+      RestaurantAndRoute.addMarkers(map);
+      // set the current route
+      RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.lastSearch.start, $scope.lastSearch.end, $scope.mode);
+    }
+    initMap();
+
+    //clear start and end inputs
+    $scope.start = undefined;
+    $scope.end = undefined;
+
+  }
 
   // toggles active user depending on the presence of a logged in user
   if ($localStorage.username) {
@@ -124,43 +184,23 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     // to refresh states from main.map, need to redirect to main first
     $state.go('main');
 
-    if (true) {
-      RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode)
-      .then(restaurants => {
-        $state.go('main.map');
 
-        // update list of restaurants in the factory
-        console.log('restaurants: ', restaurants);
-
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var map;
-
-        // create a map with restaurant markers and rendered route
-        function initMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 14
-          });
-          $scope.map = map;
-          // Associate the route with our current map
-          directionsDisplay.setMap(map);
-          //clear existing markers
-          RestaurantAndRoute.removeMarkers();
-          //add restaurant markers
-          RestaurantAndRoute.addMarkers(map);
-          // set the current route
-          RestaurantAndRoute.calculateAndDisplayRoute(directionsService, directionsDisplay, $scope.lastSearch.start, $scope.lastSearch.end, $scope.mode);
+    RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.mode)
+      .then(response => {
+        console.log(response,"This is the response")
+        if (response === "Payment Required"){
+          handler.open({
+              name: 'Demo Site',
+              description: '2 widgets',
+              amount: 2000
+            })
+        } else {
+          renderMap()
         }
-        initMap();
-
-        //clear start and end inputs
-        // $scope.start = undefined;
-        // $scope.end = undefined;
-
       }).catch(err => {
         console.log('Error submitting: ', err);
       });
-    }
+
   };
 
   //Shows the appropriate restaurant info window on the map when clicked in the list

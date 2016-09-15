@@ -9,7 +9,9 @@ var _ = require('lodash');
 var User = require('./dbconfig/schema.js').User;
 var Address = require('./dbconfig/schema.js').Address;
 var bcrypt = require('bcrypt');
+var stripe = require("stripe")("sk_test_xg4PkTku227mE5Pub1jJvIj5");
 var https = require('https');
+
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -19,6 +21,7 @@ var yelp = new Yelp({
   'token': keys.yelpToken,
   'token_secret': keys.yelpTokenSecret
 });
+
 
 module.exports = {
   login: (req, res, next) => {
@@ -118,7 +121,7 @@ module.exports = {
     let options = {
       url: `${gmapsURL}?${queryString}`,
       method: 'GET'
-    }; 
+    };
 
 
     // Make request to Google Directions API.
@@ -127,6 +130,7 @@ module.exports = {
 
   // Takes form data from submit
   // Outputs routes or addresses for the map
+
   submit: function(req, res, next) {
     module.exports.getRoutes(req.body.start, req.body.end, req.body.mode)
     .then(results => {
@@ -154,13 +158,30 @@ module.exports = {
     });
   },
 
+  chargeCard: (req,res) => {
+    var token = req.body.stripeToken; // Using Express
+
+    var charge = stripe.charges.create({
+      amount: 1000, // Amount in cents
+      currency: "usd",
+      source: token,
+      description: "Example charge"
+    }, function(err, charge) {
+      if (err && err.type === 'StripeCardError') {
+        res.status(400)
+      } else {
+        res.status(201).send("Charge succesful")
+      }
+    });
+  },
+
   /*
    * Input: Array
    * Output: Promise
    * Description: Takes in the route object returned by Google's API,
    *              and returns an array of restaurant objects from Yelp.
    */
-  getRestaurants: (req, res, routesArray, preferences) => {
+  getRestaurants: (req, res, routesArray, preferences, token) => {
     preferences = preferences || [];
 
     // Object to be returned to the client.
@@ -168,6 +189,7 @@ module.exports = {
     var responseObject = {
       route: routesArray,
       restaurants: [],
+      paymentRequired: false
     };
 
     // Stores the segments along a route for querying Yelp.
@@ -182,6 +204,12 @@ module.exports = {
       totalRouteDistance += leg.distance.value;
       steps = steps.concat(leg.steps);
     });
+
+    //"Number below represents 500 miles"
+    if (totalRouteDistance > 804672){
+      console.log("does it reach here?")
+        responseObject.paymentRequired = true;
+    }
 
 
 
@@ -227,8 +255,8 @@ module.exports = {
         distanceFromTarget -= steps[i].distance.value;
       }
     }
-    // need to construct: segmentsArray, an array of {distance: num, midpoint: {lat: lng}} objects. Build this out of 
-    // the steps array. 
+    // need to construct: segmentsArray, an array of {distance: num, midpoint: {lat: lng}} objects. Build this out of
+    // the steps array.
 
 
 /*========= START OF VB EDITS ========*/
@@ -236,15 +264,15 @@ module.exports = {
     var granularity = 10;
 
     segmentsArray.forEach((step, index) => {
-      
+
       for (var i = 0; i < 1; i++) {
 
         var locationOne = segmentsArray[i].midpoint;
         var locationTwo = segmentsArray[i + 1].midpoint;
-        var intervals = { latInterval: Math.abs(locationOne.lat - locationTwo.lat) / granularity, 
-                          lngInterval: Math.abs(locationOne.lng - locationTwo.lng) / granularity, 
+        var intervals = { latInterval: Math.abs(locationOne.lat - locationTwo.lat) / granularity,
+                          lngInterval: Math.abs(locationOne.lng - locationTwo.lng) / granularity,
                           distInterval: segmentsArray[i].distance / granularity };
-        
+
         var maxPopulation = 0;
         var newLocation = locationOne;
         var newTarget = locationOne;
@@ -253,19 +281,19 @@ module.exports = {
 
         for (var j = 0; j < 1; j++){
 
-          newLocation = {lat: newLocation.lat + intervals.latInterval, 
+          newLocation = {lat: newLocation.lat + intervals.latInterval,
                          lng: newLocation.lng + intervals.lngInterval };
           newDistance += intervals.distInterval;
 
-          // Find population at this new Location. If it's the larget population within this leg, store it 
-          // as the target population. 
+          // Find population at this new Location. If it's the larget population within this leg, store it
+          // as the target population.
           var options = {
             hostname: 'mapfruition-demoinquiry.p.mashape.com',
             path: '/inquirebypolygon',
-            method: 'POST', 
+            method: 'POST',
             headers: {'X-Mashape-Key': 'vNhhGifz20msh11Zbr5NI5Uw7h0Op1SdE6mjsn50s2iLQJ9f8a',
-                      'Content-Type': 'application/json', 
-                      'Accept': 'application/json' }, 
+                      'Content-Type': 'application/json',
+                      'Accept': 'application/json' },
             data: '{"variables":"stotpop,smedage,spopchpct","polygon":{"coordinates":[[[-97.8241448144638,30.358458814463805],[-97.8241448144638,30.190871185536192],[-97.6565571855362,30.190871185536192],[-97.6565571855362,30.358458814463805],[-97.8241448144638,30.358458814463805]]],"type":"Polygon"}}'
           };
 
@@ -290,8 +318,8 @@ module.exports = {
           //   targetDistance = newDistance;
           // }
         }
-        populationCenters.push({ distance: targetDistance, 
-                                 midpoint: newTarget}); 
+        populationCenters.push({ distance: targetDistance,
+                                 midpoint: newTarget});
 
       }
     });
@@ -341,6 +369,8 @@ module.exports = {
               return totalDistance < Math.max(step.distance / 2, 100);
             }
           });
+
+
 
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
