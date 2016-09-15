@@ -9,9 +9,10 @@ var _ = require('lodash');
 var User = require('./dbconfig/schema.js').User;
 var Address = require('./dbconfig/schema.js').Address;
 var bcrypt = require('bcrypt');
+var polyline = require('polyline');
+var geolib = require('geolib');
 var stripe = require("stripe")("sk_test_xg4PkTku227mE5Pub1jJvIj5");
 var https = require('https');
-
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -192,152 +193,59 @@ module.exports = {
       paymentRequired: false
     };
 
-    // Stores the segments along a route for querying Yelp.
-    var segmentsArray = [];
-
-    // Stores all of the Google defined "steps" along a route.
-    var steps = [];
-
     // Determine the total length of a route in meters.
     var totalRouteDistance = 0;
     routesArray[0].legs.forEach(function (leg) {
       totalRouteDistance += leg.distance.value;
-      steps = steps.concat(leg.steps);
     });
 
-    //"Number below represents 500 miles"
-    if (totalRouteDistance > 804672){
-      console.log("does it reach here?")
-        responseObject.paymentRequired = true;
-    }
+    // // Use a different radius for longer routes. 
+    var yelpSearchRadius = totalRouteDistance > 150000 ? 3000 :
+                              totalRouteDistance > 8750 ? totalRouteDistance / 50 : 175;    
 
+    // Use these. They are auto-distributed with a bias towards population centers.
+    var latLngPairs = polyline.decode(routesArray[0].overview_polyline.points);
 
+    var shouldUseHalfDistance = true;
+    var minSeparationForQueries = yelpSearchRadius / 2;
+    var currentPoint = latLngPairs[0];
+    var queryTargets = [];
 
-    // Calculates the length of the segments produced by cutting a given route into 10ths.
-    var averageSegmentLength = totalRouteDistance / 10;
+    // Loop through the lat lng pairs that make up the total root and select points that 
+    // will provide yelp queries that are spread out evenly along the route, without multiple
+    // queries falling within overlapping search radii, since these produce redundant results. 
+    for ( var i = 1; i < latLngPairs.length; i++ ){
+      if ( geolib.getDistance(currentPoint, latLngPairs[i]) >= minSeparationForQueries ){
+        queryTargets.push(latLngPairs[i]);
+        currentPoint = latLngPairs[i];
 
-    // Breaks down all of Google's given 'steps' into 10 uniform segments of equal length.
-    var start, end;
-    var distanceFromTarget = averageSegmentLength / 2;
-
-    // Iterate over each step along a route.
-    for (var i = 0; i < steps.length; i++) {
-
-      // Check if a segment's target midpoint lies along a given step.
-      if (steps[i].distance.value >= distanceFromTarget) {
-
-        // Grab the step's start and stop coordinates.
-        start = steps[i].start_location;
-        end = steps[i].end_location;
-
-        // Calculate the midpoint of the given segment using MATH!
-        var midpoint = {
-          lat: start.lat + ((end.lat - start.lat) * (distanceFromTarget / steps[i].distance.value)),
-          lng: start.lng + ((end.lng - start.lng) * (distanceFromTarget / steps[i].distance.value)),
-        };
-
-        // Generate the appropriate segment object and add it to the storage array.
-        segmentsArray.push({
-          distance: averageSegmentLength,
-          midpoint: midpoint,
-        });
-
-        // Chop off the beginning of a given step that has already been evaluated.
-        steps[i].start_location = midpoint;
-        steps[i].distance.value -= distanceFromTarget;
-        distanceFromTarget = averageSegmentLength;
-        i--;
-      } else {
-
-        // If the step doesn't contain the midpoint for a segment,
-        // move on to the next step and decrease the remaining distance from target
-        // by the step's distance.
-        distanceFromTarget -= steps[i].distance.value;
+        // Only the first query needs to be set to the half radius. Once this has started, move the 
+        // separation to a yelpSearchDiameter.
+        if ( shouldUseHalfDistance ) {
+          minSeparationForQueries = yelpSearchRadius;
+          shouldUseHalfDistance = false;
+        }
       }
     }
     // need to construct: segmentsArray, an array of {distance: num, midpoint: {lat: lng}} objects. Build this out of
     // the steps array.
 
-
-/*========= START OF VB EDITS ========*/
-    var populationCenters = [];
-    var granularity = 10;
-
-    segmentsArray.forEach((step, index) => {
-
-      for (var i = 0; i < 1; i++) {
-
-        var locationOne = segmentsArray[i].midpoint;
-        var locationTwo = segmentsArray[i + 1].midpoint;
-        var intervals = { latInterval: Math.abs(locationOne.lat - locationTwo.lat) / granularity,
-                          lngInterval: Math.abs(locationOne.lng - locationTwo.lng) / granularity,
-                          distInterval: segmentsArray[i].distance / granularity };
-
-        var maxPopulation = 0;
-        var newLocation = locationOne;
-        var newTarget = locationOne;
-        var newDistance = 0;
-        var targetDistance;
-
-        for (var j = 0; j < 1; j++){
-
-          newLocation = {lat: newLocation.lat + intervals.latInterval,
-                         lng: newLocation.lng + intervals.lngInterval };
-          newDistance += intervals.distInterval;
-
-          // Find population at this new Location. If it's the larget population within this leg, store it
-          // as the target population.
-          var options = {
-            hostname: 'mapfruition-demoinquiry.p.mashape.com',
-            path: '/inquirebypolygon',
-            method: 'POST',
-            headers: {'X-Mashape-Key': 'vNhhGifz20msh11Zbr5NI5Uw7h0Op1SdE6mjsn50s2iLQJ9f8a',
-                      'Content-Type': 'application/json',
-                      'Accept': 'application/json' },
-            data: '{"variables":"stotpop,smedage,spopchpct","polygon":{"coordinates":[[[-97.8241448144638,30.358458814463805],[-97.8241448144638,30.190871185536192],[-97.6565571855362,30.190871185536192],[-97.6565571855362,30.358458814463805],[-97.8241448144638,30.358458814463805]]],"type":"Polygon"}}'
-          };
-
-          var req = https.request(options, (res) => {
-            console.log('statusCode:', res.statusCode);
-            console.log('headers:', res.headers);
-
-            res.on('data', (data) => {
-              console.log("DATA IS: ", data)
-            });
-          });
-
-          req.end();
-
-          req.on('error', (e) => {
-            console.error(e);
-          });
-
-
-          // if (population > maxPopulation) {
-          //   newTarget = newLocation;
-          //   targetDistance = newDistance;
-          // }
-        }
-        populationCenters.push({ distance: targetDistance,
-                                 midpoint: newTarget});
-
-      }
-    });
-/* ============= END OF VB EDITS =============== */
-
-
+    // These console.logs tell you the selectiveness of the filter above
+    console.log("LENGTH OF OVERVIEW IS: ", latLngPairs.length);
+    console.log("LENGTH OF FILTERED OVERVIEW IS: ", queryTargets.length);
+  
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
     var validBusinesses;
     var searchParameters;
 
-    //Makes a unique Yelp query for each step along the given route.
-    segmentsArray.forEach(function (step, index) {
-      // console.log(step);
+    // Makes a unique Yelp query for each target along the given route.
+    queryTargets.forEach(function (target, index) {
+
       // Establish parameters for each individual yelp query.
       searchParameters = {
-        'radius_filter': Math.min(Math.max(step.distance, 100), 39999),
-        'll': `${step.midpoint.lat},${step.midpoint.lng}`,
+        'radius_filter': yelpSearchRadius,
+        'll': `${target[0]},${target[1]}`,
         'accuracy': 100,
         'category_filter': 'restaurants',
         'term': preferences.join('_') + '_restaurants'
@@ -358,15 +266,15 @@ module.exports = {
 
             } else {
 
-              // Calculate the how far away the business is.
-              var latDifference = step.midpoint.lat - item.location.coordinate.latitude;
-              var lngDifference = step.midpoint.lng - item.location.coordinate.longitude;
+              //Calculate the how far away the business is.
+              var latDifference = target[0] - item.location.coordinate.latitude;
+              var lngDifference = target[1] - item.location.coordinate.longitude;
               var totalDegreeDifference = Math.sqrt(Math.pow(latDifference, 2) + Math.pow(lngDifference, 2));
               var totalDistance = totalDegreeDifference / 0.000008998719243599958;
 
               // Compare the distrance from the business agains the upper limit,
-              // and filter accordingly.
-              return totalDistance < Math.max(step.distance / 2, 100);
+              // and filter accordingly, with a larger number used to filter for longer trips.
+              return totalDistance <= yelpSearchRadius;
             }
           });
 
@@ -378,7 +286,7 @@ module.exports = {
 
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
+          queryCounter >= queryTargets.length ? res.send(responseObject) : null;
         })
 
         // Error callback
@@ -387,7 +295,7 @@ module.exports = {
 
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
-          queryCounter >= segmentsArray.length ? res.send(responseObject) : null;
+          queryCounter >= queryTargets.length ? res.send(responseObject) : null;
         });
     });
   },
