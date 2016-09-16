@@ -193,16 +193,17 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
     RestaurantAndRoute.checkRoute($scope.stopsList, $scope.data.mode)
       .then(response => {
+        routesArray = response.routesArray
+        totalRouteDistance = response.totalRouteDistance
+
         if (response.message === "Payment Required"){
-          routesArray = response.routesArray
-          totalRouteDistance = response.totalRouteDistance
           handler.open({
               name: 'Demo Site',
               description: '2 widgets',
               amount: 2000
             })
         } else {
-          RestaurantAndRoute.fetchRestaurants(response.routesArray, response.totalRouteDistance)
+          RestaurantAndRoute.fetchRestaurants(routesArray, totalRouteDistance)
              .then ( res => {
                console.log(res,"res")
                renderMap()

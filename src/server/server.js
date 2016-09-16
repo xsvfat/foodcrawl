@@ -11,7 +11,7 @@ mongoose.connect('mongodb://localhost/foodfood');
 
 var app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'FOOD', resave: true, saveUninitialized: true }))
 

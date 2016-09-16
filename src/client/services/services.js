@@ -83,13 +83,8 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
           return restaurant.distance;
         })
 
-        // if (data.data.paymentRequired === true){
-        //   return "Payment Required"
-        // } else {
-          // resolve restaurants for promise chaining
-          return restaurants;
-        // }
-
+        // resolve restaurants for promise chaining
+        return restaurants;
 
       }).catch(err => {
         console.log('Error fetching restaurants: ', err);
