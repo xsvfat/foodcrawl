@@ -227,6 +227,8 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
       markers = [];
       infoWindows = [];
       openInfoWindows = [];
-    }
+    }, 
+
+
   }
 }])

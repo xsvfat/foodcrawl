@@ -28,6 +28,9 @@ var lastSearch;
 
 
 module.exports = {
+  wtf: (req, res, next) => {
+    res.send("I dunno man.", req);
+  },
   login: (req, res, next) => {
     var username = req.body.username;
     var password = req.body.password;
@@ -359,19 +362,7 @@ module.exports = {
 
   emailFavoritesList: (req, res) => {
 
-    let favList = req.body;
-
-    console.log("FAVLIST IS: ", favList);
-    let listHtml = 
-      '<b>Your favorite restuarants are: </b>'
-      + '<br>' 
-      + '<span>Name: </span><span>Rating: </span><span>Reviews Count: </span><span>Address: </span>';
-
-    favList.forEach((fav) => {
-      listHtml += 
-        '<span>' + fav.name + '</span><span>' + fav.rating + '</span><span>' + fav.location + '</span><span>' + fav.review_count + '</span>'
-      + '<br>';
-    });
+    console.log("FAVSHTML IS: ", req.body.favsHtml);
 
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
@@ -384,10 +375,10 @@ module.exports = {
     // setup e-mail data with unicode symbols
     var mailOptions = {
         from: '"Food Crawl" <foodcrawl2016@gmail.com>', // sender address
-        to: 'vbarilla@gmail.com', // list of receivers
+        to: req.body.userEmail,// list of receivers
         subject: 'Welcome to Food Crawl!', // Subject line
-        //text: 'Hello world ?' // plaintext body
-        html: listHtml // You can choose to send an HTML body instead
+        text: JSON.stringify(req.body.favsHtml), // plaintext body
+        //html: req.body.favsHtml // You can choose to send an HTML body instead
     };
 
     // send mail with defined transport object
