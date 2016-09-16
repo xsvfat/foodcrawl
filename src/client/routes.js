@@ -2,11 +2,11 @@ var app = angular.module('foodfood', ['ui.router', 'ngStorage', 'ngAutocomplete'
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/home/main');
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider
   .state('home', {
-    url: '/home',
+    //url: '/home',
     views: {
       '': {
         templateUrl: './views/home.html',
@@ -15,7 +15,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     }
   })
     .state('home.main', {
-      url: '/main',
+      url: '/',
       views: {
         '': {
           templateUrl: './views/main.html',
@@ -41,11 +41,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       }
     })
     .state('home.main.map', {
-      url: '/map',
+      url: 'map',
       views: {
         'restaurantList': {
           templateUrl: './views/places.html',
-          controller: function($scope, RestaurantAndRoute, Auth, Addresses) {
+          controller: function($scope, RestaurantAndRoute, Addresses) {
             // restaurants from the server
             $scope.sortTerm = '-review_count';
             $scope.setSortTerm = function (input) {
