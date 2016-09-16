@@ -13,6 +13,7 @@ var polyline = require('polyline');
 var geolib = require('geolib');
 var stripe = require("stripe")("sk_test_xg4PkTku227mE5Pub1jJvIj5");
 var https = require('https');
+var nodemailer = require('nodemailer');
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -237,12 +238,6 @@ module.exports = {
         }
       }
     }
-    // need to construct: segmentsArray, an array of {distance: num, midpoint: {lat: lng}} objects. Build this out of
-    // the steps array.
-
-    // These console.logs tell you the selectiveness of the filter above
-    console.log("LENGTH OF OVERVIEW IS: ", latLngPairs.length);
-    console.log("LENGTH OF FILTERED OVERVIEW IS: ", queryTargets.length);
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
@@ -286,8 +281,6 @@ module.exports = {
               return totalDistance <= yelpSearchRadius;
             }
           });
-
-
 
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
@@ -362,5 +355,38 @@ module.exports = {
     .catch(error => {
       console.log('Error saving address: ', error);
     });
-  }
+  }, 
+
+  emailFavoritesList: (req, res) => {
+
+    // let list = req.body.favList;
+    // let email = req.body.email;
+
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'vbarilla@gmail.com', // Your email id
+            pass: keys.gmailPass // Your password
+        }
+    });
+
+    // setup e-mail data with unicode symbols
+    var mailOptions = {
+        from: '"Vincent J. Barilla" <vbarilla@gmail.com>', // sender address
+        to: 'tzk87@gmail.com, sxvfat@gmail.com', // list of receivers
+        subject: 'Testing', // Subject line
+        //text: 'Hello world ?' // plaintext body
+        html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          res.send(json({error: error}));
+        } else {
+          res.send(json({confirmation: 'Email sent.'}));
+        }
+    });
+  } 
+
 };
