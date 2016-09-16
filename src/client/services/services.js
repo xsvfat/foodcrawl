@@ -60,7 +60,7 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
 
   return {
 
-    fetchRestaurants: function(origin, destination, mode) {
+    fetchRestaurants: function(routes, totalDistance) {
       // clear out the array for the new batch of restaurants
       restaurants = [];
 
@@ -72,10 +72,9 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
           'Content-Type': 'application/json'
         },
         data: {
-          start: origin,
-          end: destination,
-          mode: mode,
-          user: $localStorage.username,
+          routesArray: routes,
+          totalDistance: totalDistance,
+          user: $localStorage.username
         }
       }).then(data => {
         // filter out any restaurants farther than 60m
@@ -83,19 +82,45 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
         restaurants = data.data.restaurants.filter(restaurant => {
           return restaurant.distance;
         })
-        console.log(data.data)
-        if (data.data.paymentRequired === true){
-          return "Payment Required"
-        } else {
-          // resolve restaurants for promise chaining
-          return restaurants;
-        }
 
+        // resolve restaurants for promise chaining
+        return restaurants;
 
       }).catch(err => {
         console.log('Error fetching restaurants: ', err);
       })
     },
+
+    checkRoute: function(stopsList,mode){
+      var waypts = [];
+
+      for (var i = 1; i < stopsList.length-1; i++) {
+          waypts.push(stopsList[i].name);
+      }
+
+
+      // request the restaurants from the server
+      return $http({
+        method: 'POST',
+        url: '/checkRoute',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          start: stopsList[0].name,
+          end: stopsList[stopsList.length-1].name,
+          mode: mode,
+          stops: waypts,
+          user: $localStorage.username,
+        }
+      }).then(function(results){
+        return results
+      }).catch(function(err){
+        return "Payment Required"
+      })
+
+    },
+
 
     getRestaurants: function() {
       return restaurants;
@@ -149,10 +174,21 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
       Output: null
       Description: Renders a route to the map with the given start and end points.
     */
-    calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end, mode) => {
+    calculateAndDisplayRoute: (directionsService, directionsDisplay, start, end, mode, stops) => {
+      var waypts = [];
+
+      for (var i = 1; i < stops.length-1; i++) {
+          waypts.push({
+            location: stops[i].name,
+            stopover: true
+          });
+      }
+
+
       directionsService.route({
         origin: start,
         destination: end,
+        waypoints: waypts,
         travelMode: mode.toUpperCase(),
       }, function(response, status) {
         if (status === 'OK') {
