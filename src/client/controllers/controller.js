@@ -7,7 +7,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
   $scope.stopsList = [{}, {}];
 
-
   $scope.map; // store map
 
   $scope.data = {
@@ -17,6 +16,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   $scope.user;
   $scope.activeUser; // true if a user is logged in
   $scope.newUser = false; // true if a new user wants to sign up
+  var routesArray = [];
+  var totalRouteDistance;
 
   let handler = StripeCheckout.configure({
     key: 'pk_test_Xz3V8MOTjqbGd0eH8JGUDVkN',
@@ -33,8 +34,16 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
           stripeToken: token
         }
       }).then(data => {
-        console.log(data,"data")
-        renderMap()
+        //data.data === "Charge succesful"
+
+        RestaurantAndRoute.fetchRestaurants(routesArray, totalRouteDistance)
+           .then ( res => {
+             console.log(res,"res")
+             renderMap()
+           })
+           .catch(err => {
+             console.log('Error submitting: ', err);
+           })
       }).catch(err => {
         console.log(err,"error")
       })
@@ -45,7 +54,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     $state.go('main.map');
 
     // update list of restaurants in the factory
-
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var map;
@@ -68,8 +76,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     }
 
     initMap();
-
-
   }
 
   // toggles active user depending on the presence of a logged in user
@@ -178,26 +184,32 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   }
 
   // POST users' start and end locations to server
-  $scope.submit = function(form) {
+  $scope.submit = function() {
     //clear old data
     RestaurantAndRoute.clearStoredRestaurants();
     // to refresh states from main.map, need to redirect to main first
     $state.go('main');
 
 
-
-    RestaurantAndRoute.fetchRestaurants($scope.stopsList, $scope.data.mode)
-
+    RestaurantAndRoute.checkRoute($scope.stopsList, $scope.data.mode)
       .then(response => {
-        console.log(response,"This is the response")
-        if (response === "Payment Required"){
+        if (response.message === "Payment Required"){
+          routesArray = response.routesArray
+          totalRouteDistance = response.totalRouteDistance
           handler.open({
               name: 'Demo Site',
               description: '2 widgets',
               amount: 2000
             })
         } else {
-          renderMap()
+          RestaurantAndRoute.fetchRestaurants(response.routesArray, response.totalRouteDistance)
+             .then ( res => {
+               console.log(res,"res")
+               renderMap()
+             })
+             .catch(err => {
+               console.log('Error submitting: ', err);
+             })
         }
       }).catch(err => {
         console.log('Error submitting: ', err);

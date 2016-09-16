@@ -60,10 +60,43 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
 
   return {
 
-    fetchRestaurants: function(stopsList, mode) {
+    fetchRestaurants: function(routes, totalDistance) {
       // clear out the array for the new batch of restaurants
       restaurants = [];
 
+      // request the restaurants from the server
+      return $http({
+        method: 'POST',
+        url: '/maps/submit',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          routesArray: routes,
+          totalDistance: totalDistance,
+          user: $localStorage.username
+        }
+      }).then(data => {
+        // filter out any restaurants farther than 60m
+        /*** This isn't filtering by distance anymore ***/
+        restaurants = data.data.restaurants.filter(restaurant => {
+          return restaurant.distance;
+        })
+
+        // if (data.data.paymentRequired === true){
+        //   return "Payment Required"
+        // } else {
+          // resolve restaurants for promise chaining
+          return restaurants;
+        // }
+
+
+      }).catch(err => {
+        console.log('Error fetching restaurants: ', err);
+      })
+    },
+
+    checkRoute: function(stopsList,mode){
       var waypts = [];
 
       for (var i = 1; i < stopsList.length-1; i++) {
@@ -74,7 +107,7 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
       // request the restaurants from the server
       return $http({
         method: 'POST',
-        url: '/maps/submit',
+        url: '/checkRoute',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -85,25 +118,16 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
           stops: waypts,
           user: $localStorage.username,
         }
-      }).then(data => {
-        // filter out any restaurants farther than 60m
-        /*** This isn't filtering by distance anymore ***/
-        restaurants = data.data.restaurants.filter(restaurant => {
-          return restaurant.distance;
-        })
-        console.log(data.data)
-        if (data.data.paymentRequired === true){
-          return "Payment Required"
-        } else {
-          // resolve restaurants for promise chaining
-          return restaurants;
-        }
-
-
-      }).catch(err => {
-        console.log('Error fetching restaurants: ', err);
+      }).then(function(results){
+        console.log(results,"this data")
+        return results.data
+      }).catch(function(err){
+        err.data.message = "Payment Required"
+        return err.data
       })
+
     },
+
 
     getRestaurants: function() {
       return restaurants;

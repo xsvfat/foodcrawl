@@ -108,16 +108,15 @@ module.exports = {
    * Description: Given a starting and ending address, gives an object
    *              containing an array of routes in promise form.
    */
-  getRoutes: function (origin, destination, mode, stops) {
-    console.log(stops,"These are stops");
+  getRoutes: function (req, res, next) {
     // Concatenate query parameters into HTTP request friendly string.
     let queryString = qs.stringify({
-      origin: origin,
-      destination: destination,
-      waypoints: stops,
+      origin: req.body.start,
+      destination: req.body.end,
+      waypoints: req.body.stops || null,
       optimizeWaypoints: true,
       key: keys.googleMaps,
-      mode: mode,
+      mode: req.body.mode,
     });
 
     // Specify parameters for request.
@@ -128,38 +127,52 @@ module.exports = {
 
 
     // Make request to Google Directions API.
-    return request(options);
+    request(options).then(function (results){
+      var routesArray = JSON.parse(results.body).routes;
+
+      var totalRouteDistance = 0;
+      routesArray[0].legs.forEach(function (leg) {
+        totalRouteDistance += leg.distance.value;
+      });
+      console.log(totalRouteDistance,"Total Route Distance")
+      var response = {
+        routesArray: routesArray,
+        totalRouteDistance: totalRouteDistance
+      }
+      if (totalRouteDistance > 804672){
+        res.status(401).json(response)
+      } else {
+        res.status(201).json(response)
+      }
+
+    })
+
   },
 
   // Takes form data from submit
   // Outputs routes or addresses for the map
 
   submit: function(req, res, next) {
-    module.exports.getRoutes(req.body.start, req.body.end, req.body.mode, req.body.stops)
-    .then(results => {
-      // Parse nested object returned by Google's API to
-      // specifically get Array of routes.
-      var routesArray = JSON.parse(results.body).routes;
-      console.log(results.body)
-
+      console.log(req,"request")
       User.findOne({
         username: req.body.user,
       }).then(function (response) {
-
         // Call getRestaurants along the returned route.
-        module.exports.getRestaurants(req, res, routesArray, response.preferences);
+
+        if (!response){
+          module.exports.getRestaurants(res,req.body.routesArray, req.body.totalRouteDistance);
+        } else {
+          module.exports.getRestaurants(res, req.body.routesArray, req.body.totalRouteDistance, response.preferences);
+        }
 
       }).catch(function (error) {
-
+        console.log(error,"server side error")
         // Call getRestaurants along the returned route.
-        module.exports.getRestaurants(req, res, routesArray);
+        module.exports.getRestaurants(res,req.body.routesArray, req.body.totalRouteDistance);
 
       });
-    })
-    .catch(err => {
-      console.log('Error requesting routes: ', err);
-      res.end();
-    });
+
+
   },
 
   chargeCard: (req,res) => {
@@ -185,7 +198,7 @@ module.exports = {
    * Description: Takes in the route object returned by Google's API,
    *              and returns an array of restaurant objects from Yelp.
    */
-  getRestaurants: (req, res, routesArray, preferences, token) => {
+  getRestaurants: (res, routesArray, totalRouteDistance, preferences) => {
     preferences = preferences || [];
 
     // Object to be returned to the client.
@@ -193,22 +206,7 @@ module.exports = {
     var responseObject = {
       route: routesArray,
       restaurants: [],
-      paymentRequired: false
     };
-
-    // Determine the total length of a route in meters.
-    var totalRouteDistance = 0;
-    routesArray[0].legs.forEach(function (leg) {
-      totalRouteDistance += leg.distance.value;
-    });
-
-
-    //"Number below represents 500 miles"
-    if (totalRouteDistance > 804672){
-      console.log("does it reach here?")
-        responseObject.paymentRequired = true;
-    }
-
 
     // // Use a different radius for longer routes.
     var yelpSearchRadius = totalRouteDistance > 150000 ? 3000 :
@@ -267,7 +265,6 @@ module.exports = {
 
         // Sucess callback
         .then(function (searchResults) {
-
           // Filter out businesses returned by yelp that are in weird locations.
           validBusinesses = searchResults.businesses.filter(function (item) {
 
@@ -294,7 +291,7 @@ module.exports = {
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
           responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
-
+          console.log(responseObject,"responseObject")
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
           queryCounter >= queryTargets.length ? res.send(responseObject) : null;
