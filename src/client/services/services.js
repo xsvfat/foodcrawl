@@ -114,11 +114,9 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
           user: $localStorage.username,
         }
       }).then(function(results){
-        console.log(results,"this data")
-        return results.data
+        return results
       }).catch(function(err){
-        err.data.message = "Payment Required"
-        return err.data
+        return "Payment Required"
       })
 
     },

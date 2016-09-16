@@ -16,8 +16,6 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   $scope.user;
   $scope.activeUser; // true if a user is logged in
   $scope.newUser = false; // true if a new user wants to sign up
-  var routesArray = [];
-  var totalRouteDistance;
 
   let handler = StripeCheckout.configure({
     key: 'pk_test_Xz3V8MOTjqbGd0eH8JGUDVkN',
@@ -36,7 +34,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
       }).then(data => {
         //data.data === "Charge succesful"
 
-        RestaurantAndRoute.fetchRestaurants(routesArray, totalRouteDistance)
+        RestaurantAndRoute.fetchRestaurants()
            .then ( res => {
              console.log(res,"res")
              renderMap()
@@ -193,19 +191,16 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
 
     RestaurantAndRoute.checkRoute($scope.stopsList, $scope.data.mode)
       .then(response => {
-        routesArray = response.routesArray
-        totalRouteDistance = response.totalRouteDistance
-
-        if (response.message === "Payment Required"){
+        console.log(response)
+        if (response === "Payment Required"){
           handler.open({
               name: 'Demo Site',
               description: '2 widgets',
               amount: 2000
             })
         } else {
-          RestaurantAndRoute.fetchRestaurants(routesArray, totalRouteDistance)
+          RestaurantAndRoute.fetchRestaurants()
              .then ( res => {
-               console.log(res,"res")
                renderMap()
              })
              .catch(err => {

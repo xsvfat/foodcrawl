@@ -23,6 +23,8 @@ var yelp = new Yelp({
   'token_secret': keys.yelpTokenSecret
 });
 
+var lastSearch;
+
 
 module.exports = {
   login: (req, res, next) => {
@@ -135,14 +137,14 @@ module.exports = {
         totalRouteDistance += leg.distance.value;
       });
       console.log(totalRouteDistance,"Total Route Distance")
-      var response = {
+      lastSearch = {
         routesArray: routesArray,
         totalRouteDistance: totalRouteDistance
       }
       if (totalRouteDistance > 804672){
-        res.status(401).json(response)
+        res.status(401).end()
       } else {
-        res.status(201).json(response)
+        res.status(201).end()
       }
 
     })
@@ -153,7 +155,6 @@ module.exports = {
   // Outputs routes or addresses for the map
 
   submit: function(req, res, next) {
-      console.log(req,"request")
       User.findOne({
         username: req.body.user,
       }).then(function (response) {
@@ -198,22 +199,22 @@ module.exports = {
    * Description: Takes in the route object returned by Google's API,
    *              and returns an array of restaurant objects from Yelp.
    */
-  getRestaurants: (res, routesArray, totalRouteDistance, preferences) => {
+  getRestaurants: (res, preferences) => {
     preferences = preferences || [];
 
     // Object to be returned to the client.
     // Stores route and restaurants in two seperate arrays.
     var responseObject = {
-      route: routesArray,
+      route: lastSearch.routesArray,
       restaurants: [],
     };
 
     // // Use a different radius for longer routes.     //num prev 7500
-    var yelpSearchRadius = totalRouteDistance > 150000 ? 15000 :
-                              totalRouteDistance > 8750 ? totalRouteDistance / 50 : 175;
+    var yelpSearchRadius = lastSearch.totalRouteDistance > 150000 ? 7500 :
+                              lastSearch.totalRouteDistance > 8750 ? lastSearch.totalRouteDistance / 50 : 175;
 
     // Use these. They are auto-distributed with a bias towards population centers.
-    var latLngPairs = polyline.decode(routesArray[0].overview_polyline.points);
+    var latLngPairs = polyline.decode(lastSearch.routesArray[0].overview_polyline.points);
 
     var shouldUseHalfDistance = true;
     var minSeparationForQueries = yelpSearchRadius / 2;
@@ -291,7 +292,6 @@ module.exports = {
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
           responseObject.restaurants = _.uniqBy(responseObject.restaurants, 'id');
-          console.log(responseObject,"responseObject")
           // Send a response to the client if all requisite queries have been made.
           queryCounter++;
           queryCounter >= queryTargets.length ? res.send(responseObject) : null;
