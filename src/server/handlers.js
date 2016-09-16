@@ -359,32 +359,43 @@ module.exports = {
 
   emailFavoritesList: (req, res) => {
 
-    // let list = req.body.favList;
-    // let email = req.body.email;
+    let favList = req.body;
+
+    console.log("FAVLIST IS: ", favList);
+    let listHtml = 
+      '<b>Your favorite restuarants are: </b>'
+      + '<br>' 
+      + '<span>Name: </span><span>Rating: </span><span>Reviews Count: </span><span>Address: </span>';
+
+    favList.forEach((fav) => {
+      listHtml += 
+        '<span>' + fav.name + '</span><span>' + fav.rating + '</span><span>' + fav.location + '</span><span>' + fav.review_count + '</span>'
+      + '<br>';
+    });
 
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: 'vbarilla@gmail.com', // Your email id
+            user: 'foodcrawl2016@gmail.com', // Your email id
             pass: keys.gmailPass // Your password
         }
     });
 
     // setup e-mail data with unicode symbols
     var mailOptions = {
-        from: '"Vincent J. Barilla" <vbarilla@gmail.com>', // sender address
-        to: 'tzk87@gmail.com, sxvfat@gmail.com', // list of receivers
-        subject: 'Testing', // Subject line
+        from: '"Food Crawl" <foodcrawl2016@gmail.com>', // sender address
+        to: 'vbarilla@gmail.com', // list of receivers
+        subject: 'Welcome to Food Crawl!', // Subject line
         //text: 'Hello world ?' // plaintext body
-        html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
+        html: listHtml // You can choose to send an HTML body instead
     };
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          res.send(json({error: error}));
+          res.send('Error is: ' + error);
         } else {
-          res.send(json({confirmation: 'Email sent.'}));
+          res.send('Email sent.');
         }
     });
   } 
