@@ -1,5 +1,5 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, Auth, $localStorage, Addresses) {
+app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, $localStorage, Addresses) {
 
   $scope.lastSearch = { // the most recent search input
     start: '',
