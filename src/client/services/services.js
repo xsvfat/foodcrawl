@@ -123,6 +123,7 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
 
 
     getRestaurants: function() {
+      //console.log(restaurants[0]);
       return restaurants;
     },
 
