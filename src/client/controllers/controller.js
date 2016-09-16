@@ -41,7 +41,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   });
 
   var renderMap = () => {
-    $state.go('main.map');
+    $state.go('home.main.map');
 
     // update list of restaurants in the factory
    // console.log('restaurants: ', restaurants);
@@ -182,7 +182,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     console.log($scope.lastSearch);
 
     // to refresh states from main.map, need to redirect to main first
-    $state.go('main');
+    $state.go('home.main');
 
 
     RestaurantAndRoute.fetchRestaurants($scope.lastSearch.start, $scope.lastSearch.end, $scope.data.mode)
