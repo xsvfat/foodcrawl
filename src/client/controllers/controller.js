@@ -1,5 +1,5 @@
 // controller for start & end inputs
-app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', 'Auth', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, Auth, $localStorage, Addresses) {
+app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndRoute', '$localStorage', 'Addresses', function($scope, $http, $state, RestaurantAndRoute, $localStorage, Addresses) {
 
 
   Materialize.updateTextFields(); // solves input field placeholder overlapping issue
@@ -50,8 +50,8 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     }
   });
 
-  let renderMap = () => {
-    $state.go('main.map');
+  var renderMap = () => {
+    $state.go('home.main.map');
 
     // update list of restaurants in the factory
     var directionsService = new google.maps.DirectionsService;
@@ -188,7 +188,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     //clear old data
     RestaurantAndRoute.clearStoredRestaurants();
     // to refresh states from main.map, need to redirect to main first
-    $state.go('main');
+    $state.go('home.main');
 
 
     RestaurantAndRoute.checkRoute($scope.stopsList, $scope.data.mode)

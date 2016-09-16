@@ -12,21 +12,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body>
-  <nav>
-    <div class="nav-wrapper">
-      <div class="container">
-        <a href="#!" class="brand-logo">foodcrawl</a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="#" ui-sref="auth">Log In</a></li>
-        </ul>
-        <ul class="side-nav" id="mobile-demo">
-          <li><a href="#" ui-sref="auth">Log In</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<body ng-controller="home">
   <div ui-view>
   </div>
   <!-- jQuery -->
@@ -45,11 +31,9 @@
 
   <script src="routes.js"></script>
   <script src="services/services.js"></script>
-  <script src="services/authStorage.js"></script>
   <script src="services/addresses.js"></script>
-  <script src="controllers/login.js"></script>
-  <script src="controllers/signup.js"></script>
   <script src="controllers/auth.js"></script>
+  <script src="controllers/home.js"></script>
   <script src="controllers/addressesCtrl.js"></script>
   <script src="controllers/options.js"></script>
   <script src="controllers/controller.js"></script>

@@ -208,8 +208,8 @@ module.exports = {
       restaurants: [],
     };
 
-    // // Use a different radius for longer routes.
-    var yelpSearchRadius = totalRouteDistance > 150000 ? 3000 :
+    // // Use a different radius for longer routes.     //num prev 7500
+    var yelpSearchRadius = totalRouteDistance > 150000 ? 15000 :
                               totalRouteDistance > 8750 ? totalRouteDistance / 50 : 175;
 
     // Use these. They are auto-distributed with a bias towards population centers.

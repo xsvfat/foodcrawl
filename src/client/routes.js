@@ -2,35 +2,45 @@ var app = angular.module('foodfood', ['ui.router', 'ngStorage', 'ngAutocomplete'
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/main');
+  $urlRouterProvider.otherwise('/home/main');
 
   $stateProvider
-  .state('main', {
-    url: '/main',
+  .state('home', {
+    url: '/home',
     views: {
       '': {
-        templateUrl: './views/main.html',
-        controller: 'inputsController'
-      },
-      'login@main': {
-        templateUrl: './views/login.html',
-        controller: 'loginController'
-      },
-      'signup@main': {
-        templateUrl: './views/signup.html',
-        controller: 'signupController'
-      },
-      'options@main': {
-        templateUrl: './views/options.html',
-        controller: 'optionsController'
-      },
-      'addresses@main': {
-        templateUrl: './views/addresses.html',
-        controller: 'addressesController'
+        templateUrl: './views/home.html',
+        controller: 'home'
       }
     }
   })
-    .state('main.map', {
+    .state('home.main', {
+      url: '/main',
+      views: {
+        '': {
+          templateUrl: './views/main.html',
+          controller: 'inputsController'
+        },
+        'options@home.main': {
+          templateUrl: './views/options.html',
+          controller: 'optionsController'
+        },
+        'addresses@home.main': {
+          templateUrl: './views/addresses.html',
+          controller: 'addressesController'
+        }
+      }
+    })
+    .state('home.auth', {
+      url: '/auth',
+      views: {
+        '': {
+          templateUrl: './views/auth.html',
+          controller: 'authController'
+        }
+      }
+    })
+    .state('home.main.map', {
       url: '/map',
       views: {
         'restaurantList': {
@@ -58,22 +68,5 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         }
       }
     })
-  .state('auth', {
-    url: '/auth',
-    views: {
-      '': {
-        templateUrl: './views/auth.html',
-        controller: 'authController'
-      },
-      'login@auth': {
-        templateUrl: './views/login.html',
-        controller: 'loginController'
-      },
-      'signup@auth': {
-        templateUrl: './views/signup.html',
-        controller: 'signupController'
-      },
-    }
-  })
 
 }])
