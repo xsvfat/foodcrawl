@@ -75,7 +75,7 @@ form label {
   overflow-y: scroll;
   height: 400px;
   /*padding: 0;*/
-  margin-bottom:  10px;
+  /*display: block;*/
 }
 
 .collection {

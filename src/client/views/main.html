@@ -1,6 +1,6 @@
 <div ng-controller='inputsController' class="container">
 <!-- - - - -HEADER- - - - -->
-    <div class='header'>
+    <!-- <div class='header'> -->
 <!-- Show logout option for logged in users -->
     <!-- <div class='inline rightSide' ng-show='activeUser && !newUser'> -->
 <!--     <div>
@@ -13,10 +13,8 @@
 
 <!-- - - - -Start and End for user input- - - - -->
   <div class="section">
-    <div class="splashContainer">
-    <div class="introText center-align">
-      <text>Find the best places to stop and eat on your next roadtrip</text>
-    </div>
+    <!-- <div class="splashContainer"> -->
+    <div>
 
       <form id='routeSearch' name='routeForm' class="row" ng-submit='submit(routeForm)'>
 
@@ -66,6 +64,10 @@
     </div>
   </div>
 
+<!-- - - - -Restaurant list and map- - - - -->
+  <div class="row section flex-s">
+  </div>
+
 <!-- - - - -Filters and Addresses OPTIONS BAR- - - - -->
   <div id='optionsBar'>
 
@@ -84,10 +86,10 @@
     </div>
 
   </div>
-
+<!-- 
   <div id='restaurantAndMap'>
   </div>
     <div id='mapContainer'>
-    </div>
+    </div> -->
 
 </div>
