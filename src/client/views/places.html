@@ -1,5 +1,6 @@
 <div>
-  <table id='restaurantTable' ng-show='restaurants.length'>
+  
+<!--   <table id='restaurantTable' ng-show='restaurants.length'>
     <tr>
       <th align='center' ng-click='setSortTerm("name")'>Restaurants</th>
       <th align='center' ng-click='setSortTerm("rating")'>Rating</th>
@@ -13,4 +14,34 @@
       <td class='addressTable'>{{restaurant.location.address[0]}}
     </tr>
   </table>
+ -->
+  <div class="restaurantList">
+    <ul class="collection">
+      <!-- <li class="collection-header"> -->
+      <li class="collection-item">
+        <div class="row">
+            <div>Restaurants</span> 
+          <div input-field>
+            <select material-select watch>
+              <option>Option1</option>
+              <option>Option2</option>
+              <option>Option3</option>
+            </select>
+          </span>
+        </div>
+      </li>
+      <li ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class="collection-item">
+        <div class="restaurantName">{{restaurant.name}}
+          <!-- <a href="#" class="secondary-content"> -->
+          <p class="secondary-content">
+            <!-- <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" /> -->
+            <input type="checkbox" class="filled-in" id="{{restaurant.id}}" />
+            <label for="{{restaurant.id}}"></label>
+          </p>
+          <!-- </a> -->
+        </div>
+        <div><span>{{stars(restaurant.rating)}}</span><span> {{restaurant.review_count}} reviews</span></div>
+      </li>
+    </ul>
+  </div>
 </div>
