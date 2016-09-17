@@ -41,10 +41,11 @@
     </li>
   </ul> 
 </div>
-<div class="row" ng-controller='inputsController'>
-  <form id='routeSearch' name='emailForm' ng-submit='submitFavorites()'>
-      <input class="input-field col s8 m4 l8 offset-m4" name="" type='text' ng-model='userEmail' 
+<div class="row" ng-controller='inputsController' ng-class="{ 'has-error' : signupForm.name.$invalid && !signupForm.name.$pristine }">
+  <form id='routeSearch' name='emailForm' ng-submit='submitFavorites()' novalidate>
+      <input class="input-field col s8 m4 l8 offset-m4" name="email" type='email' ng-model='userEmail' 
         required placeholder='Enter Your Email to Receive Selections'>
+        <p ng-show="emailForm.email.$error.email" class="help-block">Not a valid email.</p>  
       <button class="btn waves-effect waves-light m4 s4 l2 offset-m1 offset-l1 col" type="submit" name="action">
         <i class="material-icons">send</i>
       </button>

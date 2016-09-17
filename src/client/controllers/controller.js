@@ -12,7 +12,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   $scope.data = {
     mode: 'driving',
   }
-  $scope.userEmail = {};
+  $scope.userEmail;
 
   $scope.user;
   $scope.activeUser; // true if a user is logged in
