@@ -13,6 +13,7 @@ var polyline = require('polyline');
 var geolib = require('geolib');
 var stripe = require("stripe")("sk_test_xg4PkTku227mE5Pub1jJvIj5");
 var https = require('https');
+var nodemailer = require('nodemailer');
 
 const gmapsURL = 'https://maps.googleapis.com/maps/api/directions/json';
 
@@ -27,6 +28,7 @@ var lastSearch;
 
 
 module.exports = {
+
   login: (req, res, next) => {
     var username = req.body.username;
     var password = req.body.password;
@@ -237,12 +239,6 @@ module.exports = {
         }
       }
     }
-    // need to construct: segmentsArray, an array of {distance: num, midpoint: {lat: lng}} objects. Build this out of
-    // the steps array.
-
-    // These console.logs tell you the selectiveness of the filter above
-    console.log("LENGTH OF OVERVIEW IS: ", latLngPairs.length);
-    console.log("LENGTH OF FILTERED OVERVIEW IS: ", queryTargets.length);
 
     // Keeps track of the number of Yelp queries we've made.
     var queryCounter = 0;
@@ -286,8 +282,6 @@ module.exports = {
               return totalDistance <= yelpSearchRadius;
             }
           });
-
-
 
           // Add the returned businessees to the restauraunts array.
           responseObject.restaurants = responseObject.restaurants.concat(validBusinesses);
@@ -362,5 +356,36 @@ module.exports = {
     .catch(error => {
       console.log('Error saving address: ', error);
     });
-  }
+  }, 
+
+  emailFavoritesList: (req, res) => {
+
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'foodcrawl2016@gmail.com', // Your email id
+            pass: keys.gmailPass // Your password
+        }
+    });
+
+    var html = '<h3 style="display:block;font-size:22"> Your selections are: </h3>' + req.body.favsHtml;
+    console.log("HTML IS: ", html);
+    // setup e-mail data with unicode symbols
+    var mailOptions = {
+        from: '"Food Crawl" <foodcrawl2016@gmail.com>', // sender address
+        to: req.body.userEmail,// list of receivers
+        subject: 'Welcome to Food Crawl!', // Subject line
+        html: html // You can choose to send an HTML body instead
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          res.send('Error is: ' + error);
+        } else {
+          res.send('Email sent.');
+        }
+    });
+  } 
+
 };

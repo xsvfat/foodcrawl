@@ -227,6 +227,37 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
       markers = [];
       infoWindows = [];
       openInfoWindows = [];
+    }, 
+
+    submitFavorites: (email) => {
+      var userFavList = $('<ul>');
+      userFavList.append($(':checked').closest('.entry')).find('input').remove();
+      userFavList.find('.entry').append($('<br>')).append($('<br>'));
+
+      console.log($(':checked').closest('.entry'));
+      console.log("userfavlist is", userFavList);
+
+      return $http({
+        method: 'POST',
+        url: '/favorites',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        converters: {
+          'text json': true
+        },
+        data: {
+          userEmail: email,  
+          favsHtml: userFavList.html()
+        }
+      }).then(function(results){
+        return results;
+      }).catch(function(err){
+        return "Payment Required"
+      })
+
+
+      console.log(userFavList);
     }
   }
 }])

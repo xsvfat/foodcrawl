@@ -1,5 +1,5 @@
-<div>
-  <table id='restaurantTable' ng-show='restaurants.length'>
+
+<!--   <table id='restaurantTable' ng-show='restaurants.length'>
     <tr>
       <th align='center' ng-click='setSortTerm("name")'>Restaurants</th>
       <th align='center' ng-click='setSortTerm("rating")'>Rating</th>
@@ -10,7 +10,45 @@
       <td class='restaurant'>{{restaurant.name}}</td>
       <td class='rating'>{{stars(restaurant.rating)}}</td>
       <td class='reviewCount rating'>{{restaurant.review_count}}</td>
-      <td class='addressTable'>{{restaurant.location.address[0]}}
+      <td class='addressTable'>{{restaurant.location.address[0]}}</td>
     </tr>
   </table>
+ -->
+<div class="restaurantList">
+  <div class="row">
+    <div input-field class="col s12 m6 offset-m6 l5 offset-l7">
+      <select class="" ng-model="sort.input" ng-change="setSortTerm()" material-select watch >
+        <option value="name">Name (a-z)</option>
+        <option value="-name">Name (z-a)</option>
+        <option value="rating">Rating (low-high)</option>
+        <option value="-rating">Rating (high-low)</option>
+        <option value="review_count">Reviews (low-high)</option>
+        <option value="-review_count">Reviews (high-low)</option>
+      </select>
+      <label>Sort by</label>
+    </div>
+  </div>
+  <ul class="collection">
+    <li ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class="collection-item entry">
+      <div class="restaurantName">{{restaurant.name}}
+        <p class="secondary-content">
+          <input type="checkbox" class="filled-in" id="{{restaurant.id}}" />
+          <label for="{{restaurant.id}}"></label>
+        </p>
+      </div>
+      <div><span>{{stars(restaurant.rating)}}</span><span> {{restaurant.review_count}} reviews</span></div>
+      <div>{{restaurant.location.address[0]}}</div>
+    </li>
+  </ul> 
 </div>
+<div class="row" ng-controller='inputsController' ng-class="{ 'has-error' : signupForm.name.$invalid && !signupForm.name.$pristine }">
+  <form id='routeSearch' name='emailForm' ng-submit='submitFavorites()' novalidate>
+      <input class="input-field col s8 m4 l8 offset-m4" name="email" type='email' ng-model='userEmail' 
+        required placeholder='Enter Your Email to Receive Selections'>
+        <p ng-show="emailForm.email.$error.email" class="help-block">Not a valid email.</p>  
+      <button class="btn waves-effect waves-light m4 s4 l2 offset-m1 offset-l1 col" type="submit" name="action">
+        <i class="material-icons">send</i>
+      </button>
+  </form>
+</div> 
+
