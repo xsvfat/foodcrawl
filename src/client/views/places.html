@@ -1,5 +1,4 @@
-<div>
-  
+
 <!--   <table id='restaurantTable' ng-show='restaurants.length'>
     <tr>
       <th align='center' ng-click='setSortTerm("name")'>Restaurants</th>
@@ -15,36 +14,33 @@
     </tr>
   </table>
  -->
-  <div class="restaurantList">
-    <ul class="collection">
-      <!-- <li class="collection-header"> -->
-      <li class="collection-item">
-        <div class="row">
-            <div>Restaurants</span> 
-          <div input-field>
-            <select material-select watch>
-              <option>Option1</option>
-              <option>Option2</option>
-              <option>Option3</option>
-            </select>
-          </span>
-        </div>
-      </li>
-      <li ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class="collection-item entry">
-        <div class="restaurantName">{{restaurant.name}}
-          <!-- <a href="#" class="secondary-content"> -->
-          <p class="rest secondary-content">
-            <!-- <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" /> -->
-            <input type="checkbox" class="filled-in" id="{{restaurant.id}}" />
-            <label for="{{restaurant.id}}"></label>
-          </p>
-          <!-- </a> -->
-        </div>
-        <div><span>{{stars(restaurant.rating)}}</span><span> {{restaurant.review_count}} reviews</span></div>
-      </li>
-    </ul>
+<div class="restaurantList">
+  <div class="row">
+    <div input-field class="col s12 m6 offset-m6 l5 offset-l7">
+      <select class="" ng-model="sort.input" ng-change="setSortTerm()" material-select watch >
+        <option value="name">Name (a-z)</option>
+        <option value="-name">Name (z-a)</option>
+        <option value="rating">Rating (low-high)</option>
+        <option value="-rating">Rating (high-low)</option>
+        <option value="review_count">Reviews (low-high)</option>
+        <option value="-review_count">Reviews (high-low)</option>
+      </select>
+      <label>Sort by</label>
+    </div>
   </div>
-  <div>
-    <button ng-click='submitFavorites()'>Heyo </button>
-  </div>
+  <ul class="collection">
+    <li ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class="collection-item">
+      <div class="restaurantName">{{restaurant.name}}
+        <!-- <a href="#" class="secondary-content"> -->
+        <p class="secondary-content">
+          <!-- <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" /> -->
+          <input type="checkbox" class="filled-in" id="{{restaurant.id}}" />
+          <label for="{{restaurant.id}}"></label>
+        </p>
+        <!-- </a> -->
+      </div>
+      <div><span>{{stars(restaurant.rating)}}</span><span> {{restaurant.review_count}} reviews</span></div>
+      <div>{{restaurant.location.address[0]}}</div>
+    </li>
+  </ul>
 </div>
