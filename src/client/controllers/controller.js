@@ -12,6 +12,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   $scope.data = {
     mode: 'driving',
   }
+  $scope.userEmail = {};
 
   $scope.user;
   $scope.activeUser; // true if a user is logged in
@@ -229,7 +230,7 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
   }
 
   $scope.submitFavorites = () => {
-    RestaurantAndRoute.submitFavorites();
+    RestaurantAndRoute.submitFavorites($scope.userEmail);
   };
   
 }]);

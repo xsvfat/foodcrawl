@@ -229,10 +229,13 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
       openInfoWindows = [];
     }, 
 
-    submitFavorites: () => {
+    submitFavorites: (email) => {
       var userFavList = $('<ul>');
       userFavList.append($(':checked').closest('.entry')).find('input').remove();
       userFavList.find('.entry').append($('<br>')).append($('<br>'));
+
+      console.log($(':checked').closest('.entry'));
+      console.log("userfavlist is", userFavList);
 
       return $http({
         method: 'POST',
@@ -244,7 +247,7 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
           'text json': true
         },
         data: {
-          userEmail: 'vbarilla@gmail.com', 
+          userEmail: email,  
           favsHtml: userFavList.html()
         }
       }).then(function(results){

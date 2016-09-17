@@ -29,18 +29,25 @@
     </div>
   </div>
   <ul class="collection">
-    <li ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class="collection-item">
+    <li ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class="collection-item entry">
       <div class="restaurantName">{{restaurant.name}}
-        <!-- <a href="#" class="secondary-content"> -->
         <p class="secondary-content">
-          <!-- <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" /> -->
           <input type="checkbox" class="filled-in" id="{{restaurant.id}}" />
           <label for="{{restaurant.id}}"></label>
         </p>
-        <!-- </a> -->
       </div>
       <div><span>{{stars(restaurant.rating)}}</span><span> {{restaurant.review_count}} reviews</span></div>
       <div>{{restaurant.location.address[0]}}</div>
     </li>
-  </ul>
+  </ul> 
 </div>
+<div class="row" ng-controller='inputsController'>
+  <form id='routeSearch' name='emailForm' ng-submit='submitFavorites()'>
+      <input class="input-field col s8 m4 l8 offset-m4" name="" type='text' ng-model='userEmail' 
+        required placeholder='Enter Your Email to Receive Selections'>
+      <button class="btn waves-effect waves-light m4 s4 l2 offset-m1 offset-l1 col" type="submit" name="action">
+        <i class="material-icons">send</i>
+      </button>
+  </form>
+</div> 
+
