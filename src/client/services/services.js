@@ -123,7 +123,6 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
 
 
     getRestaurants: function() {
-      //console.log(restaurants[0]);
       return restaurants;
     },
 
@@ -230,6 +229,32 @@ app.factory('RestaurantAndRoute', ['$http', '$localStorage', function($http, $lo
       openInfoWindows = [];
     }, 
 
+    submitFavorites: () => {
+      var userFavList = $('<ul>');
+      userFavList.append($(':checked').closest('.entry')).find('input').remove();
+      userFavList.find('.entry').append($('<br>')).append($('<br>'));
 
+      return $http({
+        method: 'POST',
+        url: '/favorites',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        converters: {
+          'text json': true
+        },
+        data: {
+          userEmail: 'vbarilla@gmail.com', 
+          favsHtml: userFavList.html()
+        }
+      }).then(function(results){
+        return results;
+      }).catch(function(err){
+        return "Payment Required"
+      })
+
+
+      console.log(userFavList);
+    }
   }
 }])

@@ -30,10 +30,10 @@
           </span>
         </div>
       </li>
-      <li ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class="collection-item">
+      <li ng-repeat='restaurant in restaurants | orderBy: sortTerm' ng-click='showInfoWindow(restaurant)' class="collection-item entry">
         <div class="restaurantName">{{restaurant.name}}
           <!-- <a href="#" class="secondary-content"> -->
-          <p class="secondary-content">
+          <p class="rest secondary-content">
             <!-- <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" /> -->
             <input type="checkbox" class="filled-in" id="{{restaurant.id}}" />
             <label for="{{restaurant.id}}"></label>
@@ -43,5 +43,8 @@
         <div><span>{{stars(restaurant.rating)}}</span><span> {{restaurant.review_count}} reviews</span></div>
       </li>
     </ul>
+  </div>
+  <div>
+    <button ng-click='submitFavorites()'>Heyo </button>
   </div>
 </div>

@@ -28,9 +28,7 @@ var lastSearch;
 
 
 module.exports = {
-  wtf: (req, res, next) => {
-    res.send("I dunno man.", req);
-  },
+
   login: (req, res, next) => {
     var username = req.body.username;
     var password = req.body.password;
@@ -362,8 +360,6 @@ module.exports = {
 
   emailFavoritesList: (req, res) => {
 
-    console.log("FAVSHTML IS: ", req.body.favsHtml);
-
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -372,13 +368,14 @@ module.exports = {
         }
     });
 
+    var html = '<h3 style="display:block;font-size:22"> Your selections are: </h3>' + req.body.favsHtml;
+
     // setup e-mail data with unicode symbols
     var mailOptions = {
         from: '"Food Crawl" <foodcrawl2016@gmail.com>', // sender address
         to: req.body.userEmail,// list of receivers
         subject: 'Welcome to Food Crawl!', // Subject line
-        text: JSON.stringify(req.body.favsHtml), // plaintext body
-        //html: req.body.favsHtml // You can choose to send an HTML body instead
+        html: html // You can choose to send an HTML body instead
     };
 
     // send mail with defined transport object

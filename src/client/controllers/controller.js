@@ -227,4 +227,9 @@ app.controller('inputsController', ['$scope', '$http', '$state', 'RestaurantAndR
     }
     return result;
   }
+
+  $scope.submitFavorites = () => {
+    RestaurantAndRoute.submitFavorites();
+  };
+  
 }]);
