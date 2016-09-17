@@ -46,21 +46,25 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           templateUrl: './views/places.html',
           controller: function($scope, RestaurantAndRoute, Addresses) {
             // restaurants from the server
+            $scope.sort = {
+              input: '-review_count'
+            }
             $scope.sortTerm = '-review_count';
-            $scope.setSortTerm = function (input) {
-              if ($scope.sortTerm[0] === '-') {
-                if ($scope.sortTerm.slice(1) === input) {
-                  $scope.sortTerm = input;
-                } else {
-                  $scope.sortTerm = input; 
-                }
-              } else {
-                if ($scope.sortTerm === input) {
-                  $scope.sortTerm = '-' + input;
-                } else {
-                  $scope.sortTerm = input;
-                }
-              }
+            $scope.setSortTerm = function () {
+              $scope.sortTerm = $scope.sort.input;
+              // if ($scope.sortTerm[0] === '-') {
+              //   if ($scope.sortTerm.slice(1) === $scope.sort.input) {
+              //     $scope.sortTerm = $scope.sort.input;
+              //   } else {
+              //     $scope.sortTerm = $scope.sort.input; 
+              //   }
+              // } else {
+              //   if ($scope.sortTerm === $scope.sort.input) {
+              //     $scope.sortTerm = '-' + $scope.sort.input;
+              //   } else {
+              //     $scope.sortTerm = $scope.sort.input;
+              //   }
+              // }
             };
             $scope.restaurants = RestaurantAndRoute.getRestaurants();
           }
