@@ -55,6 +55,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           templateUrl: './views/places.html',
           controller: function($scope, RestaurantAndRoute, Addresses) {
             // restaurants from the server
+            
             $scope.sort = {
               input: '-review_count'
             }
