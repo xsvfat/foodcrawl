@@ -25,10 +25,9 @@ https://developers.google.com/maps/
 
 ## Contributors
 
-* Justin Griffin
-* Eric Zolayvar
-* Alex Pattison
-* Christopher Chiang
+* Sean Yang
+* Timur Zhartybayev
+* Vincent Barilla
 
 ## License
 
